@@ -1,4 +1,4 @@
-Team Delta
+Team Delta:
 Grub Gauge
 
 Team Overview - 
