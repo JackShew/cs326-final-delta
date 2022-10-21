@@ -35,6 +35,25 @@
     padding-left: 10px;
 }
 
+.dish-description {
+    margin-bottom: 0px;
+}
+
 .dish-score {
     text-align: center;
+}
+
+.dish-comments {
+    display: flex;
+    justify-content: end;
+    padding-left: 30px;
+    line-height: 0.7;
+}
+
+#chat-icon {
+    padding: 0px;
+}
+
+.comment-number {
+    padding-left: 3px;
 }
