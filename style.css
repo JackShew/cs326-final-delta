@@ -1,3 +1,19 @@
+.title{
+    font-size: 5em;
+    text-align: center;
+    color:#fff;
+    background-color: #881C1B;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+}
+.filters{
+    background-color: #fff;
+}
+
+.worcester-container{
+    color: #fff;
+    background-color: #881C1B;
+    
+}
 .dining-container {
     background-color: red;
 }
