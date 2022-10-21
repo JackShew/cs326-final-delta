@@ -12,6 +12,8 @@
 }
 .filters{
     background-color: white;
+    display: flex;
+    justify-content: center;
 }
 
 .worcester-container{
@@ -20,9 +22,19 @@
     
 }
 .dining-container {
-    background-color: red;
+
 }
 
 .dish-container {
     background-color: white;
+    display: inline-flex;
+
+}
+
+.dish-info {
+    padding-left: 10px;
+}
+
+.dish-score {
+    text-align: center;
 }
