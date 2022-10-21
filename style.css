@@ -2,16 +2,21 @@
     font-size: 5em;
     text-align: center;
     color:#fff;
-    background-color: #881C1B;
-    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+    background-color: black;
+    /* background-color: #881C1B;
+    color: white;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000; */
+}
+.gauge{
+    color: #c72e2c;
 }
 .filters{
-    background-color: #fff;
+    background-color: white;
 }
 
 .worcester-container{
-    color: #fff;
-    background-color: #881C1B;
+    color: black;
+    background-color: white;
     
 }
 .dining-container {
@@ -19,5 +24,5 @@
 }
 
 .dish-container {
-    background-color: blue;
+    background-color: white;
 }
