@@ -14,6 +14,7 @@
     background-color: white;
     display: flex;
     justify-content: center;
+    padding-top: 10px;
 }
 
 .worcester-container{
@@ -28,6 +29,7 @@
 .dish-container {
     background-color: white;
     display: inline-flex;
+    padding-bottom: 10px;
 
 }
 
