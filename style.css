@@ -65,8 +65,9 @@
     position: absolute;
     bottom: -55%;
     border: 3px solid black;
-    background-color: #c72e2c;
-    color: #fff;
+    border-radius: 10%;
+    background-color: #8f2424;
+    color: #b6c5d1;
     text-align: center;
     width: 40%;
     margin-left: 30%;
