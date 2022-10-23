@@ -19,12 +19,13 @@
                 </div>
                 <div class="col">
                     
-                    <button class="btn btn-default">
+                    <button class="btn btn-default" onclick="openForm()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                           </svg>
                     </button>
+
                 </div>
             </div>
         </div>
@@ -68,8 +69,29 @@
             <div class="left"></div>
         </div>
         <div class="col-10">
+            
             <div class="main">
-                    
+                <!-- Login -->
+                <div  class="loginForm" id="loginForm">
+                        <form>
+                            <div class="blocker" onclick="closeForm()"></div>
+                            <div class="form-content">
+                            <h1>Login</h1><br>
+                            <div class="form-group">
+                                <h2><label for="Address">Email address</label></h2>
+                                <input type="email" class="form-control" id="address" aria-describedby="emailHelp" placeholder="Enter email">
+                              </div>
+                              <div class="form-group">
+                                <h2><label for="psw">Password</label></h2>
+                                <input type="password" class="form-control" id="psw" placeholder="Password">
+                              </div>
+                              <button class="btn btn-secondary">Submit</button>
+                              <button class="btn btn-secondary">Sign up</button>
+                            </div>
+                            <br>
+                            </form>
+                </div>
+
                 <!-- end of filter -->
                 <div class="worcester-container">
                     <!-- <img src="worcester_commons_new.jpg" width=> -->
@@ -117,4 +139,13 @@
         </div>
     <div class="col"></div>
     </div>
+    <script>
+        function openForm() {
+          document.getElementById("loginForm").style.display = "inline-block";
+        }
+        
+        function closeForm() {
+          document.getElementById("loginForm").style.display = "none";
+        }
+        </script>
 </body>
