@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>Grub Gauge Comments</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Filter and locations etc -->
+    <div class="header">
+        <div class="title">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-8">
+                    <button class="btn btn-default">
+                        <div class="title">
+                            <span class="grub">Grub</span>
+                            <span class="gauge">Gauge</span>
+                        </div>
+                    </button>
+                </div>
+                <div class="col">
+                    
+                    <button class="btn btn-default" onclick="openForm()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                          </svg>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of header -->
+    <div class="row">
+        <div class="col">
+            <div class="left"></div>
+        </div>
+        <div class="col-10">
+            
+            <div class="main">
+                <!-- Login -->
+                <div  class="loginForm" id="loginForm">
+                        <form>
+                            <div class="blocker" onclick="closeForm()"></div>
+                            <div class="form-content">
+                                <h1>Login</h1><br>
+                                <div class="form-group">
+                                    <h2><label for="Address">Email address</label></h2>
+                                    <input type="email" class="form-control" id="address" aria-describedby="emailHelp" placeholder="Enter email">
+                                </div>
+                                <div class="form-group">
+                                    <h2><label for="psw">Password</label></h2>
+                                    <input type="password" class="form-control" id="psw" placeholder="Password">
+                                </div>
+                                <button class="btn btn-secondary">Submit</button>
+                                <button class="btn btn-secondary">Sign up</button>
+                            </div>
+                            <br>
+                            </form>
+                </div>
+
+                <div class="dish-name/location">
+                    <!-- <img src="worcester_commons_new.jpg" width=> -->
+                    <h2>
+                        <hr>
+                        <span class="dish-name">California Sushi Roll</span> 
+                        @
+                        <span class="dining-common">Worcester Dining Hall</span> 
+                        <hr>
+                    </h2>
+                </div>
+                <div class = "dish-image">
+                    <img src="sushi.png" class="center-image"></img>
+                </div>
+                <h3>Description:</h3>
+                    <div class="dish-container">
+                        <div class = "dish-info">
+                            <p class = "dish-description"> sit amet, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum</p>    
+                            <div class = "dish-comments">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" id="chat-icon" viewBox="0 0 16 16">
+                                    <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+                                  </svg>
+                                <div class = "comment-number">2 Comments</div>
+                            </div>
+                        </div>  
+
+                        <div class = "dish-rank">
+                            <button class="btn btn-default">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                                  </svg>
+                            </button>
+                            <div class = "dish-score"><b>123</b></div>
+                            <button class="btn btn-default">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                  </svg>
+                            </button>
+                        </div>
+                    </div>
+                        <form>
+                            <div class="form-group">
+                                <h3 for="your-comment">Make a Comment:</h3>
+                                <input type="email" class="form-control" id="your-comment" placeholder="Enter your comment">
+                            </div> 
+                            <button class="btn btn-secondary">Comment</button>
+                        </form>
+                        <br>
+                    <h3>Comments:</h3>
+                    <div class="comment-section">
+                    <div class="comment">
+                        <div class="comment-info">
+                            <span class="commenter">Cornelius</span>
+                            <span class="date">10/23/22</span>
+                            <p> Vivamus luctus libero gravida lectus tristique, non condimentum nibh posuere. Etiam et tincidunt nibh. Ut sed consequat dolor. Nulla maximus elit placerat sapien porttitor, a aliquam neque hendrerit. Nulla sed elementum nibh, lacinia maximus turpis. Morbi hendrerit laoreet vehicula. Sed at risus id nisi bibendum posuere sit amet quis urna.</p>    
+                        </div>
+                        <div class = "comment-rank">
+                            <button class="btn btn-default">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                                  </svg>
+                            </button>
+                            <div class = "comment-score"><b>34</b></div>
+                            <button class="btn btn-default">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                  </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <div class="comment-info">
+                            <span class="commenter">Flavia</span>
+                            <span class="date">10/23/22</span>
+                            <p> Fusce nisi libero, volutpat ut eros sed, lacinia semper turpis. Curabitur tristique tempor dignissim. Donec quis purus id ipsum mollis varius sit amet non felis. Nam eget dapibus ligula.</p>    
+                        </div>
+                        <div class = "comment-rank">
+                            <button class="btn btn-default">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                                  </svg>
+                            </button>
+                            <div class = "comment-score"><b>8</b></div>
+                            <button class="btn btn-default">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                  </svg>
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- <div class="dish-container">
+                        <div class="comment-section">
+                            <h3>Comments:</h3>
+                            <div class="comment">
+                                <span class="commenter">cornelius</span>
+                                <span class="time-posted"> 10/23/22</span> 
+                                <p>
+                                Vivamus luctus libero gravida lectus tristique, non condimentum nibh posuere. Etiam et tincidunt nibh. Ut sed consequat dolor. Nulla maximus elit placerat sapien porttitor, a aliquam neque hendrerit. Nulla sed elementum nibh, lacinia maximus turpis. Morbi hendrerit laoreet vehicula. Sed at risus id nisi bibendum posuere sit amet quis urna.
+                                </p>
+                                <div class = "dish-rank">
+                                    <button class="btn btn-default">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+                                        </svg>
+                                    </button>
+                                    <div class = "dish-score"><b>123</b></div>
+                                    <button class="btn btn-default">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+            </div>
+        </div>
+    <div class="col"></div>
+    </div>
+</body>
