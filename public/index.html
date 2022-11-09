@@ -290,11 +290,11 @@
         <div class="row">
             <div class="col"></div>
             <div class="col-6">
-                <form>
+                <form action = "http://localhost:5000/dish" method="POST">
                     <div class="form-group">
                         <h3>Post a Dish:</h3>
-                        <input type="text" class="form-control" id="postName" placeholder="Enter the dish name">
-                        <input type="text" class="form-control" id="postDescription" placeholder="Enter the dish description">
+                        <input type="text" name="title" class="form-control" id="postName" placeholder="Enter the dish name">
+                        <input type="text" name="description" class="form-control" id="postDescription" placeholder="Enter the dish description">
                     </div>
                     <div class="locations">
                         <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="diningHalls" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -309,7 +309,7 @@
                     </div>
                     <label for="formFile" class="form-label">Choose image</label>
                     <input class="form-control" type="file" id="formFile">         
-                    <button class="btn btn-dark">Post</button>
+                    <button class="btn btn-dark" type="submit">Post</button>
                 </form>
             </div>
             <div class="col"></div>
