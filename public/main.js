@@ -8,6 +8,13 @@ document.getElementById("Franklin/Sushi/Score/increment").addEventListener('clic
 document.getElementById("Franklin/Sushi/Score/decrement").addEventListener('click', function(){
     decrement("Franklin/Sushi/Score")
 });
+document.getElementById("post").addEventListener(function(){
+    const title = document.getElementById("postTitle").value;
+    const des = document.getElementById("postDescription").value;
+    const loc = document.getElementById("postLocation").value;
+    const img = document.getElementById("formFile").value; 
+    post({"title":title, "description":des, "location":loc, "image":img});
+});
 function increment(id){
     if(!dishes[id]["incremented"]){
         let score = document.getElementById(id).innerText;
@@ -47,4 +54,7 @@ function decrement(id){
         dishes[id]["incremented"] = false;
         dishes[id]["decremented"] = false;
     }
+}
+function post(postData){
+    // Create post html
 }

@@ -296,7 +296,13 @@
                         <input type="text" name="title" class="form-control" id="postName" placeholder="Enter the dish name">
                         <input type="text" name="description" class="form-control" id="postDescription" placeholder="Enter the dish description">
                     </div>
-                    <div class="locations">
+                    <select class="locations" name="location" id="postLocation">
+                        <option value="worcester">Worcester</option>
+                        <option value="frank">Franklin</option>
+                        <option value="berk">Berkshire</option>
+                        <option value="hamp">Hampshire</option>
+                    </select>
+                    <!-- <div class="locations">
                         <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="diningHalls" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dining Hall
                         </a>
@@ -306,10 +312,10 @@
                         <a class="dropdown-item" href="#">Hampshire</a>
                         <a class="dropdown-item" href="#">Berkshire</a>
                         </div>
-                    </div>
+                    </div> -->
                     <label for="formFile" class="form-label">Choose image</label>
-                    <input class="form-control" type="file" id="formFile">         
-                    <button class="btn btn-dark" type="submit">Post</button>
+                    <input class="form-control" type="file" id="formFile" name="image">         
+                    <button class="btn btn-dark" type="submit" id="post">Post</button>
                 </form>
             </div>
             <div class="col"></div>
