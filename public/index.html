@@ -270,6 +270,34 @@
             </div>
         <div class="col"></div>
         </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-6">
+                <form>
+                    <div class="form-group">
+                        <h3>Post a Dish:</h3>
+                        <input type="text" class="form-control" id="postName" placeholder="Enter the dish name">
+                        <input type="text" class="form-control" id="postDescription" placeholder="Enter the dish description">
+                    </div>
+                    <label for="diningHalls" class="form-label">Choose Dining Hall</label>
+                    <div class="locations">
+                        <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="diningHalls" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Location
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="location-dropdown">
+                        <a class="dropdown-item" href="#">Worcester</a>
+                        <a class="dropdown-item" href="#">Frank</a>
+                        <a class="dropdown-item" href="#">Hampshire</a>
+                        <a class="dropdown-item" href="#">Berkshire</a>
+                        </div>
+                    </div>
+                    <label for="formFile" class="form-label">Choose image</label>
+                    <input class="form-control" type="file" id="formFile">         
+                    <button class="btn btn-dark">Post</button>
+                </form>
+            </div>
+            <div class="col"></div>
+        </div>
         <script>
             function openForm() {
             document.getElementById("loginForm").style.display = "inline-block";
