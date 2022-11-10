@@ -27,15 +27,23 @@ The API will respond with a JSON object containing the information requested
 
 
 Part 2:
+Implementation was not all the way there. 
+Submit button sends a get request containing the informations in the forms to create a new dish item.
 https://github.com/JackShew/cs326-final-delta/blob/main/docs/images/SubmitButton.PNG
 
+Image below shows array of dish items
 https://github.com/JackShew/cs326-final-delta/blob/main/docs/images/localHost5000_dish.PNG
 
+When upvote button is pressed the dish score is incremented, if the user has already pressed the upvote
+button it instead decrements the score and then next time it is pressed it increments.
 https://github.com/JackShew/cs326-final-delta/blob/main/docs/images/upvoteButton.PNG
-
+Image below shows that element is changed. 
 https://github.com/JackShew/cs326-final-delta/blob/main/docs/images/upvoteButtonPressed.PNG
-
+Downvote buttons work in the same way
 
 Part 3:
 Heroku link
 https://grub-gauge.herokuapp.com/
+
+Division of Labor:
+
