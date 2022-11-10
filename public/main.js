@@ -1,12 +1,38 @@
 // document.getElementById('red').classList.add("hidden");// console.log(document.getElementById('red').innerText);
 const dishes = {};
+dishes["Worcester/Sushi/Score"] = {incremented: false, decremented: false};
+dishes["Worcester/StirFry/Score"] = {incremented: false, decremented: false};
+dishes["Worcester/Bannana/Score"] = {incremented: false, decremented: false};
 dishes["Franklin/Sushi/Score"] = {incremented: false, decremented: false};
-​
+dishes["Franklin/Salad/Score"] = {incremented: false, decremented: false};
 document.getElementById("Franklin/Sushi/Score/increment").addEventListener('click', function(){
     increment("Franklin/Sushi/Score")
 });
 document.getElementById("Franklin/Sushi/Score/decrement").addEventListener('click', function(){
     decrement("Franklin/Sushi/Score")
+});
+document.getElementById("Franklin/Salad/Score/increment").addEventListener('click', function(){
+    increment("Franklin/Salad/Score")
+});
+document.getElementById("Franklin/Salad/Score/decrement").addEventListener('click', function(){
+    decrement("Franklin/Salad/Score")
+});
+document.getElementById("Worcester/Sushi/Score/increment").addEventListener('click', function(){
+    increment("Worcester/Sushi/Score")
+});
+document.getElementById("Worcester/Sushi/Score/decrement").addEventListener('click', function(){
+    decrement("Worcester/Sushi/Score")
+});
+document.getElementById("Worcester/StirFry/Score/increment").addEventListener('click', function(){
+    increment("Worcester/StirFry/Score")
+});
+document.getElementById("Worcester/StirFry/Score/decrement").addEventListener('click', function(){
+    decrement("Worcester/StirFry/Score")
+});document.getElementById("Worcester/Bannana/Score/increment").addEventListener('click', function(){
+    increment("Worcester/Bannana/Score")
+});
+document.getElementById("Worcester/Bannana/Score/decrement").addEventListener('click', function(){
+    decrement("Worcester/Bannana/Score")
 });
 // Uneccessary html already accomplishes this
 // document.getElementById("post").addEventListener('click', function(){
@@ -21,7 +47,7 @@ document.getElementById("post").addEventListener('click', function(){
     postDishData();
     renderPost({"title":title, "description":des, "location":loc, "image":img});
 });
-​
+
 async function postDishData() {
     const dishURL = "http://localhost:5000/dish"
     const response = await fetch(dishURL);
