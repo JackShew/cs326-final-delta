@@ -46,4 +46,6 @@ Heroku link
 https://grub-gauge.herokuapp.com/
 
 Division of Labor:
+Jack: Implemented part 1, the back-end Skeleton code, set up and deployed on Heroku, and helped implement front end.
+Jayden: After consulting with Jack implemented part 0, implemented front end, and wrote milestone2.md. 
 
