@@ -1,3 +1,4 @@
+Part 0:
 The Grub Gauge API, based on REST API, delivers JSON data to and from the client and server
 
 Objects:
@@ -23,3 +24,13 @@ Our API will have CRUD operations for all four objects, with endpoints like thes
 
 
 The API will respond with a JSON object containing the information requested
+
+
+Part 2:
+
+
+
+
+Part 3:
+Heroku link
+https://grub-gauge.herokuapp.com/
