@@ -18,8 +18,22 @@ document.getElementById("post").addEventListener('click', function(){
     const loc = document.getElementById("postLocation").value;
     const img = document.getElementById("formFile").value; 
     // past('s');
-    post({"title":title, "description":des, "location":loc, "image":img});
+    postDishData();
+    renderPost({"title":title, "description":des, "location":loc, "image":img});
 });
+
+async function postDishData() {
+    const dishURL = "http://localhost:5000/dish"
+    const response = await fetch(dishURL);
+    if (response.ok) {
+      const json = await response.json();
+      console.log(json);
+      //document.getElementById('star_count').innerHTML = `<b>${json.stargazers_count}</b>`;
+    } else {
+      //document.getElementById('star_count').innerHTML = '<b>an error occurred</b>';
+    }
+}
+
 function increment(id){
     if(!dishes[id]["incremented"]){
         let score = document.getElementById(id).innerText;
@@ -61,11 +75,12 @@ function decrement(id){
     }
 }
 
-function post(postData){
-    window.alert(postData["title"]+"dfsa");
-    window.alert(postData["description"]);
-    window.alert(postData["location"]);
-    window.alert(postData["image"]);
+function renderPost(postData){
+    // window.alert(postData["title"]+"dfsa");
+    // window.alert(postData["description"]);
+    // window.alert(postData["location"]);
+    // window.alert(postData["image"]);
+    // console.log(postData["title"]+"dfsa");
     // Create post html
     const dish = document.createElement("div");
     dish.classList.add("dish-container");
@@ -83,8 +98,10 @@ function post(postData){
     dishInfo.appendChild(dishTitle);
     dishInfo.appendChild(dishDes);
     const hallContainer = document.getElementById(postData["location"]+"Container");
-    const diningContainer = hallContainer.querySelector(".dining-container");
-    diningContainer.appendChild(newDiv);
+    hallContainer.innerHTML = JSON.stringify(postData);
+    //const diningContainer = hallContainer.querySelector(".dining-container");
+    hallContainer.appendChild(dish);
+    console.log("hi");
 }
 
 
