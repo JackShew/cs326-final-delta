@@ -9,7 +9,7 @@ document.getElementById("Franklin/Sushi/Score/decrement").addEventListener('clic
     decrement("Franklin/Sushi/Score")
 });
 // Uneccessary html already accomplishes this
-document.getElementById("post").addEventListener(function(){
+document.getElementById("post").addEventListener('click', function(){
     const title = document.getElementById("postTitle").value;
     const des = document.getElementById("postDescription").value;
     const loc = document.getElementById("postLocation").value;
