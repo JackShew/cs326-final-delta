@@ -62,7 +62,7 @@ function decrement(id){
 }
 
 function post(postData){
-    window.alert(postData["title"]);
+    window.alert(postData["title"]+"dfsa");
     window.alert(postData["description"]);
     window.alert(postData["location"]);
     window.alert(postData["image"]);
@@ -82,7 +82,8 @@ function post(postData){
     dishDes.appendChild(des);
     dishInfo.appendChild(dishTitle);
     dishInfo.appendChild(dishDes);
-    const diningContainer = document.getElementById(postData["location"]+"Container");
+    const hallContainer = document.getElementById(postData["location"]+"Container");
+    const diningContainer = hallContainer.querySelector(".dining-container");
     diningContainer.appendChild(newDiv);
 }
 
