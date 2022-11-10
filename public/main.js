@@ -62,10 +62,10 @@ function decrement(id){
 }
 
 function post(postData){
-    window.alert(postData["title"]+"dfsa");
-    window.alert(postData["description"]);
-    window.alert(postData["location"]);
-    window.alert(postData["image"]);
+    // window.alert(postData["title"]+"dfsa");
+    // window.alert(postData["description"]);
+    // window.alert(postData["location"]);
+    // window.alert(postData["image"]);
     // Create post html
     const dish = document.createElement("div");
     dish.classList.add("dish-container");
