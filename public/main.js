@@ -9,11 +9,15 @@ document.getElementById("Franklin/Sushi/Score/decrement").addEventListener('clic
     decrement("Franklin/Sushi/Score")
 });
 // Uneccessary html already accomplishes this
+// document.getElementById("post").addEventListener('click', function(){
+//     past("s");
+// })
 document.getElementById("post").addEventListener('click', function(){
     const title = document.getElementById("postTitle").value;
     const des = document.getElementById("postDescription").value;
     const loc = document.getElementById("postLocation").value;
     const img = document.getElementById("formFile").value; 
+    // past('s');
     post({"title":title, "description":des, "location":loc, "image":img});
 });
 function increment(id){
@@ -58,7 +62,10 @@ function decrement(id){
 }
 
 function post(postData){
-    window.alert("reeee");
+    window.alert(postData["title"]);
+    window.alert(postData["description"]);
+    window.alert(postData["location"]);
+    window.alert(postData["image"]);
     // Create post html
     const dish = document.createElement("div");
     dish.classList.add("dish-container");

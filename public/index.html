@@ -293,15 +293,16 @@
                 <form action = "http://localhost:5000/dish" method="POST">
                     <div class="form-group">
                         <h3>Post a Dish:</h3>
-                        <input type="text" name="title" class="form-control" id="postName" placeholder="Enter the dish name">
-                        <input type="text" name="description" class="form-control" id="postDescription" placeholder="Enter the dish description">
+                        <input type="text" id="postTitle" name="title" class="form-control" placeholder="Enter the dish name">
+                        <input type="text" id="postDescription" name="description" class="form-control" placeholder="Enter the dish description">
                     </div>
-                    <select class="locations" name="location" id="postLocation">
+                    <select class="locations" id="postLocation" name="location">
                         <option value="worcester">Worcester</option>
                         <option value="frank">Franklin</option>
                         <option value="berk">Berkshire</option>
                         <option value="hamp">Hampshire</option>
                     </select>
+                    <br>
                     <label for="formFile" class="form-label">Choose image</label>
                     <input class="form-control" type="file" id="formFile" name="image">         
                     <button class="btn btn-dark" type="submit" id="post">Post</button>
