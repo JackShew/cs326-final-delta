@@ -28,6 +28,7 @@ The API will respond with a JSON object containing the information requested
 
 Part 2:
 [localHost5000_dish.PNG](https://github.com/JackShew/cs326-final-delta/blob/main/docs/images/upvoteButton.PNG)
+https://github.com/JackShew/cs326-final-delta/blob/main/docs/images/upvoteButton.PNG
 
 
 
