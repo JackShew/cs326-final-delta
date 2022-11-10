@@ -58,6 +58,7 @@ function decrement(id){
 }
 
 function post(postData){
+    window.alert("reeee");
     // Create post html
     const dish = document.createElement("div");
     dish.classList.add("dish-container");
