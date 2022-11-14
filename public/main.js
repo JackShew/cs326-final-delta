@@ -1,12 +1,38 @@
 // document.getElementById('red').classList.add("hidden");// console.log(document.getElementById('red').innerText);
 const dishes = {};
+dishes["Worcester/Sushi/Score"] = {incremented: false, decremented: false};
+dishes["Worcester/StirFry/Score"] = {incremented: false, decremented: false};
+dishes["Worcester/Bannana/Score"] = {incremented: false, decremented: false};
 dishes["Franklin/Sushi/Score"] = {incremented: false, decremented: false};
-
+dishes["Franklin/Salad/Score"] = {incremented: false, decremented: false};
 document.getElementById("Franklin/Sushi/Score/increment").addEventListener('click', function(){
     increment("Franklin/Sushi/Score")
 });
 document.getElementById("Franklin/Sushi/Score/decrement").addEventListener('click', function(){
     decrement("Franklin/Sushi/Score")
+});
+document.getElementById("Franklin/Salad/Score/increment").addEventListener('click', function(){
+    increment("Franklin/Salad/Score")
+});
+document.getElementById("Franklin/Salad/Score/decrement").addEventListener('click', function(){
+    decrement("Franklin/Salad/Score")
+});
+document.getElementById("Worcester/Sushi/Score/increment").addEventListener('click', function(){
+    increment("Worcester/Sushi/Score")
+});
+document.getElementById("Worcester/Sushi/Score/decrement").addEventListener('click', function(){
+    decrement("Worcester/Sushi/Score")
+});
+document.getElementById("Worcester/StirFry/Score/increment").addEventListener('click', function(){
+    increment("Worcester/StirFry/Score")
+});
+document.getElementById("Worcester/StirFry/Score/decrement").addEventListener('click', function(){
+    decrement("Worcester/StirFry/Score")
+});document.getElementById("Worcester/Bannana/Score/increment").addEventListener('click', function(){
+    increment("Worcester/Bannana/Score")
+});
+document.getElementById("Worcester/Bannana/Score/decrement").addEventListener('click', function(){
+    decrement("Worcester/Bannana/Score")
 });
 // Uneccessary html already accomplishes this
 // document.getElementById("post").addEventListener('click', function(){
@@ -33,7 +59,11 @@ async function postDishData() {
       //document.getElementById('star_count').innerHTML = '<b>an error occurred</b>';
     }
 }
+<<<<<<< HEAD
 
+=======
+​
+>>>>>>> 168d452d6dec009c4655347a24a576f99d1302c6
 function increment(id){
     if(!dishes[id]["incremented"]){
         let score = document.getElementById(id).innerText;
@@ -74,6 +104,7 @@ function decrement(id){
         dishes[id]["decremented"] = false;
     }
 }
+<<<<<<< HEAD
 
 function renderPost(postData){
     // window.alert(postData["title"]+"dfsa");
@@ -81,6 +112,14 @@ function renderPost(postData){
     // window.alert(postData["location"]);
     // window.alert(postData["image"]);
     // console.log(postData["title"]+"dfsa");
+=======
+​
+function post(postData){
+    window.alert(postData["title"]+"dfsa");
+    window.alert(postData["description"]);
+    window.alert(postData["location"]);
+    window.alert(postData["image"]);
+>>>>>>> 168d452d6dec009c4655347a24a576f99d1302c6
     // Create post html
     const dish = document.createElement("div");
     dish.classList.add("dish-container");
@@ -103,8 +142,8 @@ function renderPost(postData){
     hallContainer.appendChild(dish);
     console.log("hi");
 }
-
-
+​
+​
 /*<div class="dish-container">
  <div class = "dish-image">
 <img src="images/salad.jpg" alt="Salad" width=200>
@@ -136,9 +175,9 @@ function renderPost(postData){
     </svg>
 </button>
 </div>
-
+​
 </div> */
-
+​
 function process(dishObj){
-
+​
 }
