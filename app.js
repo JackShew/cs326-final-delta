@@ -30,7 +30,6 @@ app.post('/postDish', async function(req, res) {
     const collection = database.collection('Posts');
     const p = await collection.insertOne(req.body);
     const myDoc = await collection.findOne();
-    console.log(myDoc);
   }catch(err){
     console.log(err);
   }
@@ -46,8 +45,6 @@ app.post('/postDish', async function(req, res) {
 });
 
 app.get('/mongo', async function(req,res) {
-  // res.send('Hello World, from express');
-  // console.log("fdjhisfy");
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   
   try {
