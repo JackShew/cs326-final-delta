@@ -19,9 +19,25 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'))
 app.use(express.static(__dirname + '/images'))
 
-app.post('/postDish', (req, res) => {
+app.post('/postDish', async function(req, res) {
   console.log(req.query);
-  const {title, description, location, image} = req.body;
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  // const {title, description, location, image} = req.body;
+  console.log(req.body);
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Posts');
+    const p = await collection.insertOne(req.body);
+    const myDoc = await collection.findOne();
+    console.log(myDoc);
+  }catch(err){
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
   //await mongo.createDish(title, description, location, image);
   // Output the book to the console for debugging
   //worchester.push(dish);
@@ -111,5 +127,3 @@ let worchester = [
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
-// mongodb+srv://JaydenNambu:<GGShoko03>@grubgauge-east.kusf5zy.mongodb.net/GrubGaugeData?retryWrites=true&w=majority
