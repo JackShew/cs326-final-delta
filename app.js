@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(cors());
 const {MongoClient} = require("mongodb");
-const uri = "mongodb+srv://JaydenNambu:GGShoko03@grubgauge-east.kusf5zy.mongodb.net/sample_mflix?retryWrites=true&w=majority";
-// const uri = process.env.MONGODB_URI; Causes error
+const uri = process.env.MONGODB_URI; 
+// Causes error
 
 // require('dotenv').config();
 // var mongoose = require('mongoose');
