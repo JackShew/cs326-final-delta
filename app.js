@@ -28,7 +28,14 @@ app.post('/postDish', async function(req, res) {
     await client.connect();
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Posts');
-    const p = await collection.insertOne(req.body);
+    // const p = await collection.insertOne(req.body);
+    const p = await collection.insertOne({
+      "name": { "first": "Alan", "last": "Turing" },
+      "birth": new Date(1912, 5, 23), // May 23, 1912                                                                                                                                 
+      "death": new Date(1954, 5, 7),  // May 7, 1954                                                                                                                                  
+      "contribs": [ "Turing machine", "Turing test", "Turingery" ],
+      "views": 1250000
+  });
     const myDoc = await collection.findOne();
     console.log(myDoc);
   }catch(err){
@@ -42,7 +49,7 @@ app.post('/postDish', async function(req, res) {
   // Output the book to the console for debugging
   //worchester.push(dish);
   //res.send(worchester);
-  res.status(200).json({ status: 'success' });
+  res.status(200).json({ status: 'success'});
 });
 
 app.get('/mongo', async function(req,res) {
