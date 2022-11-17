@@ -18,14 +18,14 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'))
 app.use(express.static(__dirname + '/images'))
 
-app.post('/dish', (req, res) => {
-  const dish = req.body;
-
+app.post('/postDish', (req, res) => {
+  console.log(req.query);
+  const {title, description, location, image} = req.body;
+  //await mongo.createDish(title, description, location, image);
   // Output the book to the console for debugging
-  console.log(dish);
-  worchester.push(dish);
-
-  res.send(worchester);
+  //worchester.push(dish);
+  //res.send(worchester);
+  res.status(200).json({ status: 'success' });
 });
 
 app.get('/mongo', async function(req,res) {

@@ -45,21 +45,19 @@ document.getElementById("post").addEventListener('click', function(){
     const img = document.getElementById("formFile").value; 
     const dishData = {"title": title, "description": des, "location": loc, "image": img};
     // past('s');
-    //postDishData();
+    //postDishData(dishData);
     renderPost(dishData);
     //post(dishData);
 });
 
-async function postDishData() {
-    const dishURL = "http://localhost:5000/dish"
-    const response = await fetch(dishURL);
-    if (response.ok) {
-      const json = await response.json();
-      console.log(json);
-      //document.getElementById('star_count').innerHTML = `<b>${json.stargazers_count}</b>`;
-    } else {
-      //document.getElementById('star_count').innerHTML = '<b>an error occurred</b>';
-    }
+async function postDishData(dishData) {
+    const data = JSON.stringify({dishData});
+    const response = await fetch(`/postDish?title=${dishData["title"]}&description=${dishData["description"]}&location=${dishData["location"]}`, {
+        method: 'POST'
+      });
+      if (!response.ok) {
+        console.error(`Unable to save ${data} to server`);
+      }
 }
 
 function renderPost(postData){
@@ -113,9 +111,6 @@ function renderPost(postData){
     //const diningContainer = hallContainer.querySelector(".dining-container");
     hallContainer.appendChild(dish);
     console.log("hi");
-
-   
-    
 }
 
 
