@@ -6,8 +6,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(cors());
 const {MongoClient} = require("mongodb");
-const uri = process.env.MONGODB_URI;
-console.log(uri);
+const uri = process.env.MONGODB_URI; 
+console.log(uri);// Causes error
+
 // require('dotenv').config();
 // var mongoose = require('mongoose');
 // mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/GrubGauge');
@@ -18,14 +19,29 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'))
 app.use(express.static(__dirname + '/images'))
 
-app.post('/postDish', (req, res) => {
+app.post('/postDish', async function(req, res) {
   console.log(req.query);
-  const {title, description, location, image} = req.body;
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  // const {title, description, location, image} = req.body;
+  console.log(req.body);
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Posts');
+    const p = await collection.insertOne(req.body);
+    const myDoc = await collection.findOne();
+  }catch(err){
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
   //await mongo.createDish(title, description, location, image);
   // Output the book to the console for debugging
   //worchester.push(dish);
   //res.send(worchester);
-  res.status(200).json({ status: 'success' });
+  res.status(200).json({ status: 'success'});
 });
 
 app.get('/mongo', async function(req,res) {
@@ -61,7 +77,7 @@ app.get('/mongo', async function(req,res) {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
-})
+});
 app.get('/hi', (req, res) => {
   res.send('Hello World, from express');
 });
@@ -133,5 +149,3 @@ async function main(){
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
-
-// mongodb+srv://JaydenNambu:<GGShoko03>@grubgauge-east.kusf5zy.mongodb.net/GrubGaugeData?retryWrites=true&w=majority
