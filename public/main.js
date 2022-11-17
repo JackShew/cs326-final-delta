@@ -59,7 +59,7 @@ async function postDishData() {
       //document.getElementById('star_count').innerHTML = '<b>an error occurred</b>';
     }
 }
-​
+
 function increment(id){
     if(!dishes[id]["incremented"]){
         let score = document.getElementById(id).innerText;
@@ -100,7 +100,7 @@ function decrement(id){
         dishes[id]["decremented"] = false;
     }
 }
-​
+
 function post(postData){
     window.alert(postData["title"]+"dfsa");
     window.alert(postData["description"]);
