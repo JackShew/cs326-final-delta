@@ -127,7 +127,7 @@ function post(postData){
     //const diningContainer = hallContainer.querySelector(".dining-container");
     hallContainer.appendChild(dish);
     console.log("hi");
-}​
+}
 
 /*<div class="dish-container">
  <div class = "dish-image">
