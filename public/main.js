@@ -59,11 +59,7 @@ async function postDishData() {
       //document.getElementById('star_count').innerHTML = '<b>an error occurred</b>';
     }
 }
-<<<<<<< HEAD
-
-=======
 ​
->>>>>>> 168d452d6dec009c4655347a24a576f99d1302c6
 function increment(id){
     if(!dishes[id]["incremented"]){
         let score = document.getElementById(id).innerText;
@@ -104,22 +100,12 @@ function decrement(id){
         dishes[id]["decremented"] = false;
     }
 }
-<<<<<<< HEAD
-
-function renderPost(postData){
-    // window.alert(postData["title"]+"dfsa");
-    // window.alert(postData["description"]);
-    // window.alert(postData["location"]);
-    // window.alert(postData["image"]);
-    // console.log(postData["title"]+"dfsa");
-=======
 ​
 function post(postData){
     window.alert(postData["title"]+"dfsa");
     window.alert(postData["description"]);
     window.alert(postData["location"]);
     window.alert(postData["image"]);
->>>>>>> 168d452d6dec009c4655347a24a576f99d1302c6
     // Create post html
     const dish = document.createElement("div");
     dish.classList.add("dish-container");
@@ -141,9 +127,8 @@ function post(postData){
     //const diningContainer = hallContainer.querySelector(".dining-container");
     hallContainer.appendChild(dish);
     console.log("hi");
-}
-​
-​
+}​
+
 /*<div class="dish-container">
  <div class = "dish-image">
 <img src="images/salad.jpg" alt="Salad" width=200>
@@ -177,7 +162,7 @@ function post(postData){
 </div>
 ​
 </div> */
-​
+
 function process(dishObj){
-​
+
 }
