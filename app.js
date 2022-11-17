@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(cors());
 const {MongoClient} = require("mongodb");
-const uri = process.env.MONGODB_URI;
+const uri = "mongodb+srv://JaydenNambu:GGShoko03@grubgauge-east.kusf5zy.mongodb.net/sample_mflix?retryWrites=true&w=majority";
+// const uri = process.env.MONGODB_URI; Causes error
 
 // require('dotenv').config();
 // var mongoose = require('mongoose');
@@ -29,6 +30,8 @@ app.post('/postDish', (req, res) => {
 });
 
 app.get('/mongo', async function(req,res) {
+  // res.send('Hello World, from express');
+  // console.log("fdjhisfy");
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   
   try {
@@ -61,7 +64,7 @@ app.get('/mongo', async function(req,res) {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
-})
+});
 app.get('/hi', (req, res) => {
   res.send('Hello World, from express');
 });
