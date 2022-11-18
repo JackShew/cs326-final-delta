@@ -52,9 +52,15 @@ document.getElementById("post").addEventListener('click', function(){
 
 async function postDishData(dishData) {
     const data = JSON.stringify({dishData});
-    const response = await fetch(`/postDish?title=${dishData["title"]}&description=${dishData["description"]}&location=${dishData["location"]}`, {
-        method: 'POST'
-      });
+    console.log(data);
+    console.log(dishData["title"]); //good g
+
+    const response = await fetch("/postDish", {
+        method: 'POST',
+        body: data
+
+      })
+      .then(response => console.log(JSON.stringify(response)));
       if (!response.ok) {
         console.error(`Unable to save ${data} to server`);
       }

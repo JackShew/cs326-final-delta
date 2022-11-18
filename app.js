@@ -25,7 +25,7 @@ app.post('/postDish', async function(req, res) {
   const data = {title, description, location, image} = req.body;
   data["score"]= 0;
   data["comment-number"] = 0;
-
+  
   console.log(req.body);
   try {
     await client.connect();
