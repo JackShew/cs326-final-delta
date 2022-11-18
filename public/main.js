@@ -45,7 +45,7 @@ document.getElementById("post").addEventListener('click', function(){
     const img = document.getElementById("formFile").value; 
     const dishData = {"title": title, "description": des, "location": loc, "image": img};
     // past('s');
-    //postDishData(dishData);
+    postDishData(dishData);
     renderPost(dishData);
     //post(dishData);
 });
