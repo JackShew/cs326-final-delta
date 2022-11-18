@@ -57,7 +57,10 @@ async function postDishData(dishData) {
 
     const response = await fetch("/postDish", {
         method: 'POST',
-        body: data
+        body: {
+            "title":"pissbaby",
+            "description":"12"
+        }
 
       })
       .then(response => console.log(JSON.stringify(response)));

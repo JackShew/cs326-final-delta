@@ -38,6 +38,7 @@ app.post('/postDish', async function(req, res) {
   // data["comment-number"] = 0;
   console.log(req.body);
   console.log(data);
+  // Data is empty 
   try {
     await client.connect();
     const database = client.db('GrubGaugeData');
