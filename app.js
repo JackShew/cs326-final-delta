@@ -22,13 +22,16 @@ app.use(express.static(__dirname + '/images'))
 app.post('/postDish', async function(req, res) {
   console.log(req.query);
   const client = new MongoClient(uri, { useUnifiedTopology: true });
-  // const {title, description, location, image} = req.body;
+  const data = {title, description, location, image} = req.body;
+  data["score"]= 0;
+  data["comment-number"] = 0;
+
   console.log(req.body);
   try {
     await client.connect();
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Posts');
-    const p = await collection.insertOne(req.body);
+    const p = await collection.insertOne(data);
     const myDoc = await collection.findOne();
   }catch(err){
     console.log(err);
