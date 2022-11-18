@@ -1,3 +1,4 @@
+// import {settings} from './settings.env';
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
@@ -5,6 +6,8 @@ const nodeEnv = process.env.NODE_ENV;
 const bodyParser = require('body-parser');
 const cors = require('cors');
 app.use(cors());
+require('dotenv').config();
+console.log(process.env)
 const {MongoClient} = require("mongodb");
 const uri = process.env.MONGODB_URI; 
 console.log(uri);// Causes error
@@ -21,16 +24,24 @@ app.use(express.static(__dirname + '/images'))
 
 app.post('/postDish', async function(req, res) {
   console.log(req.query);
+  // console.log(req.body);
+  console.log("uri" + uri);
   const client = new MongoClient(uri, { useUnifiedTopology: true });
-  const data = {title, description, location, image} = req.body;
-  data["score"]= 0;
-  data["comment-number"] = 0;
-  
+  console.log("reached");
+  const data = JSON.stringify(req.body);
+  // const title = req.body.title;
+  // const description = req.body.description;
+  // const location = req.body.location;
+  // const image = req.body.image;
+  // console.log(title);
+  // data["score"]= 0;
+  // data["comment-number"] = 0;
   console.log(req.body);
+  console.log(data);
   try {
     await client.connect();
     const database = client.db('GrubGaugeData');
-    const collection = database.collection('Posts');
+    const collection = database.collection('Post');
     const p = await collection.insertOne(data);
     const myDoc = await collection.findOne();
   }catch(err){
