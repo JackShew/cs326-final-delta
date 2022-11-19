@@ -1,6 +1,8 @@
 // import {settings} from './settings.env';
 const express = require('express');
+const multer  = require('multer');
 const app = express();
+
 const port = process.env.PORT || 5000;
 const nodeEnv = process.env.NODE_ENV;
 const bodyParser = require('body-parser');
@@ -20,15 +22,29 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public'))
-app.use(express.static(__dirname + '/images'))
+//app.use(express.static(__dirname + '/images'))
+app.use('/uploads', express.static('uploads'));
 
-app.post('/postDish', async function(req, res) {
+var storage = multer.diskStorage({
+  destination: '/public/images',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({ storage: storage })
+
+app.post('/postDish', upload.single("imageUpload"), async function(req, res) {
   console.log(req.query);
   // console.log(req.body);
   console.log("uri" + uri);
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   console.log("reached");
   // const data = JSON.stringify(req.body);
+  console.log(JSON.stringify(req.body.image))
+  var response = '<a href="/">Home</a><br>'
+  response += "Files uploaded successfully.<br>"
+  response += `<img src="${req.file.path}" /><br>`
+  console.log(response);
   const title = req.body.title;
   const description = req.body.description;
   const location = req.body.location;
@@ -41,9 +57,7 @@ app.post('/postDish', async function(req, res) {
     "score":0,
     "comment-number":0
   }
-  // console.log(title);
-  // data["score"]= 0;
-  // data["comment-number"] = 0;
+
   console.log(req.body);
   console.log(data);
   // Data is empty 
@@ -63,8 +77,8 @@ app.post('/postDish', async function(req, res) {
   //await mongo.createDish(title, description, location, image);
   // Output the book to the console for debugging
   //worchester.push(dish);
-  //res.send(worchester);
-  res.status(200).json({ status: 'success'});
+  res.send(response);
+  //res.status(200).json({ status: 'success'});
 });
 
 app.get('/mongo', async function(req,res) {

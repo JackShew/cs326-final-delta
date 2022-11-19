@@ -38,11 +38,23 @@
 // document.getElementById("post").addEventListener('click', function(){
 //     past("s");
 // })
+// const image_input = document.querySelector("#imageUpload");
+
+// image_input.addEventListener("change", function() {
+//   const reader = new FileReader();
+//   reader.addEventListener("load", () => {
+//     const uploaded_image = reader.result;
+//     document.querySelector("#display-image").style.backgroundImage = `url(${uploaded_image})`;
+//   });
+//   reader.readAsDataURL(this.files[0]);
+// });
+
 document.getElementById("post").addEventListener('click', function(){
     const title = document.getElementById("postTitle").value;
     const des = document.getElementById("postDescription").value;
     const loc = document.getElementById("postLocation").value;
-    const img = document.getElementById("formFile").value; 
+    const img = document.getElementById("imageUpload").value; 
+    console.log(img);
     const dishData = {"title": title, "description": des, "location": loc, "image": img};
     // past('s');
     // postDishData(dishData);

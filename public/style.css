@@ -10,6 +10,10 @@
 .gauge{
     color: #c72e2c;
 }
+.row{
+    width:100%;
+}
+
 .filters{
     background-color: white;
     display: flex;
