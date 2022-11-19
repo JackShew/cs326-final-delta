@@ -28,11 +28,19 @@ app.post('/postDish', async function(req, res) {
   console.log("uri" + uri);
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   console.log("reached");
-  const data = JSON.stringify(req.body);
-  // const title = req.body.title;
-  // const description = req.body.description;
-  // const location = req.body.location;
-  // const image = req.body.image;
+  // const data = JSON.stringify(req.body);
+  const title = req.body.title;
+  const description = req.body.description;
+  const location = req.body.location;
+  const image = req.body.image;
+  const data = {
+    "title":title,
+    "description":description,
+    "location":location,
+    "image":image,
+    "score":0,
+    "comment-number":0
+  }
   // console.log(title);
   // data["score"]= 0;
   // data["comment-number"] = 0;
