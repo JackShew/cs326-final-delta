@@ -45,29 +45,29 @@ document.getElementById("post").addEventListener('click', function(){
     const img = document.getElementById("formFile").value; 
     const dishData = {"title": title, "description": des, "location": loc, "image": img};
     // past('s');
-    postDishData(dishData);
+    // postDishData(dishData);
     renderPost(dishData);
     //post(dishData);
 });
 
-async function postDishData(dishData) {
-    const data = JSON.stringify({dishData});
-    console.log(data);
-    console.log(dishData["title"]); //good g
+// async function postDishData(dishData) {
+//     const data = JSON.stringify({dishData});
+//     console.log(data);
+//     console.log(dishData["title"]); //good g
 
-    const response = await fetch("/postDish", {
-        method: 'POST',
-        body: {
-            "title":"pissbaby",
-            "description":"12"
-        }
+//     const response = await fetch("/postDish", {
+//         method: 'POST',
+//         body: {
+//             "title":"pissbaby",
+//             "description":"12"
+//         }
 
-      })
-      .then(response => console.log(JSON.stringify(response)));
-      if (!response.ok) {
-        console.error(`Unable to save ${data} to server`);
-      }
-}
+//       })
+//       .then(response => console.log(JSON.stringify(response)));
+//       if (!response.ok) {
+//         console.error(`Unable to save ${data} to server`);
+//       }
+// }
 
 function renderPost(postData){
     const dish = document.createElement("div");
