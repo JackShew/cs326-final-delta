@@ -1,6 +1,6 @@
 // import {settings} from './settings.env';
 const express = require('express');
-const multer  = require('multer');
+//const multer  = require('multer');
 const app = express();
 
 const port = process.env.PORT || 5000;
@@ -25,15 +25,15 @@ app.use(express.static(__dirname + '/public'))
 //app.use(express.static(__dirname + '/images'))
 app.use('/uploads', express.static('uploads'));
 
-var storage = multer.diskStorage({
-  destination: '/uploads',
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-const upload = multer({ storage: storage })
-
-app.post('/postDish', upload.single("imageUpload"), async function(req, res) {
+// var storage = multer.diskStorage({
+//   destination: '/uploads',
+//   filename: function (req, file, cb) {
+//     cb(null, file.originalname)
+//   }
+// })
+// const upload = multer({ storage: storage })
+// , upload.single("imageUpload")
+app.post('/postDish', async function(req, res) {
   console.log(req.query);
   // console.log(req.body);
   console.log("uri" + uri);
