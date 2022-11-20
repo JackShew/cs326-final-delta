@@ -48,46 +48,47 @@
 //   });
 //   reader.readAsDataURL(this.files[0]);
 // });
+window.addEventListener("load", async function() {
+    console.log("Joe mama");
+    const dishes = await getDishData();
+    console.log(dishes);
+    dishes.forEach(element => {
+        renderPost(element);
+    });
 
-document.getElementById("post").addEventListener('click', function(){
-    const title = document.getElementById("postTitle").value;
-    const des = document.getElementById("postDescription").value;
-    const loc = document.getElementById("postLocation").value;
-    const img = document.getElementById("imageUpload").value; 
-    console.log(img);
-    const dishData = {"title": title, "description": des, "location": loc, "image": img};
-    // past('s');
-    // postDishData(dishData);
-    renderPost(dishData);
-    //post(dishData);
+    document.getElementById("post").addEventListener('click', function(){
+        const title = document.getElementById("postTitle").value;
+        const des = document.getElementById("postDescription").value;
+        const loc = document.getElementById("postLocation").value;
+        const img = document.getElementById("imageUpload").value; 
+        console.log(img);
+        const dishData = {"title": title, "description": des, "location": loc, "image": img};
+        // past('s');
+        // postDishData(dishData);
+        renderPost(dishData);
+        //post(dishData);
+    });
 });
 
-// async function postDishData(dishData) {
-//     const data = JSON.stringify({dishData});
-//     console.log(data);
-//     console.log(dishData["title"]); //good g
 
-//     const response = await fetch("/postDish", {
-//         method: 'POST',
-//         body: {
-//             "title":"pissbaby",
-//             "description":"12"
-//         }
-
-//       })
-//       .then(response => console.log(JSON.stringify(response)));
-//       if (!response.ok) {
-//         console.error(`Unable to save ${data} to server`);
-//       }
-// }
+async function getDishData() {
+    // const data = JSON.stringify({});
+    // console.log(data);
+    // console.log(dishData["title"]); //good g
+    console.log("in dish data mainjs");
+    const response = await fetch("/dishes");
+    console.log(response);
+    return response.json();
+}
 
 function renderPost(postData){
     const dish = document.createElement("div");
     dish.classList.add("dish-container");
-    const dishImage = document.createElement("img");
-    console.log(postData["image"]);
-    dishImage.src = postData["image"];
-    dish.appendChild(dishImage);
+    //const dishImage = document.createElement("img");
+    //console.log(postData["image"]);
+    //dishImage.src = "images/" + postData["image"];
+    //console.log(dishImage.src);
+    //dish.appendChild(dishImage);
     const dishInfo = document.createElement("div");
     dishInfo.classList.add("dish-info");
     const dishTitle = document.createElement("h3");
