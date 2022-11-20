@@ -286,7 +286,7 @@
             <div class="col"></div>
             <div class="col-6"> 
                 <!-- https://grub-gauge.herokuapp.com -->
-                <form action = "/postDish" method="POST" role="form">
+                <form action = "/postDish" target="hiddenFrame" method="POST" role="form">
                 <div class="form-group">
                     <h3>Post a Dish:</h3>
                     <input type="text" id="postTitle" name="title" class="form-control" placeholder="Enter the dish name">
@@ -307,6 +307,9 @@
             </div>
             <div class="col"></div>
         </div>
+
+        <iframe name="hiddenFrame" class="hide"></iframe>
+
         <script>
             function openForm() {
             document.getElementById("loginForm").style.display = "inline-block";
