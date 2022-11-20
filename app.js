@@ -129,6 +129,26 @@ app.get('/api/worchester/', (req, res) => {
   res.send(worchester);
 })
 
+app.post("/signUp", async function(req,res){
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  const address = res.body.address;
+  const password = res.body.password;
+  const data = {"address":address, "password":password};
+  try{
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Users');
+    const p = await collection.insertOne(data);
+    const myDoc = await collection.findOne();
+  }catch(err){
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+})
+
 app.put('/increment', async function(req, res){
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   const title = req.body.title;
@@ -148,6 +168,10 @@ app.put('/increment', async function(req, res){
   catch(err){
     console.log(err);
   }
+  finally{
+    await client.close();
+  }
+  res.status(200).json({ status: 'success'});
 })
 
 

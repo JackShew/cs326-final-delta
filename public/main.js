@@ -85,7 +85,7 @@ window.addEventListener("load", async function() {
         const password = document.getElementById("psw").value;
         const accountInfo = {"address": address, "password": password};
         console.log(accountInfo);
-        // signUp(accountInfo);
+        signUp(accountInfo);
     })
 });
 function openForm() {
@@ -104,6 +104,22 @@ async function getDishData() {
     const response = await fetch("/dishes");
     console.log(response);
     return response.json();
+}
+
+async function signUp(accountInfo) {
+    const address = accountInfo["address"];
+    const password = accountInfo["password"];
+    const response = await fetch("/signUp",{
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({address: address, password: password})
+        });
+        const content = await response.json();
+        console.log(content);
+        return content;
 }
 
 function renderPost(postData){
