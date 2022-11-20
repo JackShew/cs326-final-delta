@@ -58,6 +58,25 @@ window.addEventListener("load", async function() {
 
     document.getElementById("increment").addEventListener('click', function(){
         console.log("upvote");
+        const dishrank = this.parentElement;
+        const score = dishrank.querySelector('.dish-score');
+        const dishContainer = dishrank.parentElement;
+        const dishInfo = dishContainer.querySelector('.dish-info');
+        const title = dishInfo.querySelector('.dish-title');
+        fetch('/increment', {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              "title": title.innerText,
+              "score": score.innerText
+            })
+          })
+          score.innerText = String(parseInt(score.innerText)+1);
+          console.log(score.innerText);
+
     });
 
     document.getElementById("post").addEventListener('click', function(){

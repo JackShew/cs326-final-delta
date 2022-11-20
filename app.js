@@ -112,7 +112,26 @@ app.get('/api/worchester/', (req, res) => {
   res.send(worchester);
 })
 
-
+app.put('/increment', async function(req, res){
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  const title = req.body.title;
+  const score = req.body.score;
+  try{
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Posts');
+    const p = await collection.updateOne(
+        {"title": title},
+        {$set:
+        {
+          "score":score+1
+        }}
+    );
+  }
+  catch(err){
+    console.log(err);
+  }
+})
 
 
 async function main(){
