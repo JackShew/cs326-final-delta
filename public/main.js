@@ -58,6 +58,10 @@ window.addEventListener("load", async function() {
         renderPost(element);
     });
 
+    document.getElementById("increment").addEventListener('click', function(){
+        console.log("upvote");
+    });
+
     document.getElementById("post").addEventListener('click', function(){
         const title = document.getElementById("postTitle").value;
         const des = document.getElementById("postDescription").value;
@@ -70,6 +74,14 @@ window.addEventListener("load", async function() {
         renderPost(dishData);
         //post(dishData);
     });
+
+    document.getElementById("signUpButton").addEventListener('click', function(){
+        const address = document.getElementById("address").value;
+        const password = document.getElementById("psw").value;
+        const accountInfo = {"address": address, "password": password};
+        console.log(accountInfo);
+        // signUp(accountInfo);
+    })
 });
 
 
