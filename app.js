@@ -133,8 +133,8 @@ app.post("/signUp", async function(req,res){
   console.log(res.body);
   console.log(uri);
   const client = new MongoClient(uri, { useUnifiedTopology: true });
-  const address = res.body.address;
-  const password = res.body.password;
+  const address = req.body.address;
+  const password = req.body.password;
   const data = {"address":address, "password":password};
   try{
     await client.connect();

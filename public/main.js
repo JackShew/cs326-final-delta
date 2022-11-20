@@ -80,13 +80,13 @@ window.addEventListener("load", async function() {
     document.getElementById("closeForm").addEventListener('click', function(){
         closeForm();
     })
-    document.getElementById("signUpButton").addEventListener('click', function(){
-        const address = document.getElementById("address").value;
-        const password = document.getElementById("psw").value;
-        const accountInfo = {"address": address, "password": password};
-        console.log(accountInfo);
-        signUp(accountInfo);
-    })
+    // document.getElementById("signUpButton").addEventListener('click', function(){
+    //     const address = document.getElementById("address").value;
+    //     const password = document.getElementById("psw").value;
+    //     const accountInfo = {"address": address, "password": password};
+    //     console.log(accountInfo);
+    //     signUp(accountInfo);
+    // })
 });
 function openForm() {
     document.getElementById("loginForm").style.display = "inline-block";

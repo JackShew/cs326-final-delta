@@ -76,23 +76,23 @@
                 <div class="main food-containers">
                     <!-- Login -->
                     <div  class="loginForm" id="loginForm">
-                            <form>
+                            <form action = "/signUp" target="hiddenFrame" method="POST" role="form">
                                 <div class="blocker" id="closeForm"></div>
                                 <div class="form-content">
                                 <h1>Login</h1><br>
                                 <div class="form-group">
                                     <h2><label for="address">Email address</label></h2>
-                                    <input type="email" class="form-control" id="address" placeholder="Enter email">
+                                    <input type="email" class="form-control" name="address" placeholder="Enter email">
                                 </div>
                                 <div class="form-group">
                                     <h2><label for="psw">Password</label></h2>
-                                    <input type="password" class="form-control" id="psw" placeholder="Password">
+                                    <input type="password" class="form-control" name="psw" placeholder="Password">
                                 </div>
-                                <button class="btn btn-secondary" id="loginButton">Submit</button>
-                                <button class="btn btn-secondary" id="signUpButton">Sign up</button>
+                                <button class="btn btn-secondary" type="submit" id="loginButton">Submit</button>
+                                <button class="btn btn-secondary" type="submit" id="signUpButton">Sign up</button>
                                 </div>
                                 <br>
-                                </form>
+                            </form>
                     </div>
 
                     <!-- end of filter -->
