@@ -77,7 +77,7 @@ window.addEventListener("load", async function() {
     document.getElementById("profileButton").addEventListener('click', function(){
         openForm();
     })
-    document.getElementById("closeFormButton").addEventListener('click', function(){
+    document.getElementById("closeForm").addEventListener('click', function(){
         closeForm();
     })
     document.getElementById("signUpButton").addEventListener('click', function(){
