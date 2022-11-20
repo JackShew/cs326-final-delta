@@ -74,7 +74,12 @@ window.addEventListener("load", async function() {
         renderPost(dishData);
         //post(dishData);
     });
-
+    document.getElementById("profileButton").addEventListener('click', function(){
+        openForm();
+    })
+    document.getElementById("closeFormButton").addEventListener('click', function(){
+        closeForm();
+    })
     document.getElementById("signUpButton").addEventListener('click', function(){
         const address = document.getElementById("address").value;
         const password = document.getElementById("psw").value;
@@ -83,7 +88,13 @@ window.addEventListener("load", async function() {
         // signUp(accountInfo);
     })
 });
-
+function openForm() {
+    document.getElementById("loginForm").style.display = "inline-block";
+    }
+    
+    function closeForm() {
+    document.getElementById("loginForm").style.display = "none";
+    }
 
 async function getDishData() {
     // const data = JSON.stringify({});
