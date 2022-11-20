@@ -48,16 +48,14 @@
 //   });
 //   reader.readAsDataURL(this.files[0]);
 // });
+
+
 window.addEventListener("load", async function() {
     console.log("Joe mama");
     const dishes = await getDishData();
     console.log(dishes);
     dishes.forEach(element => {
         renderPost(element);
-    });
-
-    document.getElementById("increment").addEventListener('click', function(){
-        console.log("upvote");
     });
 
     document.getElementById("post").addEventListener('click', function(){
@@ -120,23 +118,71 @@ function renderPost(postData){
     const dishRank = document.createElement("div");
     dishRank.classList.add("dish-rank");
     dishRank.innerHTML = `
-        <button class="btn btn-default" class = increment id="increment">
+        <button class="btn btn-default" class = "increment" id="${postData["title"] + "increment"}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
             </svg>
         </button>
-        <div class = "dish-score" id="Worcester/Sushi/Score"><b>${postData["score"]}</b></div>
-        <button class="btn btn-default" id="decrement">
+        <div class = "dish-score" id="${postData["title"]+ "score"}"><b>${postData["score"]}</b></div>
+        <button class="btn btn-default" id="${postData["title"] + "decrement"}">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
             </svg>
         </button>`
+
+
     dish.appendChild(dishRank);
     const hallContainer = document.getElementById(postData["location"]+"Container");
     //hallContainer.innerHTML = JSON.stringify(postData);
     //const diningContainer = hallContainer.querySelector(".dining-container");
     hallContainer.appendChild(dish);
-    console.log("hi");
+    document.getElementById(postData["title"] + "increment").addEventListener('click', function(){
+        console.log("clicked");
+        postData.score +=1;
+        (async () => {
+            const rawResponse = await fetch('/updateScore', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(postData)
+            });
+            const content = await rawResponse.json();
+          
+            console.log(content);
+        })();
+        
+        const updatedScore = document.getElementById(postData["title"] + "score");
+        updatedScore.innerHTML = `<b>${postData["score"]}</b>`
+        document.getElementById(postData["title"] + "increment").disabled = true;
+        document.getElementById(postData["title"] + "decrement").disabled = false;
+
+    });
+
+    document.getElementById(postData["title"] + "decrement").addEventListener('click', function(){
+        console.log("clicked");
+        postData.score -=1;
+        (async () => {
+            const rawResponse = await fetch('/updateScore', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(postData)
+            });
+            const content = await rawResponse.json();
+          
+            console.log(content);
+        })();
+        
+        const updatedScore = document.getElementById(postData["title"] + "score");
+        updatedScore.innerHTML = `<b>${postData["score"]}</b>`
+        document.getElementById(postData["title"] + "increment").disabled = false;
+        document.getElementById(postData["title"] + "decrement").disabled = true;
+
+    });
 }
 
 

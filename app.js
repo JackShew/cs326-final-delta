@@ -33,6 +33,31 @@ app.use('/uploads', express.static('uploads'));
 // })
 // const upload = multer({ storage: storage })
 // , upload.single("imageUpload")
+app.post('/updateScore', async function(req, res) {
+  
+  console.log(req.body);
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Posts');
+
+    collection.updateOne({title: req.body.title}, {$set:{score:req.body.score}});
+    //const p = await collection.insertOne(data);
+    const myDoc = await collection.findOne();
+  }catch(err){
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+  res.status(200).json({ status: 'success'});
+});
+
+
+
 app.post('/postDish', async function(req, res) {
   console.log(req.query);
   // console.log(req.body);
@@ -70,10 +95,6 @@ app.post('/postDish', async function(req, res) {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
-  //await mongo.createDish(title, description, location, image);
-  // Output the book to the console for debugging
-  //worchester.push(dish);
-  //res.send(response);
   res.status(200).json({ status: 'success'});
 });
 
@@ -86,12 +107,8 @@ app.get('/dishes', async function(req,res) {
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Posts');
     //console.log(collection);
-    // Query for a movie that has the title 'Back to the Future'
     const cursor = collection.find();
 
-    //const data = collection.find({}).toArray();
-    //console.log(data);
-    //const movie = await cursor.next();
     let data = [];
     await cursor.forEach((entry) => {data.push(entry)});
     //console.log(data);
