@@ -130,6 +130,8 @@ app.get('/api/worchester/', (req, res) => {
 })
 
 app.post("/signUp", async function(req,res){
+  console.log(res.body);
+  console.log(uri);
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   const address = res.body.address;
   const password = res.body.password;
@@ -138,6 +140,7 @@ app.post("/signUp", async function(req,res){
     await client.connect();
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Users');
+    console.log(collection);
     const p = await collection.insertOne(data);
     const myDoc = await collection.findOne();
   }catch(err){
