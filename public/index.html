@@ -22,7 +22,7 @@
                     </div>
                     <div class="col">
                         
-                        <button class="btn btn-default" onclick="openForm()">
+                        <button class="btn btn-default" id="profileButton">
                             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
@@ -76,23 +76,24 @@
                 <div class="main food-containers">
                     <!-- Login -->
                     <div  class="loginForm" id="loginForm">
-                            <form>
-                                <div class="blocker" onclick="closeForm()"></div>
+                            <form action = "/signUp" target="hiddenFrame" method="POST" role="form">
+                                <div class="blocker" id="closeForm"></div>
                                 <div class="form-content">
-                                <h1>Login</h1><br>
-                                <div class="form-group">
-                                    <h2><label for="address">Email address</label></h2>
-                                    <input type="email" class="form-control" id="address" placeholder="Enter email">
+                                    <select name="login/signUp" id="signUpSelect">
+                                        <option value="login">Log In</option>
+                                        <option value="signUp">Sign Up</option>
+                                    </select>
+                                    <div class="form-group">
+                                        <h2><label for="address">Email address</label></h2>
+                                        <input type="email" class="form-control" name="address" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <h2><label for="psw">Password</label></h2>
+                                        <input type="password" class="form-control" name="password" placeholder="Password">
+                                    </div>
+                                    <button class="btn btn-secondary" type="submit" id="loginButton">Submit</button>
                                 </div>
-                                <div class="form-group">
-                                    <h2><label for="psw">Password</label></h2>
-                                    <input type="password" class="form-control" id="psw" placeholder="Password">
-                                </div>
-                                <button class="btn btn-secondary">Submit</button>
-                                <button class="btn btn-secondary">Sign up</button>
-                                </div>
-                                <br>
-                                </form>
+                            </form>
                     </div>
 
                     <!-- end of filter -->
@@ -120,12 +121,15 @@
                                 </div> 
                                 <!-- <div class="col-2">red</div> -->
                                 <div class = "dish-rank">
-                                    <button class="btn btn-default" id="Worcester/Sushi/Score/increment">
+                                    <!-- <button class="btn btn-default" id="Worcester/Sushi/Score/increment"> -->
+                                    <button class="btn btn-default" id="increment">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
                                         </svg>
                                     </button>
                                     <div class = "dish-score" id="Worcester/Sushi/Score"><b>123</b></div>
+                                    <!-- <div class = "dish-score" id="Worcester/Sushi/Score"><b>123</b></div> -->
+
                                     <button class="btn btn-default" id="Worcester/Sushi/Score/decrement">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
@@ -310,14 +314,5 @@
 
         <iframe name="hiddenFrame" class="hide"></iframe>
 
-        <script>
-            function openForm() {
-            document.getElementById("loginForm").style.display = "inline-block";
-            }
-            
-            function closeForm() {
-            document.getElementById("loginForm").style.display = "none";
-            }
-            </script>
     </body>
 </html>

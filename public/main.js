@@ -58,6 +58,10 @@ window.addEventListener("load", async function() {
         renderPost(element);
     });
 
+    document.getElementById("increment").addEventListener('click', function(){
+        console.log("upvote");
+    });
+
     document.getElementById("post").addEventListener('click', function(){
         const title = document.getElementById("postTitle").value;
         const des = document.getElementById("postDescription").value;
@@ -70,8 +74,33 @@ window.addEventListener("load", async function() {
         renderPost(dishData);
         //post(dishData);
     });
-});
+    document.getElementById("profileButton").addEventListener('click', function(){
+        openForm(document.getElementById("loginForm"));
+    })
+    document.getElementById("closeForm").addEventListener('click', function(){
+        closeForm(document.getElementById("loginForm"));
+        closeForm(document.getElementById("signUpForm"));
+    })
 
+    document.getElementById("loginSelect").addEventListener('change', function(){
+        closeForm(document.getElementById("loginForm"));
+        openForm(document.getElementById("signUpForm"));
+    })
+    // document.getElementById("signUpButton").addEventListener('click', function(){
+    //     const address = document.getElementById("address").value;
+    //     const password = document.getElementById("psw").value;
+    //     const accountInfo = {"address": address, "password": password};
+    //     console.log(accountInfo);
+    //     signUp(accountInfo);
+    // })
+});
+function openForm(element) {
+    element.style.display = "inline-block";
+    }
+    
+    function closeForm(element) {
+    element.style.display = "none";
+    }
 
 async function getDishData() {
     // const data = JSON.stringify({});
@@ -81,6 +110,22 @@ async function getDishData() {
     const response = await fetch("/dishes");
     console.log(response);
     return response.json();
+}
+
+async function signUp(accountInfo) {
+    const address = accountInfo["address"];
+    const password = accountInfo["password"];
+    const response = await fetch("/signUp",{
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({address: address, password: password})
+        });
+        const content = await response.json();
+        console.log(content);
+        return content;
 }
 
 function renderPost(postData){
