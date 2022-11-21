@@ -31,7 +31,8 @@ Users: this collection holds the information for all the users on our app. While
 **Division of Labor**
 
 Jack: Started Milestone 3 with programmatically rendering all dish elements in anticipation for mongoDB backend. After Jayden got mongo on app.js, I was able to get all the CRUD endpoints up and running on the backend while also rendering all frontend elements from the db.
-Jayden:
+
+Jayden: Set up Mongo database and connected it to the app, implemented initial post dish post requst, and set up login and submit with database compatibility.
 
 
 
