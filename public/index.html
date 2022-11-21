@@ -32,10 +32,34 @@
                     </div>
                 </div>
             </div>
-            
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-6"> 
+                    <!-- https://grub-gauge.herokuapp.com -->
+                    <form action = "/postDish" target="hiddenFrame" method="POST" role="form">
+                    <div class="form-group">
+                        <h3>Post a Dish:</h3>
+                        <input type="text" id="postTitle" name="title" class="form-control" placeholder="Enter the dish name">
+                        <input type="text" id="postDescription" name="description" class="form-control" placeholder="Enter the dish description">
+                    </div>
+                    <select class="locations" id="postLocation" name="location">
+                        <option value="worcester">Worcester</option>
+                        <option value="frank">Franklin</option>
+                        <option value="berk">Berk</option>
+                        <option value="hamp">Hamp</option>
+                    </select>
+                    <br>
+                    <label for="formFile" class="form-label">Choose image</label>
+                    <input class="form-control" type="file" id="imageUpload" name="image">  
+                    
+                    <button class="btn btn-dark" type="submit" id="post">Post</button>
+                    </form>
+                </div>
+                <div class="col"></div>
+            </div>
             <div class="filters">
                 <div class="btn-group" role="group" aria-label="filters">
-                    <div class="locations">
+                    <!-- <div class="locations"> 
                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="location-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Location
                         </a>
@@ -45,8 +69,8 @@
                         <a class="dropdown-item" href="#">Hampshire</a>
                         <a class="dropdown-item" href="#">Berkshire</a>
                         </div>
-                    </div>
-                    <div class="rating">
+                    </div>-->
+                    <!-- <div class="rating"> 
                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="rating-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Rating
                         </a>
@@ -64,7 +88,7 @@
                         <a class="dropdown-item" href="#">Vegetarian</a>
                         <a class="dropdown-item" href="#">Gluten Free</a>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -103,7 +127,7 @@
                         <h2> Worcester Dining Commons</h2>
                         <hr>
                         <div class = "worcesterContainer">
-                            <div class="dish-container">
+                            <!-- <div class="dish-container"> 
                                 <div class = "dish-image">
                                     <img src="images/sushi.png" alt="Sushi" width=200>
                                 </div>
@@ -119,16 +143,13 @@
                                         </div>
                                     </button>
                                 </div> 
-                                <!-- <div class="col-2">red</div> -->
                                 <div class = "dish-rank">
-                                    <!-- <button class="btn btn-default" id="Worcester/Sushi/Score/increment"> -->
                                     <button class="btn btn-default" id="increment">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
                                         </svg>
                                     </button>
                                     <div class = "dish-score" id="Worcester/Sushi/Score"><b>123</b></div>
-                                    <!-- <div class = "dish-score" id="Worcester/Sushi/Score"><b>123</b></div> -->
 
                                     <button class="btn btn-default" id="Worcester/Sushi/Score/decrement">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
@@ -155,7 +176,6 @@
                                     </div>
                                 </button>
                                 </div>  
-                                <!-- <div class="col-2">red</div> -->
                                 <div class = "dish-rank">
                                     <button class="btn btn-default" id="Worcester/StirFry/Score/increment">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
@@ -188,7 +208,6 @@
                                     </div>
                                     </button>
                                 </div>  
-                                <!-- <div class="col-2">red</div> -->
                                 <div class = "dish-rank">
                                     <button class="btn btn-default" id="Worcester/Bannana/Score/decrement">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
@@ -203,7 +222,7 @@
                                     </button>
                                 </div>
                                 
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                         <!--end of Worchester-->
@@ -215,7 +234,7 @@
                         </h2>
                         <hr>
                         
-                        <div class="dish-container">
+                        <!-- <div class="dish-container"> 
                             <div class = "dish-image">
                                 <img src="images/sushi.png" alt="Sushi" width=200>
                             </div>
@@ -232,7 +251,6 @@
                                 </div>
                                 </button>
                             </div>  
-                            <!-- <div class="col-2">red</div> -->
                             <div class = "dish-rank">
                                 
                                 <button class="btn btn-default" id="Franklin/Sushi/Score/increment">
@@ -266,7 +284,6 @@
                                 </div>
                                 </button>
                             </div>  
-                            <!-- <div class="col-2">red</div> -->
                             <div class = "dish-rank">
                                 <button class="btn btn-default" id="Franklin/Salad/Score/increment">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
@@ -281,36 +298,28 @@
                                 </button>
                             </div>
                             
-                        </div>
+                        </div>-->
+                    </div>
+                    <div class="hamp-container" id="hampContainer">
+                        <!-- <img src="worcester_commons_new.jpg" width=> -->
+                        <hr>
+                        <h2>
+                            Hampshire Dining Commons
+                        </h2>
+                        <hr>
+                    </div>
+                    <div class="berk-container" id="berkContainer">
+                        <!-- <img src="worcester_commons_new.jpg" width=> -->
+                        <hr>
+                        <h2>
+                            Berkshire Dining Commons
+                        </h2>
+                        <hr>
                     </div>
                 </div>
             </div>
         <div class="col"></div>
-        <div class="row">
-            <div class="col"></div>
-            <div class="col-6"> 
-                <!-- https://grub-gauge.herokuapp.com -->
-                <form action = "/postDish" target="hiddenFrame" method="POST" role="form">
-                <div class="form-group">
-                    <h3>Post a Dish:</h3>
-                    <input type="text" id="postTitle" name="title" class="form-control" placeholder="Enter the dish name">
-                    <input type="text" id="postDescription" name="description" class="form-control" placeholder="Enter the dish description">
-                </div>
-                <select class="locations" id="postLocation" name="location">
-                    <option value="worcester">Worcester</option>
-                    <option value="frank">Franklin</option>
-                    <option value="berk">Berkshire</option>
-                    <option value="hamp">Hampshire</option>
-                </select>
-                <br>
-                <label for="formFile" class="form-label">Choose image</label>
-                <input class="form-control" type="file" id="imageUpload" name="image">  
-                
-                <button class="btn btn-dark" type="submit" id="post">Post</button>
-                </form>
-            </div>
-            <div class="col"></div>
-        </div>
+        
 
         <iframe name="hiddenFrame" class="hide"></iframe>
 

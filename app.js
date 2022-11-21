@@ -90,6 +90,29 @@ app.post('/updateDescription', async function(req, res) {
   res.status(200).json({ status: 'success'});
 });
 
+app.post('/deleteDish', async function(req, res) {
+  
+  console.log(req.body);
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Posts');
+
+    collection.deleteOne({title: req.body.title});
+    //const p = await collection.insertOne(data);
+    const myDoc = await collection.findOne();
+  }catch(err){
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+  res.status(200).json({ status: 'success'});
+});
+
 
 
 app.post('/postDish', async function(req, res) {
@@ -103,19 +126,16 @@ app.post('/postDish', async function(req, res) {
   const location = req.body.location;
   const image = req.body.image;
   const score = req.body.score;
-  const comment = req.body.comment;
+  const comments = req.body.comments;
   const data = {
     "title":title,
     "description":description,
     "location":location,
     "image":image,
     "score":score,
-    "comment-number":comment
+    "comments":comments
   }
 
-  console.log(req.body);
-  console.log(data);
-  // Data is empty 
   try {
     await client.connect();
     const database = client.db('GrubGaugeData');

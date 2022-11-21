@@ -1,54 +1,3 @@
-// document.getElementById('red').classList.add("hidden");// console.log(document.getElementById('red').innerText);
-// const dishes = {};
-// dishes["Worcester/Sushi/Score"] = {incremented: false, decremented: false};
-// dishes["Worcester/StirFry/Score"] = {incremented: false, decremented: false};
-// dishes["Worcester/Bannana/Score"] = {incremented: false, decremented: false};
-// dishes["Franklin/Sushi/Score"] = {incremented: false, decremented: false};
-// dishes["Franklin/Salad/Score"] = {incremented: false, decremented: false};
-// document.getElementById("Franklin/Sushi/Score/increment").addEventListener('click', function(){
-//     increment("Franklin/Sushi/Score")
-// });
-// document.getElementById("Franklin/Sushi/Score/decrement").addEventListener('click', function(){
-//     decrement("Franklin/Sushi/Score")
-// });
-// document.getElementById("Franklin/Salad/Score/increment").addEventListener('click', function(){
-//     increment("Franklin/Salad/Score")
-// });
-// document.getElementById("Franklin/Salad/Score/decrement").addEventListener('click', function(){
-//     decrement("Franklin/Salad/Score")
-// });
-// document.getElementById("Worcester/Sushi/Score/increment").addEventListener('click', function(){
-//     increment("Worcester/Sushi/Score")
-// });
-// document.getElementById("Worcester/Sushi/Score/decrement").addEventListener('click', function(){
-//     decrement("Worcester/Sushi/Score")
-// });
-// document.getElementById("Worcester/StirFry/Score/increment").addEventListener('click', function(){
-//     increment("Worcester/StirFry/Score")
-// });
-// document.getElementById("Worcester/StirFry/Score/decrement").addEventListener('click', function(){
-//     decrement("Worcester/StirFry/Score")
-// });document.getElementById("Worcester/Bannana/Score/increment").addEventListener('click', function(){
-//     increment("Worcester/Bannana/Score")
-// });
-// document.getElementById("Worcester/Bannana/Score/decrement").addEventListener('click', function(){
-//     decrement("Worcester/Bannana/Score")
-// });
-// Uneccessary html already accomplishes this
-// document.getElementById("post").addEventListener('click', function(){
-//     past("s");
-// })
-// const image_input = document.querySelector("#imageUpload");
-
-// image_input.addEventListener("change", function() {
-//   const reader = new FileReader();
-//   reader.addEventListener("load", () => {
-//     const uploaded_image = reader.result;
-//     document.querySelector("#display-image").style.backgroundImage = `url(${uploaded_image})`;
-//   });
-//   reader.readAsDataURL(this.files[0]);
-// });
-
 
 window.addEventListener("load", async function() {
     console.log("Joe mama");
@@ -58,9 +7,6 @@ window.addEventListener("load", async function() {
         renderPost(element);
     });
 
-    document.getElementById("increment").addEventListener('click', function(){
-        console.log("upvote");
-    });
 
     document.getElementById("post").addEventListener('click', function(){
         const title = document.getElementById("postTitle").value;
@@ -68,9 +14,8 @@ window.addEventListener("load", async function() {
         const loc = document.getElementById("postLocation").value;
         const img = document.getElementById("imageUpload").value; 
         console.log(img);
-        const dishData = {"title": title, "description": des, "location": loc, "image": img, "score" : 0, "comment-number": 0};
-        // past('s');
-        // postDishData(dishData);
+        const dishData = {"title": title, "description": des, "location": loc, "image": img, "score" : 1, "comments": 1};
+ 
         renderPost(dishData);
         //post(dishData);
     });
@@ -155,7 +100,7 @@ function renderPost(postData){
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" id="chat-icon1" viewBox="0 0 16 16">
                 <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
             </svg>
-            <div class = "comment-number">${postData["comment-number"] + " Comments"}</div>
+            <div class = "comments">${postData["comments"]} Comments</div>
         </div>
     </button>`;
     const editbutton = document.createElement("button");
@@ -188,7 +133,7 @@ function renderPost(postData){
         postData["description"] = decContent;
         (async () => {
             const rawResponse = await fetch('/updateDescription', {
-              method: 'PUT',
+              method: 'POST',
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -203,7 +148,7 @@ function renderPost(postData){
     } )
 
     deleteButton.addEventListener("click", function() {
-        dish.innerHTML = ""
+        dish.innerHTML = "";
         (async () => {
             const rawResponse = await fetch('/deleteDish', {
               method: 'POST',
