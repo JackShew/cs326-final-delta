@@ -126,14 +126,14 @@ app.post('/postDish', async function(req, res) {
   const description = req.body.description;
   const location = req.body.location;
   const image = req.body.image;
-  const score = req.body.score;
-  const comments = req.body.comments;
+  const score = 0;
+  const comments = 0;
   const data = {
     "title":title,
     "description":description,
     "location":location,
     "image":image,
-    "score":score,
+    "score":0,
     "comments":comments
   }
 
