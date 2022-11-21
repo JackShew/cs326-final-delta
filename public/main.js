@@ -64,7 +64,7 @@ window.addEventListener("load", async function() {
         const loc = document.getElementById("postLocation").value;
         const img = document.getElementById("imageUpload").value; 
         console.log(img);
-        const dishData = {"title": title, "description": des, "location": loc, "image": img, "score" : 0, "comments": 0};
+        const dishData = {"title": title, "description": des, "location": loc, "image": img, "score" : 0, "comment-number": 0};
         // past('s');
         // postDishData(dishData);
         renderPost(dishData);
@@ -86,11 +86,14 @@ async function getDishData() {
 function renderPost(postData){
     const dish = document.createElement("div");
     dish.classList.add("dish-container");
-    //const dishImage = document.createElement("img");
+    const dishImage = document.createElement("img");
     //console.log(postData["image"]);
-    //dishImage.src = "images/" + postData["image"];
+    dishImage.src = "images/placeholder.png";
     //console.log(dishImage.src);
-    //dish.appendChild(dishImage);
+    dishImage.style.width = "200px";
+    dishImage.style.height = "160px";
+
+    dish.appendChild(dishImage);
     const dishInfo = document.createElement("div");
     dishInfo.classList.add("dish-info");
     const dishTitle = document.createElement("h3");
@@ -107,12 +110,76 @@ function renderPost(postData){
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" id="chat-icon1" viewBox="0 0 16 16">
                 <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
             </svg>
-            <div class = "comment-number">${postData["comments"]} Comments</div>
+            <div class = "comment-number">${postData["comment-number"] + " Comments"}</div>
         </div>
     </button>`;
+    const editbutton = document.createElement("button");
+    editbutton.setAttribute.id = postData["title"] + "edit";
+    editbutton.innerHTML = "edit description";
+   
+    
+    const endbutton = document.createElement("button");
+    endbutton.setAttribute.id = postData["title"] + "end";
+    endbutton.innerHTML = "finish editing";
+    endbutton.style.visibility = "hidden";
+
+    const deleteButton = document.createElement("button");
+    deleteButton.setAttribute.id = postData["title"] + "delete";
+    deleteButton.innerHTML = "delete dish !!Carefull!!";
+
+
+    editbutton.addEventListener("click", function() {
+        dishTitle.contentEditable = true;
+        dishDes.contentEditable = true;
+        dishDes.style.backgroundColor = "#dddbdb";
+        endbutton.style.visibility = "visible"
+      } );
+
+    endbutton.addEventListener("click", function() {
+        dishDes.contentEditable = false;
+        endbutton.style.visibility = "hidden"
+        dishDes.style.backgroundColor = "#ffe44d";
+        const decContent = dishDes.innerHTML;
+        postData["description"] = decContent;
+        (async () => {
+            const rawResponse = await fetch('/updateDescription', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(postData)
+            });
+            const content = await rawResponse.json();
+          
+            console.log(content);
+        })();
+
+    } )
+
+    deleteButton.addEventListener("click", function() {
+        dish.innerHTML = ""
+        (async () => {
+            const rawResponse = await fetch('/deleteDish', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(postData)
+            });
+            const content = await rawResponse.json();
+          
+            console.log(content);
+        })();
+
+    } )
     dishInfo.appendChild(dishTitle);
     dishInfo.appendChild(dishDes);
     dishInfo.appendChild(dishComment);
+    dishInfo.appendChild(editbutton);
+    dishInfo.appendChild(endbutton);
+
     dish.appendChild(dishInfo);
 
     const dishRank = document.createElement("div");

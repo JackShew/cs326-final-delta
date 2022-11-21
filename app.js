@@ -57,6 +57,30 @@ app.post('/updateScore', async function(req, res) {
 });
 
 
+app.post('/updateDescription', async function(req, res) {
+  
+  console.log(req.body);
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Posts');
+
+    collection.updateOne({title: req.body.title}, {$set:{description:req.body.description}});
+    //const p = await collection.insertOne(data);
+    const myDoc = await collection.findOne();
+  }catch(err){
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+  res.status(200).json({ status: 'success'});
+});
+
+
 
 app.post('/postDish', async function(req, res) {
   console.log(req.query);
@@ -69,14 +93,14 @@ app.post('/postDish', async function(req, res) {
   const location = req.body.location;
   const image = req.body.image;
   const score = req.body.score;
-  const comments = req.body.comments;
+  const comment = req.body.comment;
   const data = {
     "title":title,
     "description":description,
     "location":location,
     "image":image,
     "score":score,
-    "comments":comments
+    "comment-number":comment
   }
 
   console.log(req.body);
