@@ -79,19 +79,20 @@
                             <form action = "/signUp" target="hiddenFrame" method="POST" role="form">
                                 <div class="blocker" id="closeForm"></div>
                                 <div class="form-content">
-                                <h1>Login</h1><br>
-                                <div class="form-group">
-                                    <h2><label for="address">Email address</label></h2>
-                                    <input type="email" class="form-control" name="address" placeholder="Enter email">
+                                    <select name="login/signUp" id="signUpSelect">
+                                        <option value="login">Log In</option>
+                                        <option value="signUp">Sign Up</option>
+                                    </select>
+                                    <div class="form-group">
+                                        <h2><label for="address">Email address</label></h2>
+                                        <input type="email" class="form-control" name="address" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <h2><label for="psw">Password</label></h2>
+                                        <input type="password" class="form-control" name="password" placeholder="Password">
+                                    </div>
+                                    <button class="btn btn-secondary" type="submit" id="loginButton">Submit</button>
                                 </div>
-                                <div class="form-group">
-                                    <h2><label for="psw">Password</label></h2>
-                                    <input type="password" class="form-control" name="password" placeholder="Password">
-                                </div>
-                                <button class="btn btn-secondary" type="submit" id="loginButton">Submit</button>
-                                <button class="btn btn-secondary" type="submit" id="signUpButton">Sign up</button>
-                                </div>
-                                <br>
                             </form>
                     </div>
 

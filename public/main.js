@@ -75,10 +75,16 @@ window.addEventListener("load", async function() {
         //post(dishData);
     });
     document.getElementById("profileButton").addEventListener('click', function(){
-        openForm();
+        openForm(document.getElementById("loginForm"));
     })
     document.getElementById("closeForm").addEventListener('click', function(){
-        closeForm();
+        closeForm(document.getElementById("loginForm"));
+        closeForm(document.getElementById("signUpForm"));
+    })
+
+    document.getElementById("loginSelect").addEventListener('change', function(){
+        closeForm(document.getElementById("loginForm"));
+        openForm(document.getElementById("signUpForm"));
     })
     // document.getElementById("signUpButton").addEventListener('click', function(){
     //     const address = document.getElementById("address").value;
@@ -88,12 +94,12 @@ window.addEventListener("load", async function() {
     //     signUp(accountInfo);
     // })
 });
-function openForm() {
-    document.getElementById("loginForm").style.display = "inline-block";
+function openForm(element) {
+    element.style.display = "inline-block";
     }
     
-    function closeForm() {
-    document.getElementById("loginForm").style.display = "none";
+    function closeForm(element) {
+    element.style.display = "none";
     }
 
 async function getDishData() {
