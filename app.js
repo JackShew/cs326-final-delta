@@ -11,8 +11,18 @@ app.use(cors());
 require('dotenv').config();
 console.log(process.env)
 const {MongoClient} = require("mongodb");
-const uri = process.env.MONGODB_URI; 
-console.log(uri);// Causes error
+//const uri = process.env.MONGODB_URI; 
+//console.log(uri);// Causes error
+
+let secrets;
+let uri;
+if (!process.env.MONGODB_URI) {
+  secrets = require('secrets.json');
+  uri = secrets.MONGODB_URI;
+} else {
+	uri = process.env.MONGODB_URI;
+}
+
 
 // require('dotenv').config();
 // var mongoose = require('mongoose');

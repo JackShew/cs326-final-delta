@@ -188,7 +188,7 @@ function renderPost(postData){
         postData["description"] = decContent;
         (async () => {
             const rawResponse = await fetch('/updateDescription', {
-              method: 'POST',
+              method: 'PUT',
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -224,6 +224,8 @@ function renderPost(postData){
     dishInfo.appendChild(dishComment);
     dishInfo.appendChild(editbutton);
     dishInfo.appendChild(endbutton);
+    dishInfo.appendChild(deleteButton);
+
 
     dish.appendChild(dishInfo);
 
