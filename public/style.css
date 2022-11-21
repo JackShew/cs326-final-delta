@@ -14,6 +14,14 @@
     width:100%;
 }
 
+.form-control{
+    padding-bottom:2px;
+    padding-top:2px;
+
+}
+.form-group {
+    padding-bottom:2px;
+}
 .filters{
     background-color: white;
     display: flex;
