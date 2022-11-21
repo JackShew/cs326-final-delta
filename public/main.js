@@ -14,7 +14,7 @@ window.addEventListener("load", async function() {
         const loc = document.getElementById("postLocation").value;
         const img = document.getElementById("imageUpload").value; 
         console.log(img);
-        const dishData = {"title": title, "description": des, "location": loc, "image": img, "score" : 1, "comments": 1};
+        const dishData = {"title": title, "description": des, "location": loc, "image": img, "score" : 1, "comments": 0};
  
         renderPost(dishData);
         //post(dishData);
