@@ -74,33 +74,68 @@ window.addEventListener("load", async function() {
         renderPost(dishData);
         //post(dishData);
     });
+
     document.getElementById("profileButton").addEventListener('click', function(){
         openForm(document.getElementById("loginForm"));
-    })
-    document.getElementById("closeForm").addEventListener('click', function(){
-        closeForm(document.getElementById("loginForm"));
-        closeForm(document.getElementById("signUpForm"));
-    })
+    });
 
     document.getElementById("loginSelect").addEventListener('change', function(){
+            console.log("signUp");
+            this.value="login";
+            closeForm(document.getElementById("loginForm"));
+            openForm(document.getElementById("signUpForm"));
+    });
+
+    document.getElementById("signUpSelect").addEventListener('change', function(){
+            console.log("login");
+            this.value="signUp";
+            closeForm(document.getElementById("signUpForm"));
+            openForm(document.getElementById("loginForm"));
+    });
+
+    document.getElementById("closeFormL").addEventListener('click', function(){
         closeForm(document.getElementById("loginForm"));
-        openForm(document.getElementById("signUpForm"));
-    })
-    // document.getElementById("signUpButton").addEventListener('click', function(){
-    //     const address = document.getElementById("address").value;
-    //     const password = document.getElementById("psw").value;
-    //     const accountInfo = {"address": address, "password": password};
-    //     console.log(accountInfo);
-    //     signUp(accountInfo);
-    // })
+    });
+    document.getElementById("closeFormS").addEventListener('click', function(){
+
+        closeForm(document.getElementById("signUpForm"));
+    });
+
+    document.getElementById("loginButton").addEventListener('click', async function(){
+        const address = document.getElementById("loginAddress").value;
+        const password = document.getElementById("loginPass").value;
+        const account = {"address": address, "password": password};
+        const response = await fetch("/login");
+        if(!response.ok){
+            console.log(response.error);
+            return;
+        }else{
+            const users = await response.json();
+            let userFound = false;
+            await users.forEach((user)=>{
+                console.log(user.address);
+                console.log(user.password);
+                if(user.address === address){
+                  if(user.password === password){
+                    // login
+                    console.log(user);
+                    userFound = true;
+                    window.localStorage.setItem("user",JSON.stringify(account));
+                  }
+                }
+              });
+              console.log(userFound);
+        }
+    });
 });
+
 function openForm(element) {
     element.style.display = "inline-block";
-    }
+}
     
-    function closeForm(element) {
+function closeForm(element) {
     element.style.display = "none";
-    }
+}
 
 async function getDishData() {
     // const data = JSON.stringify({});
@@ -115,6 +150,7 @@ async function getDishData() {
 async function signUp(accountInfo) {
     const address = accountInfo["address"];
     const password = accountInfo["password"];
+    const account = {"address": address, "password": password};
     const response = await fetch("/signUp",{
         method: 'POST',
         headers: {
@@ -125,6 +161,7 @@ async function signUp(accountInfo) {
         });
         const content = await response.json();
         console.log(content);
+        window.localStorage.setItem("user",JSON.stringify(account));
         return content;
 }
 

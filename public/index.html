@@ -76,22 +76,42 @@
                 <div class="main food-containers">
                     <!-- Login -->
                     <div  class="loginForm" id="loginForm">
-                            <form action = "/signUp" target="hiddenFrame" method="POST" role="form">
-                                <div class="blocker" id="closeForm"></div>
+                        <div class="blocker" id="closeFormL"></div>    
+                            <form target="hiddenFrame">
                                 <div class="form-content">
-                                    <select name="login/signUp" id="signUpSelect">
+                                    <select name="login/signUp" id="loginSelect">
                                         <option value="login">Log In</option>
                                         <option value="signUp">Sign Up</option>
-                                    </select>
+                                    </select>    
                                     <div class="form-group">
-                                        <h2><label for="address">Email address</label></h2>
+                                        <h2><label for="address">Email Address</label></h2>
+                                        <input type="email" class="form-control" id="loginAddress" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <h2><label for="psw">Password</label></h2>
+                                        <input type="password" class="form-control" id="loginPass" placeholder="Password">
+                                    </div>
+                                    <button class="btn btn-secondary" id="loginButton">Submit</button>
+                                </div>
+                            </form>
+                    </div>
+                    <div  class="loginForm" id="signUpForm">
+                        <div class="blocker" id="closeFormS"></div>    
+                            <form action = "/signUp" target="hiddenFrame" method="POST" role="form">
+                                <div class="form-content">
+                                    <select name="login/signUp" id="signUpSelect">
+                                        <option value="signUp">Sign Up</option>
+                                        <option value="login">Log In</option>
+                                    </select>    
+                                    <div class="form-group">
+                                        <h2><label for="address">Email Address</label></h2>
                                         <input type="email" class="form-control" name="address" placeholder="Enter email">
                                     </div>
                                     <div class="form-group">
                                         <h2><label for="psw">Password</label></h2>
                                         <input type="password" class="form-control" name="password" placeholder="Password">
                                     </div>
-                                    <button class="btn btn-secondary" type="submit" id="loginButton">Submit</button>
+                                    <button class="btn btn-secondary" type="submit" id="signUpButton">Submit</button>
                                 </div>
                             </form>
                     </div>

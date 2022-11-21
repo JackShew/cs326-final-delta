@@ -22,7 +22,8 @@ if (!process.env.MONGODB_URI) {
 } else {
 	uri = process.env.MONGODB_URI;
 }
-
+// const uri = process.env.MONGODB_URI;
+// console.log(uri);
 
 // require('dotenv').config();
 // var mongoose = require('mongoose');
@@ -142,10 +143,10 @@ app.get('/dishes', async function(req,res) {
     const collection = database.collection('Posts');
     //console.log(collection);
     const cursor = collection.find();
-
+// console.log(cursor);
     let data = [];
     await cursor.forEach((entry) => {data.push(entry)});
-    //console.log(data);
+    // console.log(data);
     res.send(data);
   } catch(err) {
     console.log(err);
@@ -161,6 +162,25 @@ app.get('/hi', (req, res) => {
 
 app.get('/api/worchester/', (req, res) => {
   res.send(worchester);
+})
+
+app.get("/login", async function(req,res){
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  try{
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Users');
+    // console.log(collection);
+    const users = collection.find();
+    const data = [];
+    await users.forEach((entry)=>{data.push(entry)});
+    res.send(data);
+    // console.log(users);
+  }catch(err){
+    console.log(err);
+  }finally{
+    client.close();
+  }
 })
 
 app.post("/signUp", async function(req,res){
