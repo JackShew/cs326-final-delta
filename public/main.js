@@ -42,7 +42,6 @@ window.addEventListener("load", async function() {
         closeForm(document.getElementById("loginForm"));
     });
     document.getElementById("closeFormS").addEventListener('click', function(){
-
         closeForm(document.getElementById("signUpForm"));
     });
 
@@ -79,6 +78,24 @@ window.addEventListener("load", async function() {
             }
         }
     });
+
+    document.getElementById("logOutL").addEventListener('click', function(){
+        if(localStorage.getItem("user")){
+            localStorage.removeItem("user");
+            console.log("Logged out");
+        }else{
+            console.log("No account to log out of");
+        }
+    })
+    
+    document.getElementById("logOutS").addEventListener('click', function(){
+        if(localStorage.getItem("user")){
+            localStorage.removeItem("user");
+            console.log("Logged out");
+        }else{
+            console.log("No account to log out of");
+        }
+    })
 });
 
 function openForm(element) {
