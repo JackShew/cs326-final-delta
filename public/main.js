@@ -70,11 +70,11 @@ window.addEventListener("load", async function() {
             //     }
             //   });
             if(user.address){
+                console.log("User:");
+                console.log(user);
                 window.localStorage.setItem("user",JSON.stringify(account));
                 console.log("signed in");
             }else{
-                console.log("User:");
-                console.log(user);
                 console.log("address or password does not match");
             }
         }
