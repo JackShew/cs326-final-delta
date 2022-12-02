@@ -186,15 +186,26 @@ app.get('/api/worchester/', (req, res) => {
 
 app.get("/login", async function(req,res){
   const client = new MongoClient(uri, { useUnifiedTopology: true });
+  const address = req.body.address;
+  const password = req.body.password;
   try{
     await client.connect();
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Users');
     // console.log(collection);
-    const users = collection.find();
-    const data = [];
-    await users.forEach((entry)=>{data.push(entry)});
-    res.send(data);
+    const user = await collection.findOne(    {
+      "address": address,
+      "password": password
+    });
+    if(user){
+      console.log("Address or password does not match");
+      res.send("Address or password does not match");
+    }else{
+      console.log("signing in");
+      res.send(user);
+    }
+    // const data = [];
+    // await users.forEach((entry)=>{data.push(entry)});
     // console.log(users);
   }catch(err){
     console.log(err);
