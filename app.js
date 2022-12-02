@@ -184,10 +184,13 @@ app.get('/api/worchester/', (req, res) => {
   res.send(worchester);
 })
 
-app.get("/login", async function(req,res){
+app.get("/login/:address/:password", async function(req,res){
+  console.log("attempting login");
   const client = new MongoClient(uri, { useUnifiedTopology: true });
-  const address = req.body.address;
-  const password = req.body.password;
+  const address = req.params.address;
+  const password = req.params.password;
+  console.log(address);
+  console.log(password);
   try{
     await client.connect();
     const database = client.db('GrubGaugeData');
@@ -197,12 +200,13 @@ app.get("/login", async function(req,res){
       "address": address,
       "password": password
     });
+    console.log(user);
     if(user){
-      console.log("Address or password does not match");
-      res.send("Address or password does not match");
-    }else{
       console.log("signing in");
       res.send(user);
+    }else{
+      console.log("Address or password does not match");
+      res.send({"no Sign in":"Address or password does not match"});
     }
     // const data = [];
     // await users.forEach((entry)=>{data.push(entry)});

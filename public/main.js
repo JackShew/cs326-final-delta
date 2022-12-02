@@ -50,26 +50,33 @@ window.addEventListener("load", async function() {
         const address = document.getElementById("loginAddress").value;
         const password = document.getElementById("loginPass").value;
         const account = {"address": address, "password": password};
-        const response = await fetch("/login");
+        const response = await fetch("/login/"+address + "/" + password);
         if(!response.ok){
             console.log(response.error);
             return;
         }else{
-            const users = await response.json();
-            let userFound = false;
-            await users.forEach((user)=>{
-                console.log(user.address);
-                console.log(user.password);
-                if(user.address === address){
-                  if(user.password === password){
-                    // login
-                    console.log(user);
-                    userFound = true;
-                    window.localStorage.setItem("user",JSON.stringify(account));
-                  }
-                }
-              });
-              console.log(userFound);
+            const user = await response.json();
+            // let userFound = false;
+            // await users.forEach((user)=>{
+            //     console.log(user.address);
+            //     console.log(user.password);
+            //     if(user.address === address){
+            //       if(user.password === password){
+            //         // login
+            //         console.log(user);
+            //         userFound = true;
+            //         window.localStorage.setItem("user",JSON.stringify(account));
+            //       }
+            //     }
+            //   });
+            if(user.address){
+                window.localStorage.setItem("user",JSON.stringify(account));
+                console.log("signed in");
+            }else{
+                console.log("User:");
+                console.log(user);
+                console.log("address or password does not match");
+            }
         }
     });
 });
