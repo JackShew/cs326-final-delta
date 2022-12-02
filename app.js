@@ -219,8 +219,8 @@ app.get("/login/:address/:password", async function(req,res){
 })
 
 app.post("/signUp", async function(req,res){
-  console.log(res.body);
-  console.log(uri);
+  // console.log(res.body);
+  // console.log(uri);
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   const address = req.body.address;
   const password = req.body.password;
@@ -229,9 +229,17 @@ app.post("/signUp", async function(req,res){
     await client.connect();
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Users');
-    console.log(collection);
-    const p = await collection.insertOne(data);
-    const myDoc = await collection.findOne();
+    // console.log(collection);
+    const userInColl = await collection.findOne({
+      "address": address
+    });
+    if(userInColl){  
+      console.log("address already has account")
+    }else{
+      await collection.insertOne(data);
+      console.log(data);
+    }
+
   }catch(err){
     console.log(err);
   }
