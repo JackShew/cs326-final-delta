@@ -22,13 +22,7 @@ if (!process.env.MONGODB_URI) {
 } else {
 	uri = process.env.MONGODB_URI;
 }
-// const uri = process.env.MONGODB_URI;
-// console.log(uri);
 
-// require('dotenv').config();
-// var mongoose = require('mongoose');
-// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/GrubGauge');
-// Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -36,14 +30,6 @@ app.use(express.static(__dirname + '/public'))
 //app.use(express.static(__dirname + '/images'))
 app.use('/uploads', express.static('uploads'));
 
-// var storage = multer.diskStorage({
-//   destination: '/uploads',
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname)
-//   }
-// })
-// const upload = multer({ storage: storage })
-// , upload.single("imageUpload")
 app.post('/updateScore', async function(req, res) {
   
   console.log(req.body);
