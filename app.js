@@ -13,6 +13,60 @@ console.log(process.env)
 const {MongoClient} = require("mongodb");
 //const uri = process.env.MONGODB_URI; 
 //console.log(uri);// Causes error
+// new stuff from minicrypt
+const expressSession = require('express-session');
+const passport=require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const minicrypt = require('./miniCrypt');
+const mc = new minicrypt();
+
+
+const session = {
+  secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
+  resave : false,
+  saveUninitialized: false
+};
+
+// App configuration
+const strategy = new LocalStrategy({
+  usernameField : 'username',
+  passwordField : 'password'
+},
+  async (username, password, done) => {
+    if (!findUser(username)) {
+        // no such user
+        await new Promise((r) => setTimeout(r, 2000)); // two second delay
+        return done(null, false, { 'message' : 'Wrong username' });
+    }
+    if (!validatePassword(username, password)) {
+        // invalid password
+        // should disable logins after N messages
+        // delay return to rate-limit brute-force attacks
+        await new Promise((r) => setTimeout(r, 2000)); // two second delay
+        return done(null, false, { 'message' : 'Wrong password' });
+    }
+  // success!
+  // should create a user object here, associated with a unique identifier
+    return done(null, username);
+  });
+
+app.use(expressSession(session));
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Convert user object to a unique identifier.
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+// Convert a unique identifier to a user object.
+passport.deserializeUser((uid, done) => {
+  done(null, uid);
+});
+
+app.use(express.json()); // allow JSON inputs
+app.use(express.urlencoded({'extended' : true})); // allow URLencoded data
+// new stuff
 
 let secrets;
 let uri;
@@ -28,6 +82,135 @@ if (!process.env.MONGODB_URI) {
 app.use(express.static(__dirname + '/public'))
 //app.use(express.static(__dirname + '/images'))
 app.use('/uploads', express.static('uploads'));
+app.get('/failure',(req,res)=>{
+    res.send('Hello World, from express');
+  }
+)
+// authentication round 9
+app.post('/alogin',
+	 passport.authenticate('local' , {     // use username/password authentication
+	     'successRedirect' : '/private',   // when we login, go to /private 
+	     'failureRedirect' : '/dishes'      // otherwise, back to login
+	 }));
+
+// Handle the URL /login (just output the login.html file).
+// app.get('/alogin/:address/:password',
+// app.get('/alogin',
+// 	(req, res) => res.sendFile('public/index.html',
+// 				   { 'root' : __dirname }));
+
+// Handle logging out (takes us back to the login page).
+app.get('/alogout', (req, res) => {
+    req.logout(); // Logs us out!
+    res.redirect('/dishes'); // back to login
+});
+
+
+// Like login, but add a new user and password IFF one doesn't exist already.
+// If we successfully add a new user, go to /login, else, back to /register.
+// Use req.body to access data (as in, req.body['username']).
+// Use res.redirect to change URLs.
+app.post('/register',
+	 (req, res) => {
+  const username = req.body['username'];
+  const password = req.body['password'];
+  if (addUser(username, password)) {
+    res.redirect('/login');
+	} else {
+	  res.redirect('/register');
+	}
+});
+
+// Register URL
+app.get('/register',
+	(req, res) => res.sendFile('public/index.html',
+				   { 'root' : __dirname }));
+
+// Private data
+app.get('/private',
+	checkLoggedIn, // If we are logged in (notice the comma!)...
+	(req, res) => {             // Go to the user's page.
+	    res.redirect('/private/' + req.user);
+	});
+
+// A dummy page for the user.
+app.get('/private/:userID/',
+	checkLoggedIn, // We also protect this route: authenticated...
+	(req, res) => {
+	    // Verify this is the right user.
+	    if (req.params.userID === req.user) {
+		res.writeHead(200, {"Content-Type" : "text/html"});
+		res.write('<H1>HELLO ' + req.params.userID + "</H1>");
+		res.write('<br/><a href="/logout">click here to logout</a>');
+		res.end();
+	    } else {
+		res.redirect('/private/');
+	    }
+	});
+  
+// authentication stuff
+// app.post('/authLogin',
+//     passport.authenticate('local',{
+//       'successRedirect':'/private',
+//       'failureRedirect':'/authLogin'
+//     }));
+
+// // Handle the URL /login (just output the login.html file).
+// app.get('/authLogin',
+// 	(req, res) => {
+//     console.log("WEE");
+//     res.sendFile('/public/index.html',
+// 				   { 'root' : __dirname });
+//   });
+
+// // Handle logging out (takes us back to the login page).
+// app.get('/authLogout', (req, res) => {
+//     req.logout(); // Logs us out!
+//     res.redirect('/authLogin'); // back to login
+// });
+
+// // Like login, but add a new user and password IFF one doesn't exist already.
+// // If we successfully add a new user, go to /login, else, back to /register.
+// // Use req.body to access data (as in, req.body['username']).
+// // Use res.redirect to change URLs.
+// app.post('/register',
+// 	 (req, res) => {
+// 	     const username = req.body['username'];
+// 	     const password = req.body['password'];
+// 	     if (addUser(username, password)) {
+// 		      res.redirect('/authLogin');
+// 	     } else {
+// 		      res.redirect('/register');
+// 	     }
+// 	 });
+
+// // Register URL
+// app.get('/register',
+// 	(req, res) => res.sendFile('/public/index.html',
+// 				   { 'root' : __dirname }));
+
+// // Private data
+// app.get('/private',
+// 	checkLoggedIn, // If we are logged in (notice the comma!)...
+// 	(req, res) => {             // Go to the user's page.
+//       console.log("weee");
+// 	    res.redirect('/private/' + req.user);
+// 	});
+
+// // A dummy page for the user.
+// app.get('/private/:userID/',
+// 	checkLoggedIn, // We also protect this route: authenticated...
+// 	(req, res) => {
+// 	    // Verify this is the right user.
+// 	    if (req.params.userID === req.user) {
+// 		res.writeHead(200, {"Content-Type" : "text/html"});
+// 		res.write('<H1>HELLO ' + req.params.userID + "</H1>");
+// 		res.write('<br/><a href="/logout">click here to logout</a>');
+// 		res.end();
+// 	    } else {
+// 		res.redirect('/private/');
+// 	    }
+// 	});
 
 app.post('/updateScore', async function(req, res) {
   
@@ -177,6 +360,8 @@ app.get("/login/:address/:password", async function(req,res){
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   const address = req.params.address;
   const password = req.params.password;
+  // const [salt,hash] = mc.hash(password);
+
   console.log(address);
   console.log(password);
   try{
@@ -184,12 +369,10 @@ app.get("/login/:address/:password", async function(req,res){
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Users');
     // console.log(collection);
-    const user = await collection.findOne(    {
-      "address": address,
-      "password": password
-    });
+    const user = await collection.findOne({
+      "address": address});
     console.log(user);
-    if(user){
+    if(mc.check(password,user.password[0],user.password[1])){
       console.log("signing in");
       res.send(user);
     }else{
@@ -212,7 +395,8 @@ app.post("/signUp", async function(req,res){
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   const address = req.body.address;
   const password = req.body.password;
-  const data = {"address":address, "password":password};
+  const [salt,hash] = mc.hash(password);
+  const data = {"address":address, "password":[salt,hash]};
   try{
     await client.connect();
     const database = client.db('GrubGaugeData');
@@ -262,6 +446,95 @@ app.put('/increment', async function(req, res){
   res.status(200).json({ status: 'success'});
 })
 
+// minicrypt stuff
+async function findUser(address){
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Users');
+    
+    if(collection.findOne({
+      "address": address
+    })){
+      client.close();
+      return true;
+    }else{
+      client.close();
+      return false;
+    }
+  }catch(err){
+    console.log(err);
+  }
+  finally{
+    await client.close();
+  }
+}
+
+async function addUser(address, password){
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Users');
+    
+    if(collection.findOne({
+      "address": address
+    })){
+      client.close();
+      return false;
+    }else{
+      const [salt, hash] = mc.hash(password);
+      await collection.insertOne({"address":address, "password":[salt,hash]});
+      client.close();
+      return true;
+    }
+  }catch(err){
+    console.log(err);
+  }
+  finally{
+    await client.close();
+  }
+}
+
+// Returns true iff the password is the one we have stored.
+async function validatePassword(name, pwd) {
+  if (!findUser(name)) {
+    return false;
+  }
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Users');
+    
+    if (mc.check(pwd, users[name][0], users[name][1])) {
+      return true;
+    }
+      return false;
+  }catch(err){
+    console.log(err);
+  }
+  finally{
+    await client.close();
+  }
+}
+function checkLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {    
+// If we are authenticated, run the next route.
+    next();
+  } else {
+// Otherwise, redirect to the login page.            
+    res.redirect('/authLogin');
+  }
+}
+let users = {}; // name : [salt, hash]
+
+// Illustration of how salts and hashes look and work
+const exampleSalt = '541818e33fa6e21a35b718bbd94d1c7f';
+const exampleHash = '902f945dc114cdf04bb1b2bbcc2ccdef6e416fdb1dce93ed8f34dc6aac02eefaaaf5d65c657dec6e405efa977a26c8e41ff4eb3f46722fbd88779a25d1a22c5b';
+console.log(mc.check('compsci326', exampleSalt, exampleHash)); // true
+console.log(mc.check('nope', exampleSalt, exampleHash)); // false
 
 async function main(){
   /**
