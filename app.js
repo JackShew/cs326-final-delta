@@ -23,27 +23,6 @@ if (!process.env.MONGODB_URI) {
 	uri = process.env.MONGODB_URI;
 }
 
-//web scraping
-app.get('/', function(req, res) {
-	request('https://umassdining.com/locations-menus/worcester/menu', function(error, response, html) {
-		if(!error && response.statusCode == 200) {
-			var $ = cheerio.load(html);
-      var result = [];
-			$('.dinner_fp').each(function(i, element) {
-				var title = $(this).find('.lightbox-nutrition').text();
-        var description = $().find('a').text();
-
-				result.push({
-					title: title,
-					description: description,
-
-				});
-      });
-      res.send(result);
-    }
-  })
-});
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
