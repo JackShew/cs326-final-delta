@@ -45,34 +45,16 @@ window.addEventListener("load", async function() {
         closeForm(document.getElementById("signUpForm"));
     });
 
-    this.document.getElementById("author").addEventListener('click', async function(){
-        const response = await fetch("/aLogin");
-        console.log(response);
-        // if(!response.ok){
-        //     console.log(response.error);
-        //     return;
-        // }else{
-        //     const user = await response.json();
-        //     console.log(user);
-        // }
-    });
     document.getElementById("loginButton").addEventListener('click', async function(){
         const address = document.getElementById("loginAddress").value;
         const password = document.getElementById("loginPass").value;
         const account = {"address": address, "password": password};
-        const response = await fetch("/alogin", {        
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(account)});
+        const response = await fetch("/login/"+address + "/" + password);
         if(!response.ok){
             console.log(response.error);
             return;
         }else{
-            console.log(response);
-            // const user = await response.json();
+            const user = await response.json();
             // let userFound = false;
             // await users.forEach((user)=>{
             //     console.log(user.address);
@@ -86,14 +68,14 @@ window.addEventListener("load", async function() {
             //       }
             //     }
             //   });
-            // if(user.address){
-            //     console.log("User:");
-            //     console.log(user);
-            //     window.localStorage.setItem("user",JSON.stringify(account));
-            //     console.log("signed in");
-            // }else{
-            //     console.log("address or password does not match");
-            // }
+            if(user.address){
+                console.log("User:");
+                console.log(user);
+                window.localStorage.setItem("user",JSON.stringify(account));
+                console.log("signed in");
+            }else{
+                console.log("address or password does not match");
+            }
         }
     });
 
