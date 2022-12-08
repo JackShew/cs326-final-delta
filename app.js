@@ -76,15 +76,8 @@ if (!process.env.MONGODB_URI) {
 } else {
 	uri = process.env.MONGODB_URI;
 }
-// const uri = process.env.MONGODB_URI;
-// console.log(uri);
 
-// require('dotenv').config();
-// var mongoose = require('mongoose');
-// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/GrubGauge');
-// Configuring body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+
 
 app.use(express.static(__dirname + '/public'))
 //app.use(express.static(__dirname + '/images'))
@@ -219,14 +212,6 @@ app.get('/private/:userID/',
 // 	    }
 // 	});
 
-// var storage = multer.diskStorage({
-//   destination: '/uploads',
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname)
-//   }
-// })
-// const upload = multer({ storage: storage })
-// , upload.single("imageUpload")
 app.post('/updateScore', async function(req, res) {
   
   console.log(req.body);
@@ -337,19 +322,22 @@ app.post('/postDish', async function(req, res) {
 });
 
 app.get('/dishes', async function(req,res) {
+  console.log('data');
+
   const client = new MongoClient(uri, { useUnifiedTopology: true });
-  
+  console.log('data');
+
   try {
     await client.connect();
 
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Posts');
-    //console.log(collection);
     const cursor = collection.find();
-// console.log(cursor);
     let data = [];
-    await cursor.forEach((entry) => {data.push(entry)});
-    // console.log(data);
+    console.log('data');
+
+    await cursor.forEach((entry) => {console.log(data); data.push(entry)});
+    console.log(data);
     res.send(data);
   } catch(err) {
     console.log(err);
