@@ -41,6 +41,3 @@ Jayden: Set up Mongo database and connected it to the app, implemented initial p
 **Next Steps**
 
 We are on track for something that can be usable, but we have some priorities for after thanksgiving break. 1) Account functionality. Right now you can only create new accounts can be made and log in to existing accounts. 2) commenting functionallity. After accounts are opperational, we want to give the user the ability to comment under each dish option 3) More starter data, right now we only have dummy data in the future it will have a broad array of dishes
-
-Jayden: user sign in display. password secure store in mongo+localstorage. -> comments (HTML) 
-Jack: images! web scraping. 'see more'. comments (backend)
