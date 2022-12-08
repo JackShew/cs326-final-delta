@@ -23,7 +23,29 @@ if (!process.env.MONGODB_URI) {
 	uri = process.env.MONGODB_URI;
 }
 
+//web scraping
+app.get('/', function(req, res) {
+	request('https://umassdining.com/locations-menus/worcester/menu', function(error, response, html) {
+		if(!error && response.statusCode == 200) {
+			var $ = cheerio.load(html);
+      var result = [];
+			$('.dinner_fp').each(function(i, element) {
+				var title = $(this).find('.lightbox-nutrition').text();
+        var description = $().find('a').text();
 
+				result.push({
+					title: title,
+					description: description,
+
+				});
+      });
+      res.send(result);
+    }
+  })
+});
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public'))
 //app.use(express.static(__dirname + '/images'))
@@ -139,22 +161,19 @@ app.post('/postDish', async function(req, res) {
 });
 
 app.get('/dishes', async function(req,res) {
-  console.log('data');
-
   const client = new MongoClient(uri, { useUnifiedTopology: true });
-  console.log('data');
-
+  
   try {
     await client.connect();
 
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Posts');
+    //console.log(collection);
     const cursor = collection.find();
+// console.log(cursor);
     let data = [];
-    console.log('data');
-
-    await cursor.forEach((entry) => {console.log(data); data.push(entry)});
-    console.log(data);
+    await cursor.forEach((entry) => {data.push(entry)});
+    // console.log(data);
     res.send(data);
   } catch(err) {
     console.log(err);
