@@ -16,7 +16,7 @@ window.addEventListener("load", async function() {
         const loc = document.getElementById("postLocation").value;
         const img = document.getElementById("imageUpload").value; 
         console.log(img);
-        const dishData = {"title": title, "description": des, "location": loc, "image": img, "score" : 1, "comments": 0};
+        const dishData = {"title": title, "description": des, "location": loc, "image": img, "score" : 1, "comments": []};
  
         renderPost(dishData);
         //post(dishData);
@@ -279,6 +279,9 @@ function renderPost(postData){
     //const diningContainer = hallContainer.querySelector(".dining-container");
     hallContainer.appendChild(dish);
     document.getElementById(postData["title"] + "increment").addEventListener('click', function(){
+        if(document.getElementById(postData["title"] + "decrement").disabled){
+            postData.score +=1;
+        }
         console.log("clicked");
         postData.score +=1;
         (async () => {
@@ -304,6 +307,9 @@ function renderPost(postData){
 
     document.getElementById(postData["title"] + "decrement").addEventListener('click', function(){
         console.log("clicked");
+        if(document.getElementById(postData["title"] + "increment").disabled){
+            postData.score -= 1;
+        }
         postData.score -=1;
         (async () => {
             const rawResponse = await fetch('/updateScore', {
