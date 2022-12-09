@@ -5,6 +5,9 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- put module back in when done testing -->
+    <!-- <script type="module" src="comments.js" defer></script>-->
+    <script src="comments.js" defer></script>
         <title>Grub Gauge Comments</title>
         <meta charset="utf-8">
         <link rel="stylesheet" href="style.css">
@@ -69,9 +72,9 @@
                         <!-- <img src="worcester_commons_new.jpg" width=> -->
                         <hr>
                         <h2>
-                            <span class="dish-name">California Sushi Roll</span> 
+                            <span id="dish-name" class="dish-name"></span> 
                             @
-                            <span class="dining-common">Worcester Dining Hall</span> 
+                            <span id="dining-common" class="dining-common"></span> 
                         </h2>
                         <hr>
                     </div>
@@ -113,7 +116,7 @@
                             </form>
                             <br>
                         <h3>Comments:</h3>
-                        <div class="comment-section">
+                        <div class="comment-section" id="comment-section">
                         <div class="comment">
                             <div class="comment-info">
                                 <span class="commenter">Cornelius</span>
