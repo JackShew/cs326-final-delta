@@ -103,7 +103,7 @@ app.post('/deleteDish', async function(req, res) {
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Posts');
 
-    collection.deleteOne({title: req.body.title});
+    await collection.deleteOne({title: req.body.title});
     //const p = await collection.insertOne(data);
     const myDoc = await collection.findOne();
   }catch(err){
