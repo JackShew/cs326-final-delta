@@ -19,7 +19,7 @@ const mc = new minicrypt();
 let secrets;
 let uri;
 if (!process.env.MONGODB_URI) {
-  secrets = require('secrets.json');
+  secrets = require('./secrets.json');
   uri = secrets.MONGODB_URI;
 } else {
 	uri = process.env.MONGODB_URI;

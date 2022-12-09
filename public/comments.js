@@ -4,6 +4,10 @@ window.addEventListener("load", async function() {
     // comments.forEach(comment => {
     //     renderComment(comment);
     // });
+    var r = getParameterByName('dishName');
+    var h = getParameterByName('diningHall');
+    console.log(r);
+    console.log(h);
     const d = new Date();
     const month = d.getMonth().toString();
     const day = d.getDay().toString();
@@ -159,6 +163,16 @@ window.addEventListener("load", async function() {
 //         window.localStorage.setItem("user",JSON.stringify(account));
 //         return content;
 // }
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 
 function renderComment(commentData){
     const commentSection = document.getElementById("comment-section");

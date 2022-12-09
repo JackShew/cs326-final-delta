@@ -162,17 +162,30 @@ function renderPost(postData){
     const dishDes = document.createElement("p");
     const des = document.createTextNode(postData["description"]);
     dishDes.appendChild(des);
-    const dishComment = document.createElement("div");
+    // <a href="comments.html?dishName=dish&?diningHall=hall">comments</a><br>
+    const dishComment = document.createElement("a");
     dishComment.classList.add("comment");
-    dishComment.innerHTML = `
-    <button class = " btn btn-default">
+    dishComment.href = "comments.html?dishName="+postData["title"]+"dish&?diningHall="+postData["location"];
+    const commentBtn = document.createElement("button");
+    commentBtn.classList.add("btn");
+    commentBtn.classList.add("btn-default");
+    commentBtn.setAttribute.id = "comments " + postData["title"];
+    commentBtn.innerHTML = `
         <div class = "dish-comments">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" id="chat-icon1" viewBox="0 0 16 16">
                 <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
             </svg>
             <div class = "comments">${postData["comments"]} Comments</div>
-        </div>
-    </button>`;
+        </div>`;
+    // commentBtn.addEventListener('click', async function(){
+    //         await fetch("comments.html?dishName=dish&?diningHall=hall");
+    //     })
+    dishComment.appendChild(commentBtn);
+    // const comments = dishComment.querySelector('#firs');
+
+    // comments.addEventListener('click', async function(){
+    //     await fetch("comments.html?dishName=dish&?diningHall=hall");
+    // })
     const editbutton = document.createElement("button");
     editbutton.setAttribute.id = postData["title"] + "edit";
     editbutton.innerHTML = "edit description";
