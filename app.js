@@ -131,7 +131,7 @@ app.post('/postDish', async function(req, res) {
   const location = req.body.location;
   const image = req.body.image;
   const score = 1;
-  const comments = 0;
+  const comments = [];
   const data = {
     "title":title,
     "description":description,
