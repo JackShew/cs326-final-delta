@@ -1,168 +1,70 @@
+var r;
+var h;
 
 window.addEventListener("load", async function() {
     // const comments = await getComments();
     // comments.forEach(comment => {
     //     renderComment(comment);
     // });
-    var r = getParameterByName('dishName');
-    var h = getParameterByName('diningHall');
-    console.log(r);
-    console.log(h);
-    const d = new Date();
-    const month = d.getMonth().toString();
-    const day = d.getDay().toString();
-    const year = d.getFullYear().toString();
-    const date = month + "-" + day + "-" + year;
-    const test = {
-        "commenter":"george",
-        "date" : date,
-        "text": "cool",
-        "score": 56
+    r = getParameterByName('dishName');
+    h = getParameterByName('diningHall');
+    var hall;
+    switch(h){
+        case "berk":
+            hall = "Berkshire";
+            break;
+        case "frank":
+            hall = "Frank";
+            break;
+        case "worcester":
+            hall = "Worcester";
+            break;
+        case "hamp":
+            hall = "Hampshire";
+            break;  
+        default:
+            hall = h;
     }
-    renderComment(test)
+    document.getElementById("dish-name").innerHTML = r;
+    document.getElementById("dining-common").innerHTML = hall;
+    const postData = await getPostData();
+    document.getElementById("description").innerHTML = postData["description"];
+    const comments = postData["comments"];
+    var numComments = comments.length;
+    if(numComments === 1){
+        numComments = numComments.toString() + " Comment";
+    }else{
+        numComments = numComments.toString() + " Comments";
+    }
+    document.getElementById("commentNumber").innerHTML = numComments;
+    document.getElementById("rank").innerHTML = postData["score"];
+    // const d = new Date();
+    // const month = d.getMonth().toString();
+    // const day = d.getDay().toString();
+    // const year = d.getFullYear().toString();
+    // const date = month + "-" + day + "-" + year;
+    // const test = {
+    //     "commenter":"george",
+    //     "date" : date,
+    //     "text": "cool",
+    //     "score": 56
+    // }
+    comments.forEach(c => {
+        renderComment(c) 
+    });
 });
-//     console.log("Joe mama");
-    // const user = await getUser();
-//     // document.getElementById("userID").innerHTML("Hi" + user.name)
-//     const dishes = await getDishData();
-//     console.log(dishes);
-//     dishes.forEach(element => {
-//         renderPost(element);
-//     });
 
+async function getCommentData() {
+    const response = await fetch("/commentData/"+r);
+    console.log(response);
+    return response.json();
+}
 
-//     document.getElementById("post").addEventListener('click', function(){
-//         const title = document.getElementById("postTitle").value;
-//         const des = document.getElementById("postDescription").value;
-//         const loc = document.getElementById("postLocation").value;
-//         const img = document.getElementById("imageUpload").value; 
-//         console.log(img);
-//         const dishData = {"title": title, "description": des, "location": loc, "image": img, "score" : 1, "comments": 0};
- 
-//         renderPost(dishData);
-//         //post(dishData);
-//     });
-
-//     document.getElementById("profileButton").addEventListener('click', function(){
-//         openForm(document.getElementById("loginForm"));
-//     });
-
-//     document.getElementById("loginSelect").addEventListener('change', function(){
-//             console.log("signUp");
-//             this.value="login";
-//             closeForm(document.getElementById("loginForm"));
-//             openForm(document.getElementById("signUpForm"));
-//     });
-
-//     document.getElementById("signUpSelect").addEventListener('change', function(){
-//             console.log("login");
-//             this.value="signUp";
-//             closeForm(document.getElementById("signUpForm"));
-//             openForm(document.getElementById("loginForm"));
-//     });
-
-//     document.getElementById("closeFormL").addEventListener('click', function(){
-//         closeForm(document.getElementById("loginForm"));
-//     });
-//     document.getElementById("closeFormS").addEventListener('click', function(){
-//         closeForm(document.getElementById("signUpForm"));
-//     });
-
-//     document.getElementById("loginButton").addEventListener('click', async function(){
-//         const address = document.getElementById("loginAddress").value;
-//         const password = document.getElementById("loginPass").value;
-//         const account = {"address": address, "password": password};
-//         const response = await fetch("/login/"+address + "/" + password);
-//         if(!response.ok){
-//             console.log(response.error);
-//             return;
-//         }else{
-//             const user = await response.json();
-//             // let userFound = false;
-//             // await users.forEach((user)=>{
-//             //     console.log(user.address);
-//             //     console.log(user.password);
-//             //     if(user.address === address){
-//             //       if(user.password === password){
-//             //         // login
-//             //         console.log(user);
-//             //         userFound = true;
-//             //         window.localStorage.setItem("user",JSON.stringify(account));
-//             //       }
-//             //     }
-//             //   });
-//             if(user.address){
-//                 console.log("User:");
-//                 console.log(user);
-//                 window.localStorage.setItem("user",JSON.stringify(account));
-//                 document.getElementById("userID").innerHTML = "Hi, " + user.address;
-//                 console.log("signed in");
-//             }else{
-//                 console.log("address or password does not match");
-//             }
-//         }
-//     });
-
-//     document.getElementById("logOutL").addEventListener('click', function(){
-//         if(localStorage.getItem("user")){
-//             localStorage.removeItem("user");
-//             document.getElementById("userID").innerHTML = "";
-
-//             console.log("Logged out");
-//         }else{
-//             console.log("No account to log out of");
-//         }
-//     })
-    
-//     document.getElementById("logOutS").addEventListener('click', function(){
-//         if(localStorage.getItem("user")){
-//             localStorage.removeItem("user");
-//             console.log("Logged out");
-//         }else{
-//             console.log("No account to log out of");
-//         }
-//     })
-// });
-
-// function openForm(element) {
-//     element.style.display = "inline-block";
-// }
-    
-// function closeForm(element) {
-//     element.style.display = "none";
-// }
-
-// // async function getUser(){
-// //     const response = await fetch("/user");
-// //     return response.json;
-// // }
-// async function getDishData() {
-//     // const data = JSON.stringify({});
-//     // console.log(data);
-//     // console.log(dishData["title"]); //good g
-//     console.log("in dish data mainjs");
-//     const response = await fetch("/dishes");
-//     console.log(response);
-//     return response.json();
-// }
-
-// async function signUp(accountInfo) {
-//     const address = accountInfo["address"];
-//     const password = accountInfo["password"];
-//     const account = {"address": address, "password": password};
-//     const response = await fetch("/signUp",{
-//         method: 'POST',
-//         headers: {
-//             'Accept': 'application/json',
-//             'Content-Type': 'application/json'
-//           },
-//           body: JSON.stringify({address: address, password: password})
-//         });
-//         const content = await response.json();
-//         console.log(content);
-//         window.localStorage.setItem("user",JSON.stringify(account));
-//         return content;
-// }
+async function getPostData() {
+    const response = await fetch("/dish/"+r+"/"+h);
+    console.log(response);
+    return response.json();
+}
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;

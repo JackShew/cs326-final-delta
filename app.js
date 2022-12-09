@@ -116,6 +116,26 @@ app.post('/deleteDish', async function(req, res) {
   res.status(200).json({ status: 'success'});
 });
 
+app.get('/commentData/:dish', async function(req,res){
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+  const dish = req.params.dish;
+  try {
+    await client.connect();
+
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Posts');
+    //console.log(collection);
+    const dishPost = await collection.findOne({"title":dish});
+    res.send(dishPost.comments);
+  } catch(err) {
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+});
 app.get('/comments.html', function(req,res){
   res.render("./comments.html");
 })
@@ -180,6 +200,28 @@ app.get('/dishes', async function(req,res) {
     await client.close();
   }
 });
+
+app.get('/dish/:title/:hall', async function(req,res) {
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  const title = req.params.title;
+  const hall = req.params.hall;
+  try {
+    await client.connect();
+
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Posts');
+    //console.log(collection);
+    const dishData = await collection.findOne({"title":title, "location":hall});
+    res.send(dishData);
+  } catch(err) {
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+});
+
 app.get('/hi', (req, res) => {
   res.send('Hello World, from express');
 });

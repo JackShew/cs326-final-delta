@@ -165,7 +165,7 @@ function renderPost(postData){
     // <a href="comments.html?dishName=dish&?diningHall=hall">comments</a><br>
     const dishComment = document.createElement("a");
     dishComment.classList.add("comment");
-    dishComment.href = "comments.html?dishName="+postData["title"]+"dish&?diningHall="+postData["location"];
+    dishComment.href = "comments.html?dishName="+postData["title"]+"&?diningHall="+postData["location"];
     const commentBtn = document.createElement("button");
     commentBtn.classList.add("btn");
     commentBtn.classList.add("btn-default");
