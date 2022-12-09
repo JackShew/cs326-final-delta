@@ -1,6 +1,8 @@
 
 window.addEventListener("load", async function() {
     console.log("Joe mama");
+    // const user = await getUser();
+    // document.getElementById("userID").innerHTML("Hi" + user.name)
     const dishes = await getDishData();
     console.log(dishes);
     dishes.forEach(element => {
@@ -72,6 +74,7 @@ window.addEventListener("load", async function() {
                 console.log("User:");
                 console.log(user);
                 window.localStorage.setItem("user",JSON.stringify(account));
+                document.getElementById("userID").innerHTML = "Hi, " + user.address;
                 console.log("signed in");
             }else{
                 console.log("address or password does not match");
@@ -82,6 +85,8 @@ window.addEventListener("load", async function() {
     document.getElementById("logOutL").addEventListener('click', function(){
         if(localStorage.getItem("user")){
             localStorage.removeItem("user");
+            document.getElementById("userID").innerHTML = "";
+
             console.log("Logged out");
         }else{
             console.log("No account to log out of");
@@ -106,6 +111,10 @@ function closeForm(element) {
     element.style.display = "none";
 }
 
+// async function getUser(){
+//     const response = await fetch("/user");
+//     return response.json;
+// }
 async function getDishData() {
     // const data = JSON.stringify({});
     // console.log(data);

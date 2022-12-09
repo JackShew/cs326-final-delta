@@ -11,6 +11,8 @@ app.use(cors());
 require('dotenv').config();
 console.log(process.env)
 const {MongoClient} = require("mongodb");
+const minicrypt = require('./miniCrypt');
+const mc = new minicrypt(); 
 //const uri = process.env.MONGODB_URI; 
 //console.log(uri);// Causes error
 
@@ -196,12 +198,11 @@ app.get("/login/:address/:password", async function(req,res){
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Users');
     // console.log(collection);
-    const user = await collection.findOne(    {
-      "address": address,
-      "password": password
-    });
+    const user = await collection.findOne({"address": address});
     console.log(user);
-    if(user){
+    // if(user){
+
+    if(mc.check(password, user.password[0], user.password[1])){
       console.log("signing in");
       res.send(user);
     }else{
@@ -224,7 +225,7 @@ app.post("/signUp", async function(req,res){
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   const address = req.body.address;
   const password = req.body.password;
-  const data = {"address":address, "password":password};
+  const data = {"address":address, "password":mc.hash(password)};
   try{
     await client.connect();
     const database = client.db('GrubGaugeData');
