@@ -116,7 +116,9 @@ app.post('/deleteDish', async function(req, res) {
   res.status(200).json({ status: 'success'});
 });
 
-
+app.get('/comments.html', function(req,res){
+  res.render("./comments.html");
+})
 
 app.post('/postDish', async function(req, res) {
   console.log(req.query);
