@@ -1,6 +1,6 @@
 var r;
 var h;
-
+const user = "Jay"
 window.addEventListener("load", async function() {
     // const comments = await getComments();
     // comments.forEach(comment => {
@@ -52,7 +52,27 @@ window.addEventListener("load", async function() {
     comments.forEach(c => {
         renderComment(c) 
     });
+    // document.getElementById("commentBtn").addEventListener('click', postComment(description));
 });
+
+async function postComment(description) {
+    const d = new Date();
+    const month = d.getMonth().toString();
+    const day = d.getDay().toString();
+    const year = d.getFullYear().toString();
+    const date = month + "/" + day + "/" + year;
+    const response = await fetch("/postComment",{
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({"commenter": user, "date": date, "text": description, "score": 1})
+        });
+        const content = await response.json();
+        console.log(content);
+        return content;
+}
 
 async function getCommentData() {
     const response = await fetch("/commentData/"+r);
