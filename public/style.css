@@ -7,6 +7,9 @@
     color: white;
     text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000; */
 }
+.grub{
+    color: #fff;
+}
 .gauge{
     color: #c72e2c;
 }
