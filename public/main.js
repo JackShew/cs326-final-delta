@@ -3,12 +3,42 @@ window.addEventListener("load", async function() {
     console.log("Joe mama");
     // const user = await getUser();
     // document.getElementById("userID").innerHTML("Hi" + user.name)
-    const dishes = await getDishData();
+    let dishes = await getDishData();
     console.log(dishes);
     dishes.forEach(element => {
         renderPost(element);
     });
 
+    const wooUpdate = this.document.getElementById("worcesterUpdate");
+    wooUpdate.addEventListener("click", async function() {
+        let wooScraped = await fetch("/worchester").then(response => response.json());
+        console.log(wooScraped);     
+        wooScraped.forEach(dish => {
+            console.log((JSON.stringify(dish)));
+            (async () => {
+                const rawResponse = await fetch('/postDish', {
+                  method: 'POST',
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(dish)
+                });
+            });
+            let found = false;
+            for(let i = 0; i < dishes.length; i++) {
+                if (dishes[i].title == dish.title) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if(!found){
+                renderPost(dish);
+            }
+        });
+
+    });
 
     document.getElementById("post").addEventListener('click', function(){
         const title = document.getElementById("postTitle").value;
@@ -121,6 +151,7 @@ async function getDishData() {
     // console.log(dishData["title"]); //good g
     console.log("in dish data mainjs");
     const response = await fetch("/dishes");
+
     console.log(response);
     return response.json();
 }

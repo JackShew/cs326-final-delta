@@ -2,7 +2,10 @@
 const express = require('express');
 //const multer  = require('multer');
 const app = express();
-
+//const request = require('request');
+const https = require('https');
+const axios = require('axios');
+const cheerio = require('cheerio');
 const port = process.env.PORT || 5000;
 const nodeEnv = process.env.NODE_ENV;
 const bodyParser = require('body-parser');
@@ -37,6 +40,9 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'))
 //app.use(express.static(__dirname + '/images'))
 app.use('/uploads', express.static('uploads'));
+
+// //web scraping
+
 
 // var storage = multer.diskStorage({
 //   destination: '/uploads',
@@ -319,6 +325,46 @@ app.put('/increment', async function(req, res){
   res.status(200).json({ status: 'success'});
 })
 
+
+app.get('/worchester', function(req, res) {
+  // Using the http module
+  https.get('https://umassdining.com/locations-menus/worcester/menu', (response) => {
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    response.on('end', () => {
+      var $ = cheerio.load(data);
+      var result = [];
+      let inter = 0;
+      $('.dinner_fp').each(function(i, element) {
+        // Select the .lightbox-nutrition elements within the current .dinner_fp element
+        var lightboxElements = $(this).find('.lightbox-nutrition');
+
+        // Iterate over the .lightbox-nutrition elements
+        lightboxElements.each(function(j, lightboxElement) {
+          var title = $(this).text();
+          var description = $(this).find('a').attr('data-ingredient-list');
+          if(inter < 7) {
+            result.push({
+              "title": title,
+              "description": description,
+              "location":"worcester",
+              "image":"image",
+              "score":0,
+              "comments":[]
+            });
+            inter++;
+          }
+         
+        });
+      });
+
+      res.send(result);
+    });
+  });
+});
 
 async function main(){
   /**
