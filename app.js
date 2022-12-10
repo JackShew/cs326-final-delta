@@ -149,7 +149,7 @@ app.get('/comments.html', function(req,res){
 app.post('/postDish', async function(req, res) {
   console.log(req.query);
   // console.log(req.body);
-  console.log("uri" + uri);
+  console.log(req.body);
   const client = new MongoClient(uri, { useUnifiedTopology: true });
 
   const title = req.body.title;
@@ -228,13 +228,6 @@ app.get('/dish/:title/:hall', async function(req,res) {
   }
 });
 
-app.get('/hi', (req, res) => {
-  res.send('Hello World, from express');
-});
-
-app.get('/api/worchester/', (req, res) => {
-  res.send(worchester);
-})
 
 app.get("/login/:address/:password", async function(req,res){
   console.log("attempting login");
@@ -325,6 +318,34 @@ app.put('/increment', async function(req, res){
   res.status(200).json({ status: 'success'});
 })
 
+function getScrapeDishes(data, location) {
+  var $ = cheerio.load(data);
+  var result = [];
+  let inter = 0;
+  $('.dinner_fp').each(function(i, element) {
+    // Select the .lightbox-nutrition elements within the current .dinner_fp element
+    var lightboxElements = $(this).find('.lightbox-nutrition');
+
+    // Iterate over the .lightbox-nutrition elements
+    lightboxElements.each(function(j, lightboxElement) {
+      var title = $(this).text();
+      var description = $(this).find('a').attr('data-ingredient-list');
+      if(inter < 7) {
+        result.push({
+          title: title,
+          description: description,
+          location: location,
+          image: "",
+          score: 0,
+          comments:[]
+        });
+        inter++;
+      }
+     
+    });
+  });
+  return result;
+}
 
 app.get('/worchester', function(req, res) {
   // Using the http module
@@ -335,32 +356,52 @@ app.get('/worchester', function(req, res) {
     });
 
     response.on('end', () => {
-      var $ = cheerio.load(data);
-      var result = [];
-      let inter = 0;
-      $('.dinner_fp').each(function(i, element) {
-        // Select the .lightbox-nutrition elements within the current .dinner_fp element
-        var lightboxElements = $(this).find('.lightbox-nutrition');
+      let result = getScrapeDishes(data, "worcester");
+      res.send(result);
+    });
+  });
+});
 
-        // Iterate over the .lightbox-nutrition elements
-        lightboxElements.each(function(j, lightboxElement) {
-          var title = $(this).text();
-          var description = $(this).find('a').attr('data-ingredient-list');
-          if(inter < 7) {
-            result.push({
-              "title": title,
-              "description": description,
-              "location":"worcester",
-              "image":"image",
-              "score":0,
-              "comments":[]
-            });
-            inter++;
-          }
-         
-        });
-      });
+app.get('/frank', function(req, res) {
+  // Using the http module
+  https.get('https://umassdining.com/locations-menus/franklin/menu', (response) => {
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
 
+    response.on('end', () => {
+      let result = getScrapeDishes(data, "frank");
+      res.send(result);
+    });
+  });
+});
+
+app.get('/hamp', function(req, res) {
+  // Using the http module
+  https.get('https://umassdining.com/locations-menus/hampshire/menu', (response) => {
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    response.on('end', () => {
+      let result = getScrapeDishes(data, "hamp");
+      res.send(result);
+    });
+  });
+});
+
+app.get('/berk', function(req, res) {
+  // Using the http module
+  https.get('https://umassdining.com/locations-menus/berkshire/menu', (response) => {
+    let data = '';
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    response.on('end', () => {
+      let result = getScrapeDishes(data, "berk");
       res.send(result);
     });
   });

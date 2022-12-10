@@ -14,17 +14,6 @@ window.addEventListener("load", async function() {
         let wooScraped = await fetch("/worchester").then(response => response.json());
         console.log(wooScraped);     
         wooScraped.forEach(dish => {
-            console.log((JSON.stringify(dish)));
-            (async () => {
-                const rawResponse = await fetch('/postDish', {
-                  method: 'POST',
-                  headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify(dish)
-                });
-            });
             let found = false;
             for(let i = 0; i < dishes.length; i++) {
                 if (dishes[i].title == dish.title) {
@@ -32,12 +21,69 @@ window.addEventListener("load", async function() {
                     break;
                 }
             }
-
             if(!found){
                 renderPost(dish);
-            }
+                postScrape(dish);
+            }       
         });
+    });
 
+    const frankUpdate = this.document.getElementById("frankUpdate");
+    frankUpdate.addEventListener("click", async function() {
+        let frankScraped = await fetch("/frank").then(response => response.json());
+        console.log(frankScraped);     
+        frankScraped.forEach(dish => {
+            let found = false;
+            for(let i = 0; i < dishes.length; i++) {
+                if (dishes[i].title == dish.title) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                renderPost(dish);
+                postScrape(dish);
+            }       
+        });
+    });
+
+    const hampUpdate = this.document.getElementById("hampUpdate");
+    hampUpdate.addEventListener("click", async function() {
+        let hampScraped = await fetch("/hamp").then(response => response.json());
+        console.log(hampScraped);     
+        hampScraped.forEach(dish => {
+            let found = false;
+            for(let i = 0; i < dishes.length; i++) {
+                if (dishes[i].title == dish.title) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                renderPost(dish);
+                postScrape(dish);
+            }       
+        });
+    });
+
+
+    const berkUpdate = this.document.getElementById("berkUpdate");
+    berkUpdate.addEventListener("click", async function() {
+        let berkScraped = await fetch("/berk").then(response => response.json());
+        console.log(berkScraped);     
+        berkScraped.forEach(dish => {
+            let found = false;
+            for(let i = 0; i < dishes.length; i++) {
+                if (dishes[i].title == dish.title) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                renderPost(dish);
+                postScrape(dish);
+            }       
+        });
     });
 
     document.getElementById("post").addEventListener('click', function(){
@@ -172,6 +218,17 @@ async function signUp(accountInfo) {
         console.log(content);
         window.localStorage.setItem("user",JSON.stringify(account));
         return content;
+}
+
+async function postScrape(body) {
+    const response = await fetch("/postDish",{
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
 }
 
 function renderPost(postData){
