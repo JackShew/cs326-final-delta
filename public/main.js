@@ -3,12 +3,88 @@ window.addEventListener("load", async function() {
     console.log("Joe mama");
     // const user = await getUser();
     // document.getElementById("userID").innerHTML("Hi" + user.name)
-    const dishes = await getDishData();
+    let dishes = await getDishData();
     console.log(dishes);
     dishes.forEach(element => {
         renderPost(element);
     });
 
+    const wooUpdate = this.document.getElementById("worcesterUpdate");
+    wooUpdate.addEventListener("click", async function() {
+        let wooScraped = await fetch("/worchester").then(response => response.json());
+        console.log(wooScraped);     
+        wooScraped.forEach(dish => {
+            let found = false;
+            for(let i = 0; i < dishes.length; i++) {
+                if (dishes[i].title == dish.title) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                renderPost(dish);
+                postScrape(dish);
+            }       
+        });
+    });
+
+    const frankUpdate = this.document.getElementById("frankUpdate");
+    frankUpdate.addEventListener("click", async function() {
+        let frankScraped = await fetch("/frank").then(response => response.json());
+        console.log(frankScraped);     
+        frankScraped.forEach(dish => {
+            let found = false;
+            for(let i = 0; i < dishes.length; i++) {
+                if (dishes[i].title == dish.title) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                renderPost(dish);
+                postScrape(dish);
+            }       
+        });
+    });
+
+    const hampUpdate = this.document.getElementById("hampUpdate");
+    hampUpdate.addEventListener("click", async function() {
+        let hampScraped = await fetch("/hamp").then(response => response.json());
+        console.log(hampScraped);     
+        hampScraped.forEach(dish => {
+            let found = false;
+            for(let i = 0; i < dishes.length; i++) {
+                if (dishes[i].title == dish.title) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                renderPost(dish);
+                postScrape(dish);
+            }       
+        });
+    });
+
+
+    const berkUpdate = this.document.getElementById("berkUpdate");
+    berkUpdate.addEventListener("click", async function() {
+        let berkScraped = await fetch("/berk").then(response => response.json());
+        console.log(berkScraped);     
+        berkScraped.forEach(dish => {
+            let found = false;
+            for(let i = 0; i < dishes.length; i++) {
+                if (dishes[i].title == dish.title) {
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                renderPost(dish);
+                postScrape(dish);
+            }       
+        });
+    });
 
     document.getElementById("post").addEventListener('click', function(){
         const title = document.getElementById("postTitle").value;
@@ -121,6 +197,7 @@ async function getDishData() {
     // console.log(dishData["title"]); //good g
     console.log("in dish data mainjs");
     const response = await fetch("/dishes");
+
     console.log(response);
     return response.json();
 }
@@ -141,6 +218,17 @@ async function signUp(accountInfo) {
         console.log(content);
         window.localStorage.setItem("user",JSON.stringify(account));
         return content;
+}
+
+async function postScrape(body) {
+    const response = await fetch("/postDish",{
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
 }
 
 function renderPost(postData){
