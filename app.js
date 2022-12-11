@@ -16,6 +16,15 @@ console.log(process.env)
 const {MongoClient} = require("mongodb");
 const minicrypt = require('./miniCrypt');
 const mc = new minicrypt(); 
+const expressSession = require('express-session');  // for managing session state
+const passport = require('passport');               // handles authentication
+const LocalStrategy = require('passport-local').Strategy; // username/password strategy
+
+const session = {
+  secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
+  resave : false,
+  saveUninitialized: false
+};
 //const uri = process.env.MONGODB_URI; 
 //console.log(uri);// Causes error
 
@@ -27,19 +36,130 @@ if (!process.env.MONGODB_URI) {
 } else {
 	uri = process.env.MONGODB_URI;
 }
-// const uri = process.env.MONGODB_URI;
-// console.log(uri);
 
-// require('dotenv').config();
-// var mongoose = require('mongoose');
-// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/GrubGauge');
+
+const strategy = new LocalStrategy(
+  async (username, password, done) => {
+	if (! await findUser(username)) {
+    // no such user
+    await new Promise((r) => setTimeout(r, 2000)); // two second delay
+    return done(null, false, { 'message' : 'Wrong username' });
+	}
+	if (! await validatePassword(username, password)) {
+	  // invalid password
+	  // should disable logins after N messages
+	  // delay return to rate-limit brute-force attacks
+	  await new Promise((r) => setTimeout(r, 2000)); // two second delay
+	  return done(null, false, { 'message' : 'Wrong password' });
+	}
+	// success!
+	// should create a user object here, associated with a unique identifier
+  return done(null, username);
+});
+
+app.use(expressSession(session));
+passport.use(strategy);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Convert user object to a unique identifier.
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+// Convert a unique identifier to a user object.
+passport.deserializeUser((uid, done) => {
+  done(null, uid);
+});
 // Configuring body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/public'))
 //app.use(express.static(__dirname + '/images'))
 app.use('/uploads', express.static('uploads'));
+
+
+// Account management Functions
+// Returns true iff the user exists.
+async function findUser(username) {
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Users');
+    const user = await collection.findOne({address:username});
+    if(!user){
+      return false;
+    }else{
+      return true;
+    }
+    }catch(err){
+      console.log(err);
+    }
+    finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
+    }
+}
+
+// Returns true iff the password is the one we have stored.
+async function validatePassword(name, pwd) {
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Users');
+    const user = await collection.findOne({address:name});
+    if(!user){
+      return false;
+    }
+    if (mc.check(pwd, user.password[0], user.password[1])) {
+      return true;
+    }
+      return false;
+    }catch(err){
+      console.log(err);
+    }
+    finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
+    }
+}
+
+// Add a user to the "database".
+async function addUser(name, pwd) {
+  if(await findUser(name)){
+    return false;
+  }
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Users');
+    const [salt, hash] = mc.hash(pwd);
+    const user = await collection.insertOne({address:name, password: [salt,hash]});
+    console.log(user);
+    return true;
+    }catch(err){
+      console.log(err);
+    }
+    finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
+    }
+}
+
+// Routes
+
+function checkLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    // If we are authenticated, run the next route.
+    next();
+  } else {
+    // Otherwise, redirect to the login page.
+    res.redirect('/login');
+  }
+}
 
 // //web scraping
 
@@ -274,7 +394,7 @@ app.get('/dish/:title/:hall', async function(req,res) {
 });
 
 
-app.get("/login/:address/:password", async function(req,res){
+app.get("/alogin/:address/:password", async function(req,res){
   console.log("attempting login");
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   const address = req.params.address;
@@ -451,6 +571,68 @@ app.get('/berk', function(req, res) {
     });
   });
 });
+
+// Private data
+app.get('/private',
+	checkLoggedIn, // If we are logged in (notice the comma!)...
+	(req, res) => {             // Go to the user's page.
+	    res.redirect('/private/' + req.user);
+	});
+
+// A dummy page for the user.
+app.get('/private/:userID/',
+	checkLoggedIn, // We also protect this route: authenticated...
+	(req, res) => {
+	    // Verify this is the right user.
+	    if (req.params.userID === req.user) {
+		res.writeHead(200, {"Content-Type" : "text/html"});
+		res.write('<H1>HELLO ' + req.params.userID + "</H1>");
+		res.write('<br/><a href="/logout">click here to logout</a>');
+		res.end();
+	    } else {
+		res.redirect('/private/');
+	    }
+	});
+// newLogin stuff
+// Handle post data from the login.html form.
+app.post('/login',
+	 passport.authenticate('local' , {     // use username/password authentication
+	     'successRedirect' : '/private',   // when we login, go to /private 
+	     'failureRedirect' : '/login'      // otherwise, back to login
+	 }));
+
+// Handle the URL /login (just output the login.html file).
+app.get('/login',
+	(req, res) => res.sendFile('public/login.html',
+				   { 'root' : __dirname }));
+
+// Handle logging out (takes us back to the login page).
+app.get('/logout', (req, res) => {
+    req.logout(); // Logs us out!
+    res.redirect('/login'); // back to login
+});
+
+
+// Like login, but add a new user and password IFF one doesn't exist already.
+// If we successfully add a new user, go to /login, else, back to /register.
+// Use req.body to access data (as in, req.body['username']).
+// Use res.redirect to change URLs.
+app.post('/register',
+	 (req, res) => {
+	     const username = req.body['username'];
+	     const password = req.body['password'];
+	     if (addUser(username, password)) {
+		 res.redirect('/login');
+	     } else {
+		 res.redirect('/register');
+	     }
+	 });
+
+// Register URL
+app.get('/register',
+	(req, res) => res.sendFile('public/register.html',
+				   { 'root' : __dirname }));
+
 
 async function main(){
   /**
