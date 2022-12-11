@@ -50,13 +50,16 @@ app.post('/updateScore', async function(req, res) {
   
   console.log(req.body);
   const client = new MongoClient(uri, { useUnifiedTopology: true });
-
+  const index = req.body.index;
   try {
     await client.connect();
     const database = client.db('GrubGaugeData');
     const collection = database.collection('Posts');
-
-    collection.updateOne({title: req.body.title}, {$set:{score:req.body.score}});
+    if(index){
+      collection.updateOne({title: req.body.title}, {$set:{[`comments.${index}.score`]:req.body.score}});
+    }else{
+      collection.updateOne({title: req.body.title}, {$set:{score:req.body.score}});
+    }
     //const p = await collection.insertOne(data);
     const myDoc = await collection.findOne();
   }catch(err){
@@ -139,6 +142,48 @@ app.get('/commentData/:dish', async function(req,res){
 app.get('/comments.html', function(req,res){
   res.render("./comments.html");
 })
+
+app.post('/postComment', async function(req, res) {
+  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  const dish = req.body.dish;
+  console.log(req.body);
+  // const user = req.body.user;
+  // const date = req.body.date;
+  const d = new Date();
+  const month = d.getMonth().toString();
+  const day = d.getDay().toString();
+  const year = d.getFullYear().toString();
+  const date = month + "/" + day + "/" + year;
+  const text = req.body.text;
+  const user = req.body.user;
+  // const score = req.body.score;
+  const data = {
+    "commenter":user,
+    "date":date,
+    "text":text,
+    "score":1
+  }
+
+  try {
+    await client.connect();
+    const database = client.db('GrubGaugeData');
+    const collection = database.collection('Posts');
+    await collection.updateOne(
+      {"title": dish},
+      {$push:
+      {
+        "comments":data
+      }}
+  );
+  }catch(err){
+    console.log(err);
+  }
+  finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+  res.status(200).json({ status: 'success'});
+});
 
 app.post('/postDish', async function(req, res) {
   console.log(req.query);

@@ -30,12 +30,13 @@
                     </div>
                     <div class="col">
                         
-                        <button class="btn btn-default" onclick="openForm()">
+                        <button class="btn btn-default" id="profileButton">
                             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
                                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                             </svg>
                         </button>
+                        <div id="userID"></div>
 
                     </div>
                 </div>
@@ -51,23 +52,46 @@
                 <div class="main">
                     <!-- Login -->
                     <div  class="loginForm" id="loginForm">
-                            <form>
-                                <div class="blocker" onclick="closeForm()"></div>
+                        <div class="blocker" id="closeFormL"></div>    
+                            <form target="hiddenFrame">
                                 <div class="form-content">
-                                    <h1>Login</h1><br>
+                                    <select name="login/signUp" id="loginSelect">
+                                        <option value="login">Log In</option>
+                                        <option value="signUp">Sign Up</option>
+                                    </select>    
                                     <div class="form-group">
-                                        <h2><label for="address">Email address</label></h2>
-                                        <input type="email" class="form-control" id="address" placeholder="Enter email">
+                                        <h2><label for="address">Email Address</label></h2>
+                                        <input type="email" class="form-control" id="loginAddress" placeholder="Enter email">
                                     </div>
                                     <div class="form-group">
                                         <h2><label for="psw">Password</label></h2>
-                                        <input type="password" class="form-control" id="psw" placeholder="Password">
+                                        <input type="password" class="form-control" id="loginPass" placeholder="Password">
                                     </div>
-                                    <button class="btn btn-secondary">Submit</button>
-                                    <button class="btn btn-secondary">Sign up</button>
+                                    <button class="btn btn-secondary" id="loginButton">Submit</button>
+                                    <button class="btn btn-secondary" id="logOutL">Log Out</button>
                                 </div>
-                                <br>
-                                </form>
+                            </form>
+                    </div>
+                    <div  class="loginForm" id="signUpForm">
+                        <div class="blocker" id="closeFormS"></div>    
+                            <form action = "/signUp" target="hiddenFrame" method="POST" role="form">
+                                <div class="form-content">
+                                    <select name="login/signUp" id="signUpSelect">
+                                        <option value="signUp">Sign Up</option>
+                                        <option value="login">Log In</option>
+                                    </select>    
+                                    <div class="form-group">
+                                        <h2><label for="address">Email Address</label></h2>
+                                        <input type="email" class="form-control" name="address" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <h2><label for="psw">Password</label></h2>
+                                        <input type="password" class="form-control" name="password" placeholder="Password">
+                                    </div>
+                                    <button class="btn btn-secondary" type="submit" id="signUpButton">Submit</button>
+                                    <button class="btn btn-secondary" id="logOutS">Log Out</button>
+                                </div>
+                            </form>
                     </div>
 
                     <div class="dish-name/location">
@@ -96,70 +120,38 @@
                             </div>  
 
                             <div class = "dish-rank">
-                                <button class="btn btn-default">
+                                <button class="btn btn-default" id="increment">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
                                     </svg>
                                 </button>
                                 <div class = "dish-score"><b id="rank">123</b></div>
-                                <button class="btn btn-default">
+                                <button class="btn btn-default" id="decrement">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
                                     </svg>
                                 </button>
                             </div>
                         </div>
-                            <form>
-                                <div class="form-group">
+                        <form  id="postComment" action = "/postComment" target="hiddenFrame" method="POST" role="form">
+                            <div class="form-group">
+                                <h3>Make a Comment:</h3>
+                                <input type="text" id="commentTex" name="text" class="form-control" placeholder="Enter your comment">
+                                <input id="n" name="dish" hidden>
+                                <input id="user" name="user" hidden>
+                            </div>
+                            <button class="btn btn-dark" type="submit" id="commentBtn">Submit</button>
+                        </form>
+                            <!-- <form target="hiddenframe">
+                                <div  class="form-group">
                                     <h3>Make a Comment:</h3>
-                                    <input type="text" class="form-control" id="your-comment" placeholder="Enter your comment">
+                                    <input type="text" class="form-control" id="yourComment" placeholder="Enter your comment">
                                 </div> 
                                 <button id="commentBtn" class="btn btn-secondary">Comment</button>
-                            </form>
+                            </form> -->
                             <br>
                         <h3>Comments:</h3>
-                        <div class="comment-section" id="comment-section">
-                        <!-- <div class="comment">
-                            <div class="comment-info">
-                                <span class="commenter">Cornelius</span>
-                                <span class="date">10/23/22</span>
-                                <p> Vivamus luctus libero gravida lectus tristique, non condimentum nibh posuere. Etiam et tincidunt nibh. Ut sed consequat dolor. Nulla maximus elit placerat sapien porttitor, a aliquam neque hendrerit. Nulla sed elementum nibh, lacinia maximus turpis. Morbi hendrerit laoreet vehicula. Sed at risus id nisi bibendum posuere sit amet quis urna.</p>    
-                            </div>
-                            <div class = "comment-rank">
-                                <button class="btn btn-default">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
-                                    </svg>
-                                </button>
-                                <div class = "comment-score"><b>34</b></div>
-                                <button class="btn btn-default">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <div class="comment-info">
-                                <span class="commenter">Flavia</span>
-                                <span class="date">10/23/22</span>
-                                <p> Fusce nisi libero, volutpat ut eros sed, lacinia semper turpis. Curabitur tristique tempor dignissim. Donec quis purus id ipsum mollis varius sit amet non felis. Nam eget dapibus ligula.</p>    
-                            </div>
-                            <div class = "comment-rank">
-                                <button class="btn btn-default">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
-                                    </svg>
-                                </button>
-                                <div class = "comment-score"><b>8</b></div>
-                                <button class="btn btn-default">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div> -->
-                        </div>
+                        <div class="comment-section" id="comment-section"></div>
                         <!-- <div class="dish-container">
                             <div class="comment-section">
                                 <h3>Comments:</h3>
@@ -187,9 +179,11 @@
                         </div> -->
                 </div>
             </div>
+            
         <div class="col"></div>
         </div>
-        <script>
+        <iframe name="hiddenFrame" class="hide"></iframe>
+        <!-- <script>
             function openForm() {
             document.getElementById("loginForm").style.display = "inline-block";
             }
@@ -197,6 +191,6 @@
             function closeForm() {
             document.getElementById("loginForm").style.display = "none";
             }
-            </script>
+            </script> -->
     </body>
 </html>

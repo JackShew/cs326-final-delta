@@ -38,40 +38,161 @@ window.addEventListener("load", async function() {
     }
     document.getElementById("commentNumber").innerHTML = numComments;
     document.getElementById("rank").innerHTML = postData["score"];
-    // const d = new Date();
-    // const month = d.getMonth().toString();
-    // const day = d.getDay().toString();
-    // const year = d.getFullYear().toString();
-    // const date = month + "-" + day + "-" + year;
-    // const test = {
-    //     "commenter":"george",
-    //     "date" : date,
-    //     "text": "cool",
-    //     "score": 56
-    // }
-    comments.forEach(c => {
-        renderComment(c) 
+    document.getElementById("increment").addEventListener('click', function(){
+        console.log("clicked");
+        if(document.getElementById("decrement").disabled){
+            postData.score +=1;
+        }
+        console.log("clicked");
+        postData.score +=1;
+        (async () => {
+            const rawResponse = await fetch('/updateScore', {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            });
+            const content = await rawResponse.json();
+            
+            console.log(content);
+        })();
+        
+        const updatedScore = document.getElementById("rank");
+        updatedScore.innerHTML = `<b>${postData["score"]}</b>`
+        document.getElementById("increment").disabled = true;
+        document.getElementById("decrement").disabled = false;
     });
+    document.getElementById("decrement").addEventListener('click', function(){
+    console.log("clicked");
+    if(document.getElementById("increment").disabled){
+        postData.score -=1;
+    }
+    console.log("clicked");
+    postData.score -=1;
+    (async () => {
+        const rawResponse = await fetch('/updateScore', {
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(postData)
+        });
+        const content = await rawResponse.json();
+        
+        console.log(content);
+    })();
+    
+    const updatedScore = document.getElementById("rank");
+    updatedScore.innerHTML = `<b>${postData["score"]}</b>`
+    document.getElementById("decrement").disabled = true;
+    document.getElementById("increment").disabled = false;
+    });
+    var index = 0;
+    comments.forEach(c => {
+        renderComment(c, index);
+        addIncDec(c,index);
+        index += 1; 
+    });
+    document.getElementById("n").value = r;
+    document.getElementById("user").value = "Jay";
+    document.getElementById("postComment").onsubmit = function(){
+        location.reload(true);
+    }
+    // profile/login stuff
+    document.getElementById("profileButton").addEventListener('click', function(){
+        openForm(document.getElementById("loginForm"));
+    });
+
+    document.getElementById("loginSelect").addEventListener('change', function(){
+            console.log("signUp");
+            this.value="login";
+            closeForm(document.getElementById("loginForm"));
+            openForm(document.getElementById("signUpForm"));
+    });
+
+    document.getElementById("signUpSelect").addEventListener('change', function(){
+            console.log("login");
+            this.value="signUp";
+            closeForm(document.getElementById("signUpForm"));
+            openForm(document.getElementById("loginForm"));
+    });
+
+    document.getElementById("closeFormL").addEventListener('click', function(){
+        closeForm(document.getElementById("loginForm"));
+    });
+    document.getElementById("closeFormS").addEventListener('click', function(){
+        closeForm(document.getElementById("signUpForm"));
+    });
+
+    document.getElementById("loginButton").addEventListener('click', async function(){
+        const address = document.getElementById("loginAddress").value;
+        const password = document.getElementById("loginPass").value;
+        const account = {"address": address, "password": password};
+        const response = await fetch("/login/"+address + "/" + password);
+        if(!response.ok){
+            console.log(response.error);
+            return;
+        }else{
+            const user = await response.json();
+            // let userFound = false;
+            // await users.forEach((user)=>{
+            //     console.log(user.address);
+            //     console.log(user.password);
+            //     if(user.address === address){
+            //       if(user.password === password){
+            //         // login
+            //         console.log(user);
+            //         userFound = true;
+            //         window.localStorage.setItem("user",JSON.stringify(account));
+            //       }
+            //     }
+            //   });
+            if(user.address){
+                console.log("User:");
+                console.log(user);
+                window.localStorage.setItem("user",JSON.stringify(account));
+                document.getElementById("userID").innerHTML = "Hi, " + user.address;
+                console.log("signed in");
+            }else{
+                console.log("address or password does not match");
+            }
+        }
+    });
+    document.getElementById("loginButton").onclick = function(){
+        location.reload(true);
+    }
+
+    document.getElementById("logOutL").addEventListener('click', function(){
+        if(localStorage.getItem("user")){
+            localStorage.removeItem("user");
+            document.getElementById("userID").innerHTML = "";
+
+            console.log("Logged out");
+        }else{
+            console.log("No account to log out of");
+        }
+    })
+    
+    document.getElementById("logOutS").addEventListener('click', function(){
+        if(localStorage.getItem("user")){
+            localStorage.removeItem("user");
+            console.log("Logged out");
+        }else{
+            console.log("No account to log out of");
+        }
+    })
     // document.getElementById("commentBtn").addEventListener('click', postComment(description));
 });
 
-async function postComment(description) {
-    const d = new Date();
-    const month = d.getMonth().toString();
-    const day = d.getDay().toString();
-    const year = d.getFullYear().toString();
-    const date = month + "/" + day + "/" + year;
-    const response = await fetch("/postComment",{
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({"commenter": user, "date": date, "text": description, "score": 1})
-        });
-        const content = await response.json();
-        console.log(content);
-        return content;
+function openForm(element) {
+    element.style.display = "inline-block";
+}
+    
+function closeForm(element) {
+    element.style.display = "none";
 }
 
 async function getCommentData() {
@@ -96,7 +217,9 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-function renderComment(commentData){
+function renderComment(commentData, intIndex){
+    const index = intIndex.toString();
+    console.log(index);
     const commentSection = document.getElementById("comment-section");
     const comment = document.createElement("div");
     comment.classList.add("comment");
@@ -123,19 +246,135 @@ function renderComment(commentData){
     const commentRank = document.createElement("div");
     commentRank.classList.add("comment-rank");
     commentRank.innerHTML = `
-    <button class="btn btn-default">
+
+    <button class="btn btn-default" class = "increment" id="${index + "increment"}">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
         </svg>
     </button>
-    <div class = "comment-score"><b>${commentData["score"]}</b></div>
-    <button class="btn btn-default">
+    <div class = "comment-score" id="${index + "score"}"><b>${commentData["score"]}</b></div>
+    <button class="btn btn-default" class = "decrement" id="${index + "decrement"}">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
         </svg>
     </button>`;
     comment.appendChild(commentRank);
     commentSection.appendChild(comment);
+    const bre = document.createElement("br");
+    commentSection.appendChild(bre);
+}
+
+// function increment(postData){
+//         console.log("clicked");
+//         if(document.getElementById("decrement").disabled){
+//             postData.score +=1;
+//         }
+//         console.log("clicked");
+//         postData.score +=1;
+//         (async () => {
+//             const rawResponse = await fetch('/updateScore', {
+//                 method: 'POST',
+//                 headers: {
+//                 'Accept': 'application/json',
+//                 'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify(postData)
+//             });
+//             const content = await rawResponse.json();
+            
+//             console.log(content);
+//         })();
+        
+//         const updatedScore = document.getElementById("rank");
+//         updatedScore.innerHTML = `<b>${postData["score"]}</b>`
+//         document.getElementById("increment").disabled = true;
+//         document.getElementById("decrement").disabled = false;
+// };
+// function decrement(postData){
+//     console.log("clicked");
+//     if(document.getElementById("increment").disabled){
+//         postData.score -=1;
+//     }
+//     console.log("clicked");
+//     postData.score -=1;
+//     (async () => {
+//         const rawResponse = await fetch('/updateScore', {
+//             method: 'POST',
+//             headers: {
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(postData)
+//         });
+//         const content = await rawResponse.json();
+        
+//         console.log(content);
+//     })();
+    
+//     const updatedScore = document.getElementById("rank");
+//     updatedScore.innerHTML = `<b>${postData["score"]}</b>`
+//     document.getElementById("decrement").disabled = true;
+//     document.getElementById("increment").disabled = false;
+// };
+
+function addIncDec(commentData, intIndex){
+    const index = intIndex.toString();
+    document.getElementById(index + "increment").addEventListener('click', function(){
+        console.log("clicked");
+        if(document.getElementById(index + "decrement").disabled){
+            commentData.score+=1;
+        }
+        commentData.score +=1;
+        commentData.title = r;
+        commentData.index = index;
+        (async () => {
+            const rawResponse = await fetch('/updateScore', {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(commentData)
+            });
+            const content = await rawResponse.json();
+            
+            console.log(content);
+    })();
+    
+    const updatedScore = document.getElementById(index + "score");
+    updatedScore.innerHTML = `<b>${commentData["score"]}</b>`
+    document.getElementById(index + "increment").disabled = true;
+    document.getElementById(index + "decrement").disabled = false;
+
+});
+
+    document.getElementById(index + "decrement").addEventListener('click', function(){
+        console.log("clicked");
+        if(document.getElementById(index + "increment").disabled){
+            commentData.score-=1;
+        }
+        commentData.score -=1;
+        commentData.title = r;
+        commentData.index = index;
+        (async () => {
+            const rawResponse = await fetch('/updateScore', {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(commentData)
+            });
+            const content = await rawResponse.json();
+            
+            console.log(content);
+        })();
+        
+        const updatedScore = document.getElementById(index + "score");
+        updatedScore.innerHTML = `<b>${commentData["score"]}</b>`
+        document.getElementById(index + "increment").disabled = false;
+        document.getElementById(index + "decrement").disabled = true;
+    });
 }
 // function renderPost(postData){
 //     const dish = document.createElement("div");
@@ -310,46 +549,6 @@ function renderComment(commentData){
 
 
 
-// function increment(id){
-//     if(!dishes[id]["incremented"]){
-//         let score = document.getElementById(id).innerText;
-//         score = parseInt(score);
-//         score += 1;
-//         if(dishes[id]["decremented"]){
-//             score+=1;
-//         }
-//         document.getElementById(id).innerText = score.toString();
-//         dishes[id]["incremented"] = true;
-//         dishes[id]["decremented"] = false;
-//     }else{
-//         let score = document.getElementById(id).innerText;
-//         score = parseInt(score);
-//         score -= 1;
-//         document.getElementById(id).innerText = score.toString();
-//         dishes[id]["incremented"] = false;
-//         dishes[id]["decremented"] = false;
-//     }
-// }
-// function decrement(id){
-//     if(!dishes[id]["decremented"]){
-//         let score = document.getElementById(id).innerText;
-//         score = parseInt(score);
-//         score -= 1;
-//         if(dishes[id]["incremented"]){ 
-//             score -= 1;
-//         }
-//         document.getElementById(id).innerText = score.toString();
-//         dishes[id]["decremented"] = true;
-//         dishes[id]["incremented"] = false;
-//     }else{
-//         let score = document.getElementById(id).innerText;
-//         score = parseInt(score);
-//         score += 1;
-//         document.getElementById(id).innerText = score.toString();
-//         dishes[id]["incremented"] = false;
-//         dishes[id]["decremented"] = false;
-//     }
-// }
 
 
 // /*<div class="dish-container">
