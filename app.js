@@ -560,49 +560,6 @@ app.get('/',checkLoggedIn,
       res.redirect('/login');
 });
 
-// app.use(express.static('html'));
-
-async function main(){
-  /**
-   * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
-   * See https://docs.mongodb.com/ecosystem/drivers/node/ for more details
-   */
-  const uri = "mongodb+srv://<username>:<password>@<your-cluster-url>/test?retryWrites=true&w=majority";
-
-
-  const client = new MongoClient(uri);
-
-  try {
-      // Connect to the MongoDB cluster
-      await client.connect();
-
-      // Make the appropriate DB calls
-      await  listDatabases(client);
-
-  } catch (e) {
-      console.error(e);
-  } finally {
-      await client.close();
-  }
-}
-
-
-
-// app.post('/book', (req, res) => {
-//   const book = req.body;
-
-//   // Output the book to the console for debugging
-//   console.log(book);
-//   books.push(book);
-
-//   res.send('Book is added to the database');
-// });
-
-
-// app.put('/user', (req, res) => {
-//     res.send('Got a PUT request at /user')
-//   })
-
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

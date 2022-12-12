@@ -1,12 +1,8 @@
 var userID = window.location.href;
 userID = userID.substring(userID.lastIndexOf("/")+1);
-var userIDslash = "";
 var account = "guest";
 window.addEventListener("load", async function() {
-    console.log("Joe mama");
-    // const user = await getUser();
     userID = window.location.href;
-    console.log(userID);
     userID = userID.substring(userID.lastIndexOf("/")+1);
     account = await getAccount();
     document.getElementById("idText").innerHTML = "Hi " + account.account;
@@ -127,18 +123,6 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-function openForm(element) {
-    element.style.display = "inline-block";
-}
-    
-function closeForm(element) {
-    element.style.display = "none";
-}
-
-// async function getUser(){
-//     const response = await fetch("/user");
-//     return response.json;
-// }
 async function getDishData() {
 
     console.log("in dish data mainjs");
@@ -146,24 +130,6 @@ async function getDishData() {
 
     console.log(response);
     return response.json();
-}
-
-async function signUp(accountInfo) {
-    const address = accountInfo["address"];
-    const password = accountInfo["password"];
-    const account = {"address": address, "password": password};
-    const response = await fetch("/signUp",{
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({address: address, password: password})
-        });
-        const content = await response.json();
-        console.log(content);
-        window.localStorage.setItem("user",JSON.stringify(account));
-        return content;
 }
 
 async function postScrape(body) {
@@ -304,8 +270,6 @@ function renderPost(postData){
 
     dish.appendChild(dishRank);
     const hallContainer = document.getElementById(postData["location"]+"Container");
-    //hallContainer.innerHTML = JSON.stringify(postData);
-    //const diningContainer = hallContainer.querySelector(".dining-container");
     hallContainer.appendChild(dish);
     document.getElementById(postData["title"] + "increment").addEventListener('click', function(){
         if(document.getElementById(postData["title"] + "decrement").disabled){
@@ -360,48 +324,5 @@ function renderPost(postData){
         document.getElementById(postData["title"] + "decrement").disabled = true;
 
     });
-}
-
-
-
-function increment(id){
-    if(!dishes[id]["incremented"]){
-        let score = document.getElementById(id).innerText;
-        score = parseInt(score);
-        score += 1;
-        if(dishes[id]["decremented"]){
-            score+=1;
-        }
-        document.getElementById(id).innerText = score.toString();
-        dishes[id]["incremented"] = true;
-        dishes[id]["decremented"] = false;
-    }else{
-        let score = document.getElementById(id).innerText;
-        score = parseInt(score);
-        score -= 1;
-        document.getElementById(id).innerText = score.toString();
-        dishes[id]["incremented"] = false;
-        dishes[id]["decremented"] = false;
-    }
-}
-function decrement(id){
-    if(!dishes[id]["decremented"]){
-        let score = document.getElementById(id).innerText;
-        score = parseInt(score);
-        score -= 1;
-        if(dishes[id]["incremented"]){ 
-            score -= 1;
-        }
-        document.getElementById(id).innerText = score.toString();
-        dishes[id]["decremented"] = true;
-        dishes[id]["incremented"] = false;
-    }else{
-        let score = document.getElementById(id).innerText;
-        score = parseInt(score);
-        score += 1;
-        document.getElementById(id).innerText = score.toString();
-        dishes[id]["incremented"] = false;
-        dishes[id]["decremented"] = false;
-    }
 }
 
