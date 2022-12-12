@@ -62,7 +62,7 @@ Posts: this collection holds the information for each and every dish on our app.
      ]
   }
  
-Users: this collection holds the information for all the users on our app. attributes for administrative operations (CRUD on dishes) is linked to an account with the adress of "Admin".
+Users: this collection holds the information for all the users on our app. attributes for administrative operations (CRUD on dishes) is linked to an account with the address of "Admin" and Password of "password". Please feel free to check it out.
 
   {
   
