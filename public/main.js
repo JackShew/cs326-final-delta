@@ -1,8 +1,21 @@
-
+var userID = window.location.href;
+userID = userID.substring(userID.lastIndexOf("/")+1);
+var userIDslash = "";
+var account = "guest";
 window.addEventListener("load", async function() {
     console.log("Joe mama");
     // const user = await getUser();
-    // document.getElementById("userID").innerHTML("Hi" + user.name)
+    userID = window.location.href;
+    console.log(userID);
+    userID = userID.substring(userID.lastIndexOf("/")+1);
+    console.log(userID);
+    if(userID){
+        document.getElementById("idText").innerHTML = "Hi " + userID;
+        document.getElementById("logout").innerHTML = "click here to logout";
+        userIDslash = "&?user="+userID;
+    }
+    account = await getAccount();
+    document.getElementById("userID").innerHTML = "Hi " + account.account;
     let dishes = await getDishData();
     console.log(dishes);
     dishes.forEach(element => {
@@ -98,8 +111,9 @@ window.addEventListener("load", async function() {
         //post(dishData);
     });
 
-    document.getElementById("profileButton").addEventListener('click', function(){
-        openForm(document.getElementById("loginForm"));
+    document.getElementById("profileButton").addEventListener('click', async function(){
+        // await fetch("/login");
+        // openForm(document.getElementById("loginForm"));
     });
 
     document.getElementById("loginSelect").addEventListener('change', function(){
@@ -178,6 +192,22 @@ window.addEventListener("load", async function() {
         }
     })
 });
+
+async function getAccount() {
+    const response = await fetch("/account");
+    console.log(response);
+    return response.json();
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
 
 function openForm(element) {
     element.style.display = "inline-block";

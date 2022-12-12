@@ -1,6 +1,6 @@
 var r;
 var h;
-const user = "Jay"
+var account;
 window.addEventListener("load", async function() {
     // const comments = await getComments();
     // comments.forEach(comment => {
@@ -8,6 +8,8 @@ window.addEventListener("load", async function() {
     // });
     r = getParameterByName('dishName');
     h = getParameterByName('diningHall');
+    account = await getAccount();
+    document.getElementById("userID").innerHTML = "Hi " + account.account;
     var hall;
     switch(h){
         case "berk":
@@ -97,14 +99,9 @@ window.addEventListener("load", async function() {
         index += 1; 
     });
     document.getElementById("n").value = r;
-    document.getElementById("user").value = "Jay";
     document.getElementById("postComment").onsubmit = function(){
         location.reload(true);
     }
-    // profile/login stuff
-    document.getElementById("profileButton").addEventListener('click', function(){
-        openForm(document.getElementById("loginForm"));
-    });
 
     document.getElementById("loginSelect").addEventListener('change', function(){
             console.log("signUp");
@@ -197,6 +194,12 @@ function closeForm(element) {
 
 async function getCommentData() {
     const response = await fetch("/commentData/"+r);
+    console.log(response);
+    return response.json();
+}
+
+async function getAccount() {
+    const response = await fetch("/account");
     console.log(response);
     return response.json();
 }

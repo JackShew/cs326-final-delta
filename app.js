@@ -18,8 +18,9 @@ const minicrypt = require('./miniCrypt');
 const mc = new minicrypt(); 
 const expressSession = require('express-session');  // for managing session state
 const passport = require('passport');               // handles authentication
+const { rmSync } = require('fs');
 const LocalStrategy = require('passport-local').Strategy; // username/password strategy
-
+var account = "guest";
 const session = {
   secret : process.env.SECRET || 'SECRET', // set this encryption key in Heroku config (never in GitHub)!
   resave : false,
@@ -265,27 +266,23 @@ app.get('/commentData/:dish', async function(req,res){
     await client.close();
   }
 });
-app.get('/comments.html', function(req,res){
-  res.render("./comments.html");
+app.get('/comments.html', checkLoggedIn,
+(req, res) => {
+    console.log(res);
+    res.render("./comments.html");
 })
 
-app.post('/postComment', async function(req, res) {
+app.post('/postComment', checkLoggedIn, async function(req, res) {
   const client = new MongoClient(uri, { useUnifiedTopology: true });
   const dish = req.body.dish;
   console.log(req.body);
-  // const user = req.body.user;
-  // const date = req.body.date;
-  const d = new Date();
-  const month = d.getMonth().toString();
-  const day = d.getDay().toString();
-  const year = d.getFullYear().toString();
-  const date = month + "/" + day + "/" + year;
+  const d = new Date().toLocaleDateString();
   const text = req.body.text;
-  const user = req.body.user;
+  const user = account;
   // const score = req.body.score;
   const data = {
     "commenter":user,
-    "date":date,
+    "date":d,
     "text":text,
     "score":1
   }
@@ -572,32 +569,44 @@ app.get('/berk', function(req, res) {
   });
 });
 
+app.get('/account', (req,res)=>{
+  if(req.isAuthenticated){
+    res.send({"account":account});
+  }
+});
 // Private data
-app.get('/private',
+app.get('/home',
 	checkLoggedIn, // If we are logged in (notice the comma!)...
 	(req, res) => {             // Go to the user's page.
-	    res.redirect('/private/' + req.user);
+      account = req.user;
+	    res.redirect('/' + req.user);
 	});
 
-// A dummy page for the user.
-app.get('/private/:userID/',
-	checkLoggedIn, // We also protect this route: authenticated...
-	(req, res) => {
-	    // Verify this is the right user.
-	    if (req.params.userID === req.user) {
-		res.writeHead(200, {"Content-Type" : "text/html"});
-		res.write('<H1>HELLO ' + req.params.userID + "</H1>");
-		res.write('<br/><a href="/logout">click here to logout</a>');
-		res.end();
-	    } else {
-		res.redirect('/private/');
-	    }
-	});
+// // A dummy page for the user.
+// app.get('/home/:userID/',
+// 	checkLoggedIn, // We also protect this route: authenticated...
+// 	(req, res) => {
+// 	    // Verify this is the right user.
+//       console.log(req);
+//       console.log(res);
+// 	    if (req.params.userID === req.user) {
+//         res.writeHead(200, {"Content-Type" : "text/html"});
+//         res.write('<H1>HELLO ' + req.params.userID + "</H1>");
+//         res.write('<br/><a href="/">click here to logout</a>');
+//         res.end();
+//         // res.sendFile('./index.html',
+//         // 				   { 'root' : "public" });
+//         // res.sendFile('public/index.html',
+// 				//    { 'root' : __dirname })
+// 	    } else {
+// 		    res.redirect('/login');
+// 	    }
+// 	});
 // newLogin stuff
 // Handle post data from the login.html form.
 app.post('/login',
 	 passport.authenticate('local' , {     // use username/password authentication
-	     'successRedirect' : '/private',   // when we login, go to /private 
+	     'successRedirect' : '/home',   // when we login, go to /private 
 	     'failureRedirect' : '/login'      // otherwise, back to login
 	 }));
 
@@ -607,9 +616,12 @@ app.get('/login',
 				   { 'root' : __dirname }));
 
 // Handle logging out (takes us back to the login page).
-app.get('/logout', (req, res) => {
-    req.logout(); // Logs us out!
-    res.redirect('/login'); // back to login
+app.get('/logout', function(req, res, next) {
+	req.logout(function(err) {
+		if (err) { return next(err); }
+    account = "guest";
+		res.redirect('/');
+	});
 });
 
 
@@ -632,7 +644,21 @@ app.post('/register',
 app.get('/register',
 	(req, res) => res.sendFile('public/register.html',
 				   { 'root' : __dirname }));
+app.get('/:userID',checkLoggedIn,
+(req, res) => {
+	    if (req.params.userID === req.user) {
+        res.sendFile('public/index.html',
+              { 'root' : __dirname })
+      }else{
+        res.redirect('/');
+      }
+    });
+app.get('/',checkLoggedIn,
+    (req, res) => {
+      res.redirect('/login');
+});
 
+// app.use(express.static('html'));
 
 async function main(){
   /**
