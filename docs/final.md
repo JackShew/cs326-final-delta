@@ -77,8 +77,15 @@ Users: this collection holds the information for all the users on our app. attri
      ]
   }
 
-
 **URL Mapping**
+
+
+| Endpoint      | Description |
+| ----------- | ----------- |
+| [Main](https://grub-gauge.herokuapp.com/)      | Main page, allows users to post and view posts|
+|[Login](https://grub-gauge.herokuapp.com/login)  | allows existing users to login|
+|[Register](https://grub-gauge.herokuapp.com/register)  | allows users to create accounts|
+|[Comments](https://grub-gauge.herokuapp.com/comments.html?dishName=Chicken%20Noodle%20Soup&?diningHall=worcester)| Allows users to view and make comments for post 
 
 
 URL Routes/Mappings: 
