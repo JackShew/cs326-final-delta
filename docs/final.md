@@ -33,6 +33,12 @@ By Jack Shewchuk and Jayden Nambu
 - axios
 - cheerio
 - bodyParser
+- minicrypt
+- expressSession
+- passport
+- fetch
+
+APIs primarily utilized for web scraping and authentication.
 
 **Database**
 
