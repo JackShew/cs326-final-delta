@@ -81,12 +81,6 @@ Users: this collection holds the information for all the users on our app. attri
 **URL Mapping**
 
 
-| Endpoint      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |
-
-
 URL Routes/Mappings: 
 
 Main page: https://grub-gauge.herokuapp.com/
@@ -106,7 +100,6 @@ Comments page: https://grub-gauge.herokuapp.com/comments.html?dishName=?diningHa
 
 **Authentication**
 
-Authentication/Authorization: 
   Authentication was carried out through several modules; express-session, passport, passport-local, and minicrypt. We first set our local strategy which checks if there is a user with the given username in the database and then if the password is correct. The password is checked using minicrypt, when a user is first made minicrypt generates a salt and hash from the given password, to check if a given password is the same as the original we use minicrypt.check. Several GET and POST routes are checked by the function checkloggedin which checks if the request is authenticated and if it is it continues through the route, but if it has not been authenticated the user is redirected to the login page.
   There is an admin account by the name Admin which is allowed several special perissions. The Admin may edit the descriptions of a post and, if needed, delete a post, as well as the abilities of a normal user. The delete and edit description buttons are only visible to the Admin.
 
