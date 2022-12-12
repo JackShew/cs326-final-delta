@@ -87,14 +87,29 @@ Users: this collection holds the information for all the users on our app. attri
 | Paragraph   | Text        |
 
 
-URL Routes/Mappings: A final up-to-date table of all the URL routes that your application supports and a short description of what those routes are used for. You should also indicate any authentication and permissions on those routes.
+URL Routes/Mappings: 
+
+Main page: https://grub-gauge.herokuapp.com/
+  the main page allows users to view and update posts as well as post dishes and access the login page and comment sections of posts,
+  accounts specific pages are held at https://grub-gauge.herokuapp.com/:userID
+    if a user tries to access another accounts page without being logged in they will be brought to the login page
+    additionally the admin account is able to delete posts and edit descriptions,
+Login page: https://grub-gauge.herokuapp.com/login
+  login page allows users to log into existing accounts
+  after logging in users are brought to the main page of the user they logged into,
+Register page: https://grub-gauge.herokuapp.com/register
+  creates new accounts
+  after submitting a register users are brought to the login page,
+Comments page: https://grub-gauge.herokuapp.com/comments.html?dishName=?diningHall=
+  if a user clicks on the comment button of a post they are brought to that posts comment page, dishname and dining hall are carried in the url
+  a dishes comments page renders the comment data and allows logged in users to make comments on the post
 
 **Authentication**
-
 
 Authentication/Authorization: 
   Authentication was carried out through several modules; express-session, passport, passport-local, and minicrypt. We first set our local strategy which checks if there is a user with the given username in the database and then if the password is correct. The password is checked using minicrypt, when a user is first made minicrypt generates a salt and hash from the given password, to check if a given password is the same as the original we use minicrypt.check. Several GET and POST routes are checked by the function checkloggedin which checks if the request is authenticated and if it is it continues through the route, but if it has not been authenticated the user is redirected to the login page.
   There is an admin account by the name Admin which is allowed several special perissions. The Admin may edit the descriptions of a post and, if needed, delete a post, as well as the abilities of a normal user. The delete and edit description buttons are only visible to the Admin.
+
 **Division of Labor**
 
 Jack: Programmatically rendering all dish elements from mongoDB backend. Constructed endpoints for dish and ranking CRUD. Built web scraper and refresh dishes functionality and UI.
