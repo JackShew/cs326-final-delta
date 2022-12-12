@@ -83,12 +83,17 @@ Authentication/Authorization: A final up-to-date description of how users are au
 
 **Division of Labor**
 
-Jack: Started Milestone 3 with programmatically rendering all dish elements in anticipation for mongoDB backend. After Jayden got mongo on app.js, I was able to get all the CRUD endpoints up and running on the backend while also rendering all frontend elements from the db.
+Jack: Programmatically rendering all dish elements from mongoDB backend. Constructed endpoints for dish and ranking CRUD. Built web scraper and refresh dishes functionality and UI.
 
 Jayden: Set up Mongo database and connected it to the app, implemented initial post dish post requst, and set up login and submit with database compatibility.
 
 
 **Conclusion**
 
-Conclusion: A conclusion describing your team’s experience in working on this project. This should include what you learned through the design and implementation process, the difficulties you encountered, what your team would have liked to know before starting the project that would have helped you later, and any other technical hurdles that your team encountered.
+Grub Gauge was a labor of love, starting from the very first paper mockup to the final user login bugs. Overall, we learned a lot about user experience design and the importance of thorough testing during the implementation phase. One of the biggest difficulties we encountered was balancing the need for a user-friendly interface with the need to integrate complex functionality into the application. We also struggled with some technical hurdles, such as debugging issues with the user login system.
+
+In hindsight, we would have liked to have a better understanding of the technical Express and MongoDB integration we were likely to face before starting the project. This would have allowed us to plan our development process more effectively and allocate our resources more efficiently.
+
+Despite the challenges we faced, we are proud of what we were able to accomplish with Grub Gauge. We believe it is a valuable tool for the Umass community to gauge the best food on campus, and we look forward to continuing to improve and evolve the application in the future.
+
 
