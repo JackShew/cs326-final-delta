@@ -99,8 +99,7 @@ Authentication/Authorization:
 
 Jack: Programmatically rendering all dish elements from mongoDB backend. Constructed endpoints for dish and ranking CRUD. Built web scraper and refresh dishes functionality and UI.
 
-Jayden: Set up Mongo database and connected it to the app, implemented initial post dish post requst, and set up login and submit with database compatibility.
-
+Jayden: Created the comments page which programatically renders comments from the mongoDB backend. Implemented authentication for account management.
 
 **Conclusion**
 
