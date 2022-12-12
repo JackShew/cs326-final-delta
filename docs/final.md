@@ -1,6 +1,6 @@
 **Team Delta Presents:**
 
-***Grub Gauge***
+***Grub Gauge***: https://grub-gauge.herokuapp.com/
 
 A web app that programatically renders user generated and web scraped dishes from UMass's 4 dining halls - enabling the Umass community to crowdsource the best dishes from the #1 dining in the nation. As the only food ranking website for UMass Amherst, we want to provide the most relevant dining information for anyone on our campus.
 
