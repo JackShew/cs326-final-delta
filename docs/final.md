@@ -52,16 +52,29 @@ Posts: this collection holds the information for each and every dish on our app.
     "location":"worcester",                                   //String
     "image":"placeholder.png",                                //String
     "score":{"$numberInt":"67"},                              //Int32
-    "comments":{"$numberInt":"0"}}                            //Int32
+    "comments": Array [                                       //Array
+       0: Object {                                            //Object
+       "commenter": "Jay",                                    //String
+       "date": "12/11/2022",                                  //String
+       "text": "This chicken noodle soup was great",          //String
+       "score": 4                                             //Int32
+       }
+     ]
   }
-  
+ 
 Users: this collection holds the information for all the users on our app. attributes for administrative operations (CRUD on dishes) is linked to an account with the adress of "Admin".
 
   {
   
-    "_id":{"$oid":"637af211718acb34665f6bc8"},                //ObjectID
-    "address":"test@test.edu",                                //String
-    "password":"test"                                         //String
+    "_id": 63969fbad7965bfe99dc0729                          //ObjectID
+    "address":"Admin",                                       //String
+    "password": Array [                                      //Array
+      0: "ceff160f886703dccf53ff1ef0e6fc6a",                 //String
+      1: "ff198f74abc76ef18cffc4db5a210c0c19                 //String
+          64e0e0ad114e957e4d4eebe1fbe2b86679
+          8ce60dcb40bb20bc39f941b048e10ecb9f
+          37a62ad6bdb91941dd2b6a8e26"
+     ]
   }
 
 
