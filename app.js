@@ -1,8 +1,5 @@
-// import {settings} from './settings.env';
 const express = require('express');
-//const multer  = require('multer');
 const app = express();
-//const request = require('request');
 const https = require('https');
 const axios = require('axios');
 const cheerio = require('cheerio');
@@ -26,11 +23,10 @@ const session = {
   resave : false,
   saveUninitialized: false
 };
-//const uri = process.env.MONGODB_URI; 
-//console.log(uri);// Causes error
 
 let secrets;
 let uri;
+
 if (!process.env.MONGODB_URI) {
   secrets = require('./secrets.json');
   uri = secrets.MONGODB_URI;
@@ -162,17 +158,6 @@ function checkLoggedIn(req, res, next) {
   }
 }
 
-// //web scraping
-
-
-// var storage = multer.diskStorage({
-//   destination: '/uploads',
-//   filename: function (req, file, cb) {
-//     cb(null, file.originalname)
-//   }
-// })
-// const upload = multer({ storage: storage })
-// , upload.single("imageUpload")
 app.post('/updateScore', async function(req, res) {
   
   console.log(req.body);
@@ -519,26 +504,6 @@ app.get('/home',
 	    res.redirect('/' + req.user);
 	});
 
-// // A dummy page for the user.
-// app.get('/home/:userID/',
-// 	checkLoggedIn, // We also protect this route: authenticated...
-// 	(req, res) => {
-// 	    // Verify this is the right user.
-//       console.log(req);
-//       console.log(res);
-// 	    if (req.params.userID === req.user) {
-//         res.writeHead(200, {"Content-Type" : "text/html"});
-//         res.write('<H1>HELLO ' + req.params.userID + "</H1>");
-//         res.write('<br/><a href="/">click here to logout</a>');
-//         res.end();
-//         // res.sendFile('./index.html',
-//         // 				   { 'root' : "public" });
-//         // res.sendFile('public/index.html',
-// 				//    { 'root' : __dirname })
-// 	    } else {
-// 		    res.redirect('/login');
-// 	    }
-// 	});
 // newLogin stuff
 // Handle post data from the login.html form.
 app.post('/login',
