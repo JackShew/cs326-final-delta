@@ -304,73 +304,75 @@ function renderPost(postData){
     // comments.addEventListener('click', async function(){
     //     await fetch("comments.html?dishName=dish&?diningHall=hall");
     // })
-    const editbutton = document.createElement("button");
-    editbutton.setAttribute.id = postData["title"] + "edit";
-    editbutton.innerHTML = "edit description";
-   
-    
-    const endbutton = document.createElement("button");
-    endbutton.setAttribute.id = postData["title"] + "end";
-    endbutton.innerHTML = "finish editing";
-    endbutton.style.visibility = "hidden";
-
-    const deleteButton = document.createElement("button");
-    deleteButton.setAttribute.id = postData["title"] + "delete";
-    deleteButton.innerHTML = "delete dish !!Carefull!!";
-
-
-    editbutton.addEventListener("click", function() {
-        dishTitle.contentEditable = true;
-        dishDes.contentEditable = true;
-        dishDes.style.backgroundColor = "#dddbdb";
-        endbutton.style.visibility = "visible"
-      } );
-
-    endbutton.addEventListener("click", function() {
-        dishDes.contentEditable = false;
-        endbutton.style.visibility = "hidden"
-        dishDes.style.backgroundColor = "#ffe44d";
-        const decContent = dishDes.innerHTML;
-        postData["description"] = decContent;
-        (async () => {
-            const rawResponse = await fetch('/updateDescription', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(postData)
-            });
-            const content = await rawResponse.json();
-          
-            console.log(content);
-        })();
-
-    } )
-
-    deleteButton.addEventListener("click", function() {
-        dish.innerHTML = "";
-        (async () => {
-            const rawResponse = await fetch('/deleteDish', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(postData)
-            });
-            const content = await rawResponse.json();
-          
-            console.log(content);
-        })();
-
-    } )
     dishInfo.appendChild(dishTitle);
     dishInfo.appendChild(dishDes);
     dishInfo.appendChild(dishComment);
-    dishInfo.appendChild(editbutton);
-    dishInfo.appendChild(endbutton);
-    dishInfo.appendChild(deleteButton);
+    if(account.account === "Admin"){
+        const editbutton = document.createElement("button");
+        editbutton.setAttribute.id = postData["title"] + "edit";
+        editbutton.innerHTML = "edit description";
+    
+        
+        const endbutton = document.createElement("button");
+        endbutton.setAttribute.id = postData["title"] + "end";
+        endbutton.innerHTML = "finish editing";
+        endbutton.style.visibility = "hidden";
+
+        const deleteButton = document.createElement("button");
+        deleteButton.setAttribute.id = postData["title"] + "delete";
+        deleteButton.innerHTML = "delete dish !!Carefull!!";
+
+
+        editbutton.addEventListener("click", function() {
+            dishTitle.contentEditable = true;
+            dishDes.contentEditable = true;
+            dishDes.style.backgroundColor = "#dddbdb";
+            endbutton.style.visibility = "visible"
+        } );
+
+        endbutton.addEventListener("click", function() {
+            dishDes.contentEditable = false;
+            endbutton.style.visibility = "hidden"
+            dishDes.style.backgroundColor = "#ffe44d";
+            const decContent = dishDes.innerHTML;
+            postData["description"] = decContent;
+            (async () => {
+                const rawResponse = await fetch('/updateDescription', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+                });
+                const content = await rawResponse.json();
+            
+                console.log(content);
+            })();
+
+        } )
+
+        deleteButton.addEventListener("click", function() {
+            dish.innerHTML = "";
+            (async () => {
+                const rawResponse = await fetch('/deleteDish', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+                });
+                const content = await rawResponse.json();
+            
+                console.log(content);
+            })();
+
+        } )
+        dishInfo.appendChild(editbutton);
+        dishInfo.appendChild(endbutton);
+        dishInfo.appendChild(deleteButton);
+    }
 
 
     dish.appendChild(dishInfo);

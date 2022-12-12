@@ -201,49 +201,51 @@ app.post('/updateScore', async function(req, res) {
 
 
 app.post('/updateDescription', async function(req, res) {
-  
-  console.log(req.body);
-  const client = new MongoClient(uri, { useUnifiedTopology: true });
+  if(account == "Admin"){
+    console.log(req.body);
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
 
-  try {
-    await client.connect();
-    const database = client.db('GrubGaugeData');
-    const collection = database.collection('Posts');
+    try {
+      await client.connect();
+      const database = client.db('GrubGaugeData');
+      const collection = database.collection('Posts');
 
-    collection.updateOne({title: req.body.title}, {$set:{description:req.body.description}});
-    //const p = await collection.insertOne(data);
-    const myDoc = await collection.findOne();
-  }catch(err){
-    console.log(err);
+      collection.updateOne({title: req.body.title}, {$set:{description:req.body.description}});
+      //const p = await collection.insertOne(data);
+      const myDoc = await collection.findOne();
+    }catch(err){
+      console.log(err);
+    }
+    finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
+    }
+    res.status(200).json({ status: 'success'});
   }
-  finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-  res.status(200).json({ status: 'success'});
 });
 
-app.post('/deleteDish', async function(req, res) {
-  
-  console.log(req.body);
-  const client = new MongoClient(uri, { useUnifiedTopology: true });
+app.post('/deleteDish',checkLoggedIn, async function(req, res) {
+  if(account == "Admin"){
+    console.log(req.body);
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
 
-  try {
-    await client.connect();
-    const database = client.db('GrubGaugeData');
-    const collection = database.collection('Posts');
+    try {
+      await client.connect();
+      const database = client.db('GrubGaugeData');
+      const collection = database.collection('Posts');
 
-    await collection.deleteOne({title: req.body.title});
-    //const p = await collection.insertOne(data);
-    const myDoc = await collection.findOne();
-  }catch(err){
-    console.log(err);
+      await collection.deleteOne({title: req.body.title});
+      //const p = await collection.insertOne(data);
+      const myDoc = await collection.findOne();
+    }catch(err){
+      console.log(err);
+    }
+    finally {
+      // Ensures that the client will close when you finish/error
+      await client.close();
+    }
+    res.status(200).json({ status: 'success'});
   }
-  finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-  res.status(200).json({ status: 'success'});
 });
 
 app.get('/commentData/:dish', async function(req,res){
