@@ -38,7 +38,7 @@ By Jack Shewchuk and Jayden Nambu
 - passport
 - fetch
 
-APIs primarily utilized for web scraping and authentication.
+APIs primarily utilized for web scraping and authentication. For example, we used axios and cheerio to extract data from web pages and minicrypt to encrypt sensitive information. The express framework and the passport library were used to handle authentication and user sessions, while fetch was used to make HTTP requests to external APIs. Overall, these APIs allowed us to build a robust and secure web scraping and authentication system for our application.
 
 **Database**
 
