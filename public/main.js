@@ -8,14 +8,12 @@ window.addEventListener("load", async function() {
     userID = window.location.href;
     console.log(userID);
     userID = userID.substring(userID.lastIndexOf("/")+1);
-    console.log(userID);
-    if(userID){
-        document.getElementById("idText").innerHTML = "Hi " + userID;
-        document.getElementById("logout").innerHTML = "click here to logout";
-        userIDslash = "&?user="+userID;
-    }
     account = await getAccount();
-    document.getElementById("userID").innerHTML = "Hi " + account.account;
+    document.getElementById("idText").innerHTML = "Hi " + account.account;
+    console.log(account.account);
+    if(account.account !== "guest"){
+        document.getElementById("logoutText").innerHTML = "click here to logout";
+    }
     let dishes = await getDishData();
     console.log(dishes);
     dishes.forEach(element => {

@@ -9,7 +9,10 @@ window.addEventListener("load", async function() {
     r = getParameterByName('dishName');
     h = getParameterByName('diningHall');
     account = await getAccount();
-    document.getElementById("userID").innerHTML = "Hi " + account.account;
+    document.getElementById("idText").innerHTML = "Hi " + account.account;
+    if(account.account !== "guest"){
+        document.getElementById("logoutText").innerHTML = "click here to logout";
+    }
     var hall;
     switch(h){
         case "berk":
